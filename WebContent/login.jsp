@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="/COMP3095_TEAM_DNS/WebContent/css/main.css" />
+<link rel="stylesheet" href="/COMP3095_TEAM_DNS/css/main.css" />
 <title>Login Page</title>
 </head>
 <body>

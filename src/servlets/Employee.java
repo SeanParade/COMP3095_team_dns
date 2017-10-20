@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utilities.HelperUtility;
+import utilities.RegularExpressionValidator;
 
 /**
  * Servlet implementation class Employee
@@ -32,14 +33,18 @@ public class Employee extends HttpServlet {
 		String email = request.getParameter("email");
 		String hireYear = request.getParameter("hireyear");
 		String position = request.getParameter("position");
+		RegularExpressionValidator regExValidator = new RegularExpressionValidator();
 		
-		if (HelperUtility.isMissing(firstName) || HelperUtility.isMissing(lastName) 
-				|| HelperUtility.isMissing(employeeNo) || HelperUtility.isMissing(email) 
+		//run through validation
+		if (HelperUtility.isMissing(firstName)|| regExValidator.validateAlphabetic(firstName) 
+				||HelperUtility.isMissing(lastName) || regExValidator.validateAlphabetic(lastName) 
+				|| HelperUtility.isMissing(employeeNo)
+				|| HelperUtility.isMissing(email)|| regExValidator.validateEmail(email) 
 				|| HelperUtility.isMissing(hireYear) || HelperUtility.isMissing(position)) {
-			//add to DB logic here
-		}else {
-			
 			//error logic here
+		}else {
+			//add to DB logic here
+		
 			
 		}
 		
