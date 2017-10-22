@@ -36,6 +36,11 @@
 		<select name="hireyear" id="ddHire">
 			<option value="">Hire Year</option>
 		</select><br /><div id="hireError"></div><br />
+		<!--- department selection?
+		<select name="department" id="ddDepartment">
+			<option value="">Department</option>
+		</select><br />
+		--->
 		<select name="position" id="ddPosition">
 			<option value="">Job Position</option>
 		</select><br />

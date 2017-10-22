@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class GroupHandler
  */
-@WebServlet("/GroupHandler")
+@WebServlet("/group/GroupHandler")
 public class GroupHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

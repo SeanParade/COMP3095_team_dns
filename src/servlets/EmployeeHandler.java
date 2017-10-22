@@ -36,6 +36,7 @@ public class EmployeeHandler extends HttpServlet {
 		//temporarily commented out until dropdown is populated
 		String hireYear = "1990"; //request.getParameter("hireyear");
 		String position = "receptionist";//request.getParameter("position");
+		//get department selection
 		RegularExpressionValidator regExValidator = new RegularExpressionValidator();
 		
 		String message;
@@ -54,10 +55,12 @@ public class EmployeeHandler extends HttpServlet {
 		if (HelperUtility.isMissing(position))
 			message = "Invalid position selection";
 			*/
+		//check if department is missing
 		
 		else {
 			//add to DB logic here
 			
+			//edit this to include department
 			Employee emp = new Employee(Integer.parseInt(employeeNo), firstName, lastName, email, hireYear, position);
 			
 			message = DatabaseAccess.insertEmployee(emp);

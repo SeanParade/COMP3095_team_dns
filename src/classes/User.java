@@ -11,6 +11,11 @@ public class User {
 	private String password;
 	private int employeeId; //foreign key
 	
+	
+	public User()
+	{
+		
+	}
 	//public constructor with userid - for select from database
 	public User(int id, String first, String last, String email,
 			String role, String username, String password)
