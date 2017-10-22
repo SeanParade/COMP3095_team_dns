@@ -1,23 +1,29 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspWriter;
+
+import classes.Department;
+import utilities.DatabaseAccess;
 
 /**
- * Servlet implementation class Group
+ * Servlet implementation class DepartmentHandler
  */
-@WebServlet("/Group")
-public class Group extends HttpServlet {
+@WebServlet("/department/DepartmentHandler")
+public class DepartmentHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Group() {
+    public DepartmentHandler() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,23 +32,24 @@ public class Group extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+
+		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String department = request.getParameter("department");
-		String groupName = request.getParameter("groupname");
-		String employee1 = request.getParameter("employee1");
-		String empolyee2 = request.getParameter("employee2");
-		String employee3 = request.getParameter("employee3");
-		String employee4 = request.getParameter("employee4");
-		String employee5 = request.getParameter("employee5");
-		String employee6 = request.getParameter("employee6");
+		
+		String departmentName = request.getParameter("depname");
+		String departmentLocation = request.getParameter("deploc");
+		
+		Department dep = new Department(departmentName, departmentLocation);
+		
+		String result = DatabaseAccess.insertDepartment(dep);
+		
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/department/department_entry.jsp").forward(request, response);
 	}
 
 }

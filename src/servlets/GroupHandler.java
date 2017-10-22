@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Department
+ * Servlet implementation class GroupHandler
  */
-@WebServlet("/Department")
-public class Department extends HttpServlet {
+@WebServlet("/GroupHandler")
+public class GroupHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Department() {
+    public GroupHandler() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,16 +26,23 @@ public class Department extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String departmentName = request.getParameter("depname");
-		String departmentLocation = request.getParameter("deploc");
+		// TODO Auto-generated method stub
+		String department = request.getParameter("department");
+		String groupName = request.getParameter("groupname");
+		String employee1 = request.getParameter("employee1");
+		String empolyee2 = request.getParameter("employee2");
+		String employee3 = request.getParameter("employee3");
+		String employee4 = request.getParameter("employee4");
+		String employee5 = request.getParameter("employee5");
+		String employee6 = request.getParameter("employee6");
 	}
 
 }

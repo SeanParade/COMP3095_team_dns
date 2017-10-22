@@ -24,7 +24,7 @@
 <div class="container">
 	<h2>Employee Entry</h2>
 	<br />
-	<form action="login" method="post">
+	<form action="EmployeeHandler" method="post">
 		First Name: 
 		<input type="text" name="fname" /><br />
 		Last Name: 
@@ -44,6 +44,7 @@
 		<input type="reset" value="Cancel"  />
 		
 	</form>
+	<div>${result}</div>
 </div>
 </body>
 </html>

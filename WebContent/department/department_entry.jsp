@@ -24,7 +24,7 @@
 <div class="container">
 	<h2>Department Entry</h2>
 	<br />
-	<form action="login" method="post">
+	<form action="DepartmentHandler" method="post">
 		Department Name: 
 		<input type="text" name="depname" /><br />
 		Department Location/Floor: 
@@ -32,6 +32,7 @@
 		<input type="submit" />
 		<input type="button" value="Cancel">
 	</form>
+	<div> ${result}</div>
 </div>
 </body>
 </html>

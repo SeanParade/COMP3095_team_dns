@@ -24,7 +24,7 @@
 <div class="container">
 	<h2>Group Entry</h2>
 	<br />
-	<form action="login" method="post">
+	<form action="/group/GroupHandler" method="post">
 		Department: 
 		<select name="department" id="ddDepartment">
 			<option value="accounting">Accounting</option>
