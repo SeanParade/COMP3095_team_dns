@@ -117,16 +117,16 @@ public class DatabaseAccess {
 			  return "failed: " + e.getMessage();
 		  }
 	  }
-	  //select user with id from database
-	  public static User selectUser(int id)
+	  //select user with username from database
+	  public static User selectUser(String userName)
 	  {
 		  User user = new User();
-		  sql = "SELECT * FROM USER WHERE ID = ?;";
+		  sql = "SELECT * FROM USER WHERE username = ?;";
 		  
 		  try{
 			  conn = connectDataBase();
 			  stmt = conn.prepareStatement(sql);
-			  stmt.setInt(1, id);
+			  stmt.setString(1, userName);
 			  
 			  rs = stmt.executeQuery();
 			  
@@ -136,7 +136,6 @@ public class DatabaseAccess {
 				  String first = rs.getString("firstName");
 				  String last = rs.getString("lastName");
 				  String email = rs.getString("email");
-				  String userName = rs.getString("username");
 				  String password = rs.getString("password");
 				  
 				  user.setUserId(userId);
