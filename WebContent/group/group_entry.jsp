@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,14 +25,20 @@
 <div class="container">
 	<h2>Group Entry</h2>
 	<br />
-	<form action="/group/GroupHandler" method="post">
+	<form action="GroupHandler" method="post">
 		Department: 
 		<select name="department" id="ddDepartment">
-			<option value="accounting">Accounting</option>
+			<c:forEach items="${departments}" var ="department">
+				<option value="${department.departmentId}"><c:out value="${department.departmentName}"/>
+			</c:forEach>
 		</select><br />
 		Group Name: 
 		<input type="text" name="groupname"/><br />
-		Employee 1: <select name="employee1" id="ddEmployee1"></select>
+		Employee 1: <select name="employee1" id="ddEmployee1">
+				<c:forEach items="${employees}" var="employee">
+				<option value="${employee.employeeId}"><c:out value="${employee}"/>
+				</c:forEach>
+		</select>
 		Employee 2: <select name="employee2" id="ddEmployee2"></select>
 		Employee 3: <select name="employee3" id="ddEmployee3"></select>
 		<br />
@@ -43,6 +50,10 @@
 		<input type="reset" value="Cancel"  />
 		
 	</form>
+	<div>
+		<div>${message}</div>
+		<div>${empMessage }</div>
+	</div>
 </div>
 </body>
 </html>
