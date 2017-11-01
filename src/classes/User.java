@@ -1,7 +1,12 @@
 package classes;
 
+import java.util.Random;
+
+import org.apache.tomcat.util.codec.binary.Base64;
+
 public class User {
 
+	
 	private int userId; //primary key
 	private String firstName;
 	private String lastName;
@@ -9,6 +14,7 @@ public class User {
 	private String role;
 	private String username;
 	private String password;
+	private String token;
 	private int employeeId; //foreign key
 	
 	
@@ -28,6 +34,19 @@ public class User {
 		this.username = username;
 		this.password= password;
 	}
+	
+	public User(int id, String first, String last, String email, String role,
+			String username, String password, String token) {
+		this.userId = id;
+		this.firstName = first;
+		this.lastName = last;
+		this.email = email;
+		this.role = role;
+		this.username = username;
+		this.password = password;
+
+	}
+	
 	public User(int id, String first, String last, String email,
 			String role, String username, String password, int employeeId)
 	{
@@ -89,10 +108,21 @@ public class User {
 	public void setEmployeeId(int id) {
 		this.employeeId = id;
 	}
+	public void setToken() {
+		Random r = new Random();
+		byte[] a = new byte[256];
+		r.nextBytes(a);
+		
+		this.token = Base64.encodeBase64String(a);		
+	}
+	
+	public String getToken() {
+		return this.token;
+	}
+	
 	@Override
 	public String toString() {
 		return firstName + " " + lastName;
-	}
-	
+	}	
 	
 }

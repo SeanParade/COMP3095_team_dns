@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.StringUtils;
+
 import classes.Department;
 import classes.Employee;
 import classes.Group;
@@ -42,14 +44,58 @@ public class DatabaseAccess {
 	      throw e;
 	    } 
 	  }
+	  
+	  //User login
+	  //Return true/false based on if credentials exist
+	  public static boolean userCredentialCheck(String usrName, String pass)
+	  {
+		  boolean exists = false;
+		  try {
+		  conn = connectDataBase();
+		  sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+		  stmt = conn.prepareStatement(sql);
+		  stmt.setString(1, usrName.toLowerCase());
+		  stmt.setString(2, pass);
+		  rs = stmt.executeQuery();
+		  exists = rs.next();
+		  
+	      conn.close();
+	      
+		  }catch(Exception e)
+		  {
+			  e.printStackTrace();
+			  return false;
+		  }
+		  return exists;
+	  }
+	  
+	  // Update Token
+	  // insert a users auth token into the DB, return success flag
+	  public static boolean updateAuthToken(User user) {
+		  boolean result;
+		  sql = "UPDATE user SET token = ? WHERE username = ?";
+		  
+		  try {
+			  conn = connectDataBase();
+			  stmt = conn.prepareStatement(sql);
+			  stmt.setString(1, user.getToken());
+			  stmt.setString(2, user.getUsername());
+			  result = stmt.execute();
+			  
+			  conn.close();
+			  return result;
+		  }catch(Exception e) {
+			  e.printStackTrace();
+		  }
+		  return false;
+	  }
+	  
 	  //insert into department into database
 	  public static String insertDepartment(Department dep)
-	  {
-		  
+	  {		  
 		  sql = "INSERT INTO DEPARTMENT(departmentName, location)" +
 					"VALUES( ?, ?);";
-		  
-
+		 
 		  try {
 			conn = connectDataBase();
 			stmt = conn.prepareStatement(sql);
@@ -117,16 +163,18 @@ public class DatabaseAccess {
 			  return "failed: " + e.getMessage();
 		  }
 	  }
+	  
 	  //select user with username from database
-	  public static User selectUser(String userName)
+	  public static User getUser(String userName, String password)
 	  {
 		  User user = new User();
-		  sql = "SELECT * FROM USER WHERE username = ?;";
+		  sql = "SELECT * FROM USER WHERE username = ? AND password = ?;";
 		  
 		  try{
 			  conn = connectDataBase();
 			  stmt = conn.prepareStatement(sql);
 			  stmt.setString(1, userName);
+			  stmt.setString(2, password);
 			  
 			  rs = stmt.executeQuery();
 			  
@@ -136,7 +184,7 @@ public class DatabaseAccess {
 				  String first = rs.getString("firstName");
 				  String last = rs.getString("lastName");
 				  String email = rs.getString("email");
-				  String password = rs.getString("password");
+				  
 				  
 				  user.setUserId(userId);
 				  user.setFirstName(first);

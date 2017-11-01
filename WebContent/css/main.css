@@ -16,7 +16,7 @@ body{
 .header ul {
 	float: left;
 }
-.header #logout {
+.header .rightinfo {
 	float: right;
 	padding-right: 20px;
 }

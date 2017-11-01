@@ -1,6 +1,12 @@
 package utilities;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
+
+import javax.servlet.http.HttpServletResponse;
+
+import classes.User;
 
 public class HelperUtility {
 
@@ -53,6 +59,24 @@ public class HelperUtility {
 
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
+	}
+	
+	public static String popNav(User user)  {
+
+		String nav = "<div class=\"header\">" +
+		"<ul>" +
+		"<li><a href=\"/COMP3095_TEAM_DNS/department/index.jsp\">Departments</a></li>" +
+		"<li><a href=\"/COMP3095_TEAM_DNS/employee/index.jsp\">Employees</a></li>" +
+		"<li><a href=\"/COMP3095_TEAM_DNS/group/index.jsp\">Group</a></li>" +
+		"<li><a href=\"/COMP3095_TEAM_DNS/reports/index.jsp\">Reports</a></li>" +
+		"<li><a href=\"/COMP3095_TEAM_DNS/attendance/index.jsp\">Attendance</a></li>" +
+	"</ul>	<ul id=\"logout\" class=\"rightinfo\">" +
+		"<li>Welcome, " + user.getFirstName() + "</li>" +
+		"<li><a href=\"/COMP3095_TEAM_DNS/Logout\">Logout</a></li>" +
+	"</ul>" +
+	"</div>";
+		
+		return nav;
 	}
 
 }

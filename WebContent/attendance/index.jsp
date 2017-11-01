@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page import="classes.User, utilities.HelperUtility" language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1" %>
+	
+<% User user = (User) session.getAttribute("user"); %>	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,19 +10,8 @@
 <title>Attendance</title>
 </head>
 <body>
-	<div class="header">
-		<ul>
-			<li><a href="/COMP3095_TEAM_DNS/department/index.jsp">Departments</a></li>
-			<li><a href="/COMP3095_TEAM_DNS/employee/index.jsp">Employees</a></li>
-			<li><a href="/COMP3095_TEAM_DNS/group/index.jsp">Group</a></li>
-			<li><a href="/COMP3095_TEAM_DNS/reports/index.jsp">Reports</a></li>
-			<li><a href="/COMP3095_TEAM_DNS/attendance/index.jsp">Attendance</a></li>
-		</ul>
-		<ul id="logout">
-		<li>Welcome, ~user~</li>
-		<li>Logout</li>
-		</ul>
-	</div>
+<%= HelperUtility.popNav(user) %>
+
 	<div class="container">
 	<img class="uc_img" src="../img/underconstruction.png" height="40%" width="40%" alt="" />
 	</div>

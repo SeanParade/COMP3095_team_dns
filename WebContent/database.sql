@@ -52,6 +52,7 @@ CREATE TABLE EMPLOYEE
 	departmentId int(11),
 	groupId int(11),
 	
+	
 	INDEX(departmentId),
 	INDEX(groupId),
 
@@ -113,6 +114,7 @@ CREATE TABLE USER
 	username varchar(20),
 	password varchar(20),
 	employeeId int(11),
+	token varchar(255),
 
 	INDEX(employeeId),
 	
@@ -123,4 +125,4 @@ CREATE TABLE USER
 );
 
 INSERT INTO USER (firstName, lastName, email, role, username, password, employeeId) 
-VALUES (NULL, NULL, "admin@domain.ca", NULL, "admin", "admin", NULL);
+VALUES ("admin", "!", "admin@domain.ca", "Administrator", "admin", "admin", 0);
