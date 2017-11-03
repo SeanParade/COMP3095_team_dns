@@ -17,13 +17,13 @@ import utilities.DatabaseAccess;
  * Servlet implementation class Login
  */
 @WebServlet(name="Login", urlPatterns= {"/Login"})
-public class Login extends HttpServlet {
+public class LoginHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public LoginHandler() {
         super();
     }
 

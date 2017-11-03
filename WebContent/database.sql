@@ -29,16 +29,7 @@ VALUES("Human Resources", "Room 1D");
 CREATE TABLE EGROUP
 (
 	id int(11) AUTO_INCREMENT PRIMARY KEY,
-	groupName varchar(255),
-	departmentId int(11),
-
-	INDEX(departmentId),
-
-	FOREIGN KEY(departmentId)
-	REFERENCES department(id)
-	
-ON UPDATE CASCADE
-	ON DELETE RESTRICT
+	groupName varchar(255)
 	
 );
 CREATE TABLE EMPLOYEE
@@ -54,14 +45,9 @@ CREATE TABLE EMPLOYEE
 	
 	
 	INDEX(departmentId),
-	INDEX(groupId),
 
 	FOREIGN KEY(departmentId)
 		REFERENCES department(id)
-		ON UPDATE CASCADE ON DELETE RESTRICT,
-
-	FOREIGN KEY(groupId)
-		REFERENCES egroup(id)
 		ON UPDATE CASCADE ON DELETE RESTRICT
 
 );
@@ -113,16 +99,8 @@ CREATE TABLE USER
 	role varchar(20),
 	username varchar(20),
 	password varchar(20),
-	employeeId int(11),
-	token varchar(255),
-
-	INDEX(employeeId),
-	
-	FOREIGN KEY(employeeId)
-		REFERENCES employee(id)
-
-	ON UPDATE CASCADE ON DELETE RESTRICT
+	token varchar(255)
 );
 
-INSERT INTO USER (firstName, lastName, email, role, username, password, employeeId) 
-VALUES ("admin", "!", "admin@domain.ca", "Administrator", "admin", "admin", 0);
+INSERT INTO USER (firstName, lastName, email, role, username, password) 
+VALUES ("admin", "!", "admin@domain.ca", "Administrator", "admin", "admin");

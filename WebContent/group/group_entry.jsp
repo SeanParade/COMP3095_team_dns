@@ -13,38 +13,52 @@
 <body>
 <%= HelperUtility.popNav(user) %>
 
+
+
 <div class="container">
 	<h2>Group Entry</h2>
 	<br />
-	<form action="GroupHandler" method="post">
+	<form action="/COMP3095_TEAM_DNS/Group" method="post">
 		Department: 
-		<select name="department" id="ddDepartment">
+		<select name="department" id="ddDepartment" 
+		onchange="self.location = '//' + location.host + location.pathname + '?dep=' + this.selectedIndex">
 			<c:forEach items="${departments}" var ="department">
 				<option value="${department.departmentId}"><c:out value="${department.departmentName}"/>
 			</c:forEach>
 		</select><br />
 		Group Name: 
-		<input type="text" name="groupname"/><br />
-		Employee 1: <select name="employee1" id="ddEmployee1">
-				<c:forEach items="${employees}" var="employee">
-				<option value="${employee.employeeId}"><c:out value="${employee}"/>
-				</c:forEach>
-		</select>
-		Employee 2: <select name="employee2" id="ddEmployee2"></select>
-		Employee 3: <select name="employee3" id="ddEmployee3"></select>
-		<br />
-		Employee 4: <select name="employee4" id="ddEmployee4"></select>
-		Employee 5: <select name="employee5" id="ddEmployee5"></select>
-		Employee 6: <select name="employee6" id="ddEmployee6"></select>
-		<br />
+		<input type="text" name="groupname" placeholder="Please enter a Name"/><br />
+		
+		<c:forEach items="${employees}" var="employee" varStatus="loop">
+		Employee ${loop.index+1}: 
+		        <select name="employee">
+					<option value="">
+						<c:forEach items="${employees}" var="employee" varStatus="loop">
+							<option value="${employee.employeeId}"><c:out value="${employee}" />
+						</c:forEach>
+				</select>
+	    </c:forEach>
+	    
+		<br/>
 		<input type="submit" />
 		<input type="reset" value="Cancel"  />
 		
 	</form>
 	<div>
 		<div>${message}</div>
-		<div>${empMessage }</div>
+		<div>${empMessage}</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+var ddlDepartment = document.getElementById('ddDepartment');
+
+function updateFormOnSelection(){
+	self.location = '//' + location.host + location.pathname + '?dep=' + this.selectedIndex;
+}
+
+ddlDepartment.getElementsByTagName('option')[${selected}].selected='selected';	
+</script>
+
 </body>
 </html>

@@ -23,7 +23,7 @@
 		<input type="submit" />
 		<input type="button" value="Cancel">
 	</form>
-	<div> ${result}</div>
+	<div> ${result} </div>
 </div>
 </body>
 </html>

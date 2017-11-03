@@ -144,13 +144,12 @@ public class DatabaseAccess {
 	  //insert group into database
 	  public static String insertGroup(Group group)
 	  {
-		  sql = "INSERT INTO EGROUP(groupName, departmentId) VALUES(?,?);";
+		  sql = "INSERT INTO EGROUP(groupName) VALUES(?);";
 		  
 		  try{
 			  conn = connectDataBase();
 			  stmt = conn.prepareStatement(sql);
 			  stmt.setString(1, group.getGroupName());
-			  stmt.setInt(2,  group.getDepartmentId());
 			  
 			  stmt.execute();
 			  conn.close();
@@ -164,7 +163,7 @@ public class DatabaseAccess {
 		  }
 	  }
 	  
-	  //select user with username from database
+	  //select user by username from database
 	  public static User getUser(String userName, String password)
 	  {
 		  User user = new User();
@@ -202,7 +201,7 @@ public class DatabaseAccess {
 		  }
 	  }
 	  //select from employee where department id = value
-	  public static ArrayList<Employee> selectEmployees(int departmentId)
+	  public static ArrayList<Employee> selectEmployeesByDepartment(int departmentId)
 	  {
 		  ArrayList<Employee> emps = new ArrayList<Employee>();
 		  sql = "SELECT * FROM EMPLOYEE WHERE departmentId = ?;";
