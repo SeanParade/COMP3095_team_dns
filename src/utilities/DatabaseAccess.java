@@ -7,8 +7,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.StringUtils;
-
 import classes.Department;
 import classes.Employee;
 import classes.Group;
@@ -271,7 +269,7 @@ public class DatabaseAccess {
 		}
 	 }
 	 //update employee with groupId
-	 public static String updateEmployee(int employeeId, int groupId)
+	 public static String updateEmployeeGroupById(int employeeId, int groupId)
 	 {
 		 sql = "UPDATE EMPLOYEE SET groupId = ? WHERE id = ?;";
 		 try{
@@ -291,5 +289,53 @@ public class DatabaseAccess {
 			 return "failed " + e.getMessage();
 		 }
 		 
+	 }
+	 
+	 //update employee with group by group name
+	 
+	 public static String updateEmployeeGroupByName(int employeeId, String groupName) {
+		
+		 sql = "SELECT id FROM egroup WHERE groupName = ?";
+		 try {
+			 conn = connectDataBase();
+			 stmt = conn.prepareStatement(sql);
+			 stmt.setString(1, groupName);
+			 rs = stmt.executeQuery();
+			 conn.close();
+			 
+			 if (rs.getInt("id") != 0) {
+				 updateEmployeeGroupById(employeeId, rs.getInt("id"));
+				 return "Success";
+			 }
+			 
+			 
+		 }catch(Exception e) {
+			 return "failed: " + e.getMessage();
+		 } 
+		 
+		 try {conn.close();} 
+		 catch(Exception e) { e.printStackTrace();}
+		 
+		return "Something went wrong! Employee " + employeeId + " was not updated. "; 
+	 }
+	 
+	 //Check to see if a group exists by a name and return a boolean
+	 public static boolean groupExists(String groupName) {
+		 sql = "SELECT * FROM egroup WHERE groupName = ?";
+		 try {
+			 conn = connectDataBase();
+			 stmt = conn.prepareStatement(sql);
+			 stmt.setString(1, groupName);
+			 rs = stmt.executeQuery();
+			 conn.close(); 
+			 
+			 if (rs != null)
+				 return true;
+			 
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }
+		 
+		 return false;
 	 }
 }

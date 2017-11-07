@@ -3,18 +3,16 @@ package classes;
 public class Group {
 	private int groupId; //primary key
 	private String groupName;
-	private int departmentId; //foreign key
 	
-	public Group(int groupId, String groupName, int departmentId)
+	
+	public Group(int groupId, String groupName)
 	{
 		this.groupId = groupId;
 		this.groupName = groupName;
-		this.departmentId = departmentId;
 	}
-	public Group(String groupName, int departmentId)
+	public Group(String groupName)
 	{
 		this.groupName = groupName;
-		this.departmentId = departmentId;
 	}
 	public int getGroupId() {
 		return groupId;
@@ -27,12 +25,6 @@ public class Group {
 	}
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
-	}
-	public int getDepartmentId() {
-		return departmentId;
-	}
-	public void setDepartmentId(int departmentId) {
-		this.departmentId = departmentId;
 	}
 	@Override
 	public String toString() {
