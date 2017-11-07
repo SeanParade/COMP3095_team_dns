@@ -11,9 +11,9 @@
 - [ ] confirmation page needs to be implemented (for when successful insert into database)
 
 - [ ] GroupHandler needs to be finished 
-  - right now, the information only displays in the drop down boxes if the submit button is pressed 
-  - need to figure out a way to populate the drop down boxes when the page loads
-  - it might turn out that the only way to do this is to have the database query directly in the jsp which is horrible and ugly but will probably work alright
+  - [x] information only displays in the drop down boxes if the submit button is pressed 
+  - [x] need to figure out a way to populate the drop down boxes when the page loads
+  - [x] figure out CRUD login
   
 - [x] go through the website and test the navigation 
   - (noticed some mismatch between the links in the menu and the jsps)

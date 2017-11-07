@@ -43,7 +43,7 @@ public class LoginHandler extends HttpServlet {
 		String redirectURL = "";
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		Boolean rememberMe = Boolean.parseBoolean(request.getParameter("remember"));
+		Boolean rememberMe = request.getParameter("remember") != null;
 		
 		
 	    if (DatabaseAccess.userCredentialCheck(username, password))
@@ -65,18 +65,11 @@ public class LoginHandler extends HttpServlet {
 				Cookie c = new Cookie("userToken", user.getToken());
 				c.setMaxAge(60*60*24*30);
 				response.addCookie(c);
-			}
-			
-			
+			}			
 		}
 		 	else { redirectURL = "login.jsp"; // TODO figure out error logic http://www.studytonight.com/servlet/login-system-example-in-servlet.php
 		}
-		 response.sendRedirect(redirectURL);
-		
-		
-		
-		
-		
+		 response.sendRedirect(redirectURL);	
 	}
 
 }

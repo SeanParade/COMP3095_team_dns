@@ -78,10 +78,16 @@ public class GroupHandler extends HttpServlet {
 		String groupName = request.getParameter("groupname");
 
 		try {
-
-			if (!employeeIDs.isEmpty() && groupName != null && department != null) {
+			
+			if(employeeIDs.isEmpty()) {
+				request.setAttribute("message", "No Employees were selected");
+			}
+			else if(groupName.trim() == "" || groupName == null){
+				request.setAttribute("message", "No group name has been chosen");
+			}
+			else {
 				// Check if there is a group named groupName; create if not.
-				if (DatabaseAccess.groupExists(groupName)) {
+				if (!DatabaseAccess.groupExists(groupName)) {
 					Group newGroup = new Group(groupName);
 					DatabaseAccess.insertGroup(newGroup);
 					// Employee update loop
@@ -90,34 +96,28 @@ public class GroupHandler extends HttpServlet {
 							DatabaseAccess.updateEmployeeGroupByName(Integer.parseInt(employeeID), groupName);
 						}
 					}
+					request.setAttribute("message", "Success!");
+					
 				} else {
 					request.setAttribute("message", "There is already a group with that name");
 				}
-			}else {
-
-			if (request.getParameter("department") != null) {
-				departmentId = Integer.parseInt(department);
-				request.setAttribute("empMessage", department);
-				ArrayList<Employee> employeeList = DatabaseAccess.selectEmployeesByDepartment(departmentId);
-
-				request.setAttribute("employees", employeeList);
 			}
 
-			else {
-				ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
-
-				if (!departmentList.isEmpty()) {
+			ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
+			String selectedDep = request.getParameter("dep");
+				// Load with defaults
+				if (!departmentList.isEmpty() && selectedDep == null) {
 					request.setAttribute("departments", departmentList);
-					request.setAttribute("message", "not empty");
-				} else {
-					request.setAttribute("message", "empty list");
+					ArrayList<Employee> employeeList = DatabaseAccess.selectEmployeesByDepartment(1);
+					request.setAttribute("employees", employeeList);
 				}
-
-			}
-			
-			request.setAttribute("empMessage", department);
-			
-			}
+				else if (!departmentList.isEmpty() && selectedDep != null) {
+					request.setAttribute("departments", departmentList);
+					ArrayList<Employee> employeeList = DatabaseAccess
+							.selectEmployeesByDepartment(Integer.parseInt(selectedDep) + 1);
+					request.setAttribute("employees", employeeList);
+					request.setAttribute("selected", selectedDep);
+				}
 			
 			request.getRequestDispatcher("/group/group_entry.jsp").forward(request, response);
 
