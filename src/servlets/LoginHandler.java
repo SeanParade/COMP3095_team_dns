@@ -43,7 +43,7 @@ public class LoginHandler extends HttpServlet {
 		String redirectURL = "";
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		Boolean rememberMe = Boolean.parseBoolean(request.getParameter("remember"));
+		Boolean rememberMe = request.getParameter("remember") != null;
 		
 		
 	    if (DatabaseAccess.userCredentialCheck(username, password))
@@ -71,6 +71,8 @@ public class LoginHandler extends HttpServlet {
 		}
 		 	else { redirectURL = "login.jsp"; // TODO figure out error logic http://www.studytonight.com/servlet/login-system-example-in-servlet.php
 		}
+	    	
+	     request.getSession().setAttribute("error", "Username/Password Invalid");
 		 response.sendRedirect(redirectURL);
 		
 		
