@@ -1,7 +1,19 @@
-<%@ page import="classes.User, utilities.HelperUtility" language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page import="classes.User, utilities.HelperUtility, utilities.DatabaseAccess" language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% User user = (User) session.getAttribute("user"); %>	
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+<% 
+// Credential check and user population
+if (session.getAttribute("user") == null){
+	String token = HelperUtility.tokenCheck(request);
+	if (token != "fail"){
+		session.setAttribute("user", DatabaseAccess.getUserByToken(token));
+	}else{
+		response.sendRedirect("/COMP3095_TEAM_DNS/Logout");
+		return;
+	}
+}
+User user = (User) session.getAttribute("user");
+%>	
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

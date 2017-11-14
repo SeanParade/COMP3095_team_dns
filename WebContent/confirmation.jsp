@@ -1,7 +1,19 @@
-<%@ page import="classes.User, utilities.HelperUtility" language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page import="classes.User, utilities.HelperUtility, utilities.DatabaseAccess" language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" %>
 	
-<% User user = (User) session.getAttribute("user");
+<% 
+// Credential check and user population
+if (session.getAttribute("user") == null){
+	String token = HelperUtility.tokenCheck(request);
+	if (token != "fail"){
+		session.setAttribute("user", DatabaseAccess.getUserByToken(token));
+	}else{
+		response.sendRedirect("/COMP3095_TEAM_DNS/Logout");
+		return;
+	}
+}
+User user = (User) session.getAttribute("user");
+
 	if (session.getAttribute("table") == null) {
 		response.sendRedirect("/COMP3095_TEAM_DNS/home.jsp");
 	}

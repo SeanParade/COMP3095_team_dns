@@ -3,6 +3,7 @@ package utilities;
 import java.io.IOException;
 import java.util.Random;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -97,14 +98,24 @@ public class HelperUtility {
 	}
 
 	
-	public static void credentialCheck(String token, HttpServletResponse response, User user) throws IOException {
-		if(DatabaseAccess.checkUserToken(token)) {
-			user = DatabaseAccess.getUserByToken(token);
+	public static String tokenCheck(HttpServletRequest request) throws IOException {
+		Cookie[] cookies = request.getCookies();
+
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("userToken")) {
+					if(DatabaseAccess.checkUserToken(cookie.getValue())) {
+						return cookie.getValue();
+					}
+				}
+			}
+			return "fail";
 		}
 		else {
-			response.sendRedirect("/COMP3095_TEAM_DNS/Logout");
+			return "fail";
 		}
 	}
+	
 }
 
 
