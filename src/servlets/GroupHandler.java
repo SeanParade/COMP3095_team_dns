@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,12 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
 
 import classes.Department;
 import classes.Employee;
 import classes.Group;
 import utilities.DatabaseAccess;
+import utilities.HelperUtility;
 
 /**
  * Servlet implementation class GroupHandler
@@ -53,7 +54,7 @@ public class GroupHandler extends HttpServlet {
 				request.setAttribute("employees", employeeList);
 				request.setAttribute("selected", selectedDep);
 			} else {
-				request.setAttribute("message", "empty list");
+				request.setAttribute("error", "empty list");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,39 +70,65 @@ public class GroupHandler extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int departmentId;
 
 		// if the submission has selected employees then it must be a group;
 		// check that name was filled
-		List<String> employeeIDs = Arrays.asList(request.getParameterValues("employee"));
-		String department = request.getParameter("department");
-		String groupName = request.getParameter("groupname");
-
-		try {
+		String [] employeeParams = {"Group name", "Employee name"};
+		String error = HelperUtility.errorMessage(employeeParams, request);
+		if(HelperUtility.isMissing(error))
+		{
+			List<String> employeeIDs = Arrays.asList(request.getParameterValues("Employee name"));
+			String groupName = request.getParameter("Group name");
 			
-			if(employeeIDs.isEmpty()) {
-				request.setAttribute("message", "No Employees were selected");
-			}
-			else if(groupName.trim() == "" || groupName == null){
-				request.setAttribute("message", "No group name has been chosen");
-			}
-			else {
-				// Check if there is a group named groupName; create if not.
-				if (!DatabaseAccess.groupExists(groupName)) {
+			try {
+				if(DatabaseAccess.groupExists(groupName))
+				{
+					request.setAttribute("error", "There is already a group with that name");
+				}
+				else
+				{
 					Group newGroup = new Group(groupName);
-					DatabaseAccess.insertGroup(newGroup);
-					// Employee update loop
-					for (String employeeID : employeeIDs) {
-						if (employeeID.trim().length() > 1) {
-							DatabaseAccess.updateEmployeeGroupByName(Integer.parseInt(employeeID), groupName);
+					if(DatabaseAccess.insertGroup(newGroup).equals("success"))
+						{
+						request.setAttribute("table", "Group");
+						request.setAttribute("name", groupName);
+						
+						// Employee update loop
+						
+						for (String employeeID : employeeIDs) {
+							if (!HelperUtility.isMissing(employeeID)) {
+							
+								try {
+									String result = DatabaseAccess.updateEmployeeGroupByName(Integer.parseInt(employeeID), groupName);
+									if(!result.equals("success"))
+									{
+										request.setAttribute("error", result);
+									}
+								} catch (SQLException e) {
+									request.setAttribute("error", "Database Error: Employee Insert");
+								}
+								 
+							}
+							
+						}
+						if(null == request.getAttribute("error"))
+						{
+							request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 						}
 					}
-					request.setAttribute("message", "Success!");
-					
-				} else {
-					request.setAttribute("message", "There is already a group with that name");
+					else
+					{
+						request.setAttribute("error", "Database error: Group Insert");
+					}
 				}
+			} catch (SQLException e) {
+				request.setAttribute("error", "Database Error: Group Insert");
 			}
+		}
+		else{
+			request.setAttribute("error", error);
+		}
+		
 
 			ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
 			String selectedDep = request.getParameter("dep");
@@ -121,9 +148,6 @@ public class GroupHandler extends HttpServlet {
 			
 			request.getRequestDispatcher("/group/group_entry.jsp").forward(request, response);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 }

@@ -1,9 +1,9 @@
 package utilities;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import classes.User;
@@ -78,6 +78,24 @@ public class HelperUtility {
 		
 		return nav;
 	}
+	
+
+
+
+	//checks paramNames against request parameters, returns first missing param name error message
+	public static String errorMessage(String[] paramNames, HttpServletRequest request)
+	{
+		String errorMessage = "";
+		for(int i=0; i< paramNames.length; i++)
+		{
+			if(HelperUtility.isMissing(request.getParameter(paramNames[i])))
+			{
+				errorMessage+= paramNames[i] + " is required <br>";
+			}
+		}
+		return errorMessage; 
+	}
+
 	
 	public static void credentialCheck(String token, HttpServletResponse response, User user) throws IOException {
 		if(DatabaseAccess.checkUserToken(token)) {

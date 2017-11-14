@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import classes.Department;
 import utilities.DatabaseAccess;
+import utilities.HelperUtility;
 
 /**
  * Servlet implementation class DepartmentHandler
@@ -41,15 +42,49 @@ public class DepartmentHandler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String departmentName = request.getParameter("depname");
-		String departmentLocation = request.getParameter("deploc");
+		String [] departmentParams = {"Department name", "Department location"};
 		
-		Department dep = new Department(departmentName, departmentLocation);
+		String error = HelperUtility.errorMessage(departmentParams, request);
 		
-		String result = DatabaseAccess.insertDepartment(dep);
-		
-		request.setAttribute("result", result);
+		if(HelperUtility.isMissing(error))
+		{
+			
+			String departmentName = request.getParameter("Department name");
+			String departmentLocation = request.getParameter("Department location");
+			//check if department name already exists
+			if(DatabaseAccess.departmentExists(departmentName))
+			{
+				request.setAttribute("error", "There is already a department with that name"); 
+			}
+			
+			else
+			{
+				Department dep = new Department(departmentName, departmentLocation);
+				
+					//check if result is success
+				String result = DatabaseAccess.insertDepartment(dep);
+				if(result.equals("success"))
+				{
+					//set parameters with "Department", departmentName
+					 request.setAttribute("table", "Department");
+					 request.setAttribute("name", departmentName);
+					//redirect to confirmation page
+					request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
+				}
+				else
+				{
+				//set error message with general database error
+				 request.setAttribute("error", "Database error");
+				}
+			
+			}
+		}
+		else
+		{
+			request.setAttribute("error", error);
+		}
 		request.getRequestDispatcher("/department/department_entry.jsp").forward(request, response);
+		
 	}
 
 }
