@@ -26,7 +26,6 @@ public class DepartmentHandler extends HttpServlet {
      */
     public DepartmentHandler() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

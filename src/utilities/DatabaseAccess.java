@@ -366,4 +366,9 @@ public class DatabaseAccess {
 		}
 		return false;
 	}
+
+	public static boolean departmentExists(String departmentName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
