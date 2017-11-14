@@ -32,11 +32,23 @@ body{
 }
 .container{
 	text-alignment: center;
+	padding: 20px;
 	width: 50vw;
 	margin: 0 auto;
-	
+}
+.container>h1 {
+	text-align:center;
+}
+.container>h2 {
+	text-align:center;
+}
+.container>img {
+	display: block;
+	margin: 0 auto;	
 }
 .container>form>*{
 	margin: 1vw auto;
 }
-
+.container>h2>a:link {
+	color: #0971B2;
+}
