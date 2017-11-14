@@ -44,7 +44,7 @@ public class User {
 		this.role = role;
 		this.username = username;
 		this.password = password;
-
+		this.token = token;
 	}
 	
 	public User(int id, String first, String last, String email,
@@ -108,12 +108,15 @@ public class User {
 	public void setEmployeeId(int id) {
 		this.employeeId = id;
 	}
-	public void setToken() {
+	public void createToken() {
 		Random r = new Random();
-		byte[] a = new byte[256];
+		byte[] a = new byte[32];
 		r.nextBytes(a);
 		
 		this.token = Base64.encodeBase64String(a);		
+	}
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 	public String getToken() {

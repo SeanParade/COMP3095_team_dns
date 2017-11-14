@@ -81,6 +81,28 @@ public class DatabaseAccess {
 		}
 		return false;
 	}
+	
+	// Check Token Validity
+	// Pass in token and return user if there is a token match
+	public static boolean checkUserToken(String token) {
+		boolean flag = false;
+		sql = "SELECT * FROM user WHERE token = ?";
+		
+		
+		try {
+			conn = connectDataBase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, token);
+			rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				flag = true;
+			}
+		}catch(Exception e) {/*returns false anyway*/}
+		
+		
+		return flag;
+	}
 
 	// insert into department into database
 	public static String insertDepartment(Department dep) {
@@ -101,7 +123,6 @@ public class DatabaseAccess {
 			// TODO Auto-generated catch block
 			return "failed: " + e.getMessage();
 		}
-
 	}
 
 	// insert employee into database
@@ -180,7 +201,41 @@ public class DatabaseAccess {
 			return user;
 		}
 	}
+	
+	
+	//Create a user object based on a user token
+	public static User getUserByToken(String token) {
+		User user = new User();
+		sql = "SELECT * FROM USER WHERE token = ?;";
 
+		try {
+			conn = connectDataBase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, token);
+			
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int userId = rs.getInt("id");
+				String first = rs.getString("firstName");
+				String last = rs.getString("lastName");
+				String email = rs.getString("email");
+				String userName = rs.getString("username");
+				user.setUserId(userId);
+				user.setFirstName(first);
+				user.setLastName(last);
+				user.setEmail(email);
+				user.setUsername(userName);
+				user.setPassword("");
+				user.setToken(token);
+			}
+			conn.close();
+			return user;
+		} catch (Exception e) {
+			return user;
+		}
+	}
+	
 	// select from employee where department id = value
 	public static ArrayList<Employee> selectEmployeesByDepartment(int departmentId) {
 		ArrayList<Employee> emps = new ArrayList<Employee>();

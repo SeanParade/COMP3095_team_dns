@@ -78,5 +78,15 @@ public class HelperUtility {
 		
 		return nav;
 	}
-
+	
+	public static void credentialCheck(String token, HttpServletResponse response, User user) throws IOException {
+		if(DatabaseAccess.checkUserToken(token)) {
+			user = DatabaseAccess.getUserByToken(token);
+		}
+		else {
+			response.sendRedirect("/COMP3095_TEAM_DNS/Logout");
+		}
+	}
 }
+
+
