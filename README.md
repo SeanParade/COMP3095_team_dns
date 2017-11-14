@@ -10,7 +10,7 @@
 
 - [ ] confirmation page needs to be implemented (for when successful insert into database)
 
-- [ ] GroupHandler needs to be finished 
+- [x] GroupHandler needs to be finished 
   - [x] information only displays in the drop down boxes if the submit button is pressed 
   - [x] need to figure out a way to populate the drop down boxes when the page loads
   - [x] figure out CRUD login

@@ -69,18 +69,9 @@ public class LoginHandler extends HttpServlet {
 		}
 		 	else { redirectURL = "login.jsp"; // TODO figure out error logic http://www.studytonight.com/servlet/login-system-example-in-servlet.php
 		}
-<<<<<<< HEAD
-		 response.sendRedirect(redirectURL);	
-=======
-	    	
+
 	     request.getSession().setAttribute("error", "Username/Password Invalid");
 		 response.sendRedirect(redirectURL);
-		
-		
-		
-		
-		
->>>>>>> c055365aa8d3fb5e1366c7ed11668733f70ac5d1
 	}
 
 }

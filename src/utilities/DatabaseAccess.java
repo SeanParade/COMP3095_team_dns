@@ -203,7 +203,6 @@ public class DatabaseAccess {
 				Employee emp = new Employee(employeeId, first, last, email, hireYear, position, departmentId);
 
 				emps.add(emp);
-
 			}
 
 			conn.close();
@@ -256,7 +255,7 @@ public class DatabaseAccess {
 
 			conn.close();
 
-			return "success message here";
+			return "Successful updating employee group";
 		} catch (Exception e) {
 			// replace this with something nicer
 			return "failed " + e.getMessage();
@@ -283,7 +282,6 @@ public class DatabaseAccess {
 					return "Success";
 				}
 			}
-
 		} catch (Exception e) {
 			return "failed: " + e.getMessage();
 		} finally {
