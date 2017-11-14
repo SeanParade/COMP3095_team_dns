@@ -346,28 +346,7 @@ public class DatabaseAccess {
 		return "failed";
 	}
 
-	// Check to see if a group exists by a name and return true if it does; false if not
-	public static boolean groupExists(String groupName) throws SQLException {
-		sql = "SELECT * FROM egroup WHERE groupName = ?";
-		try {
-			conn = connectDataBase();
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, groupName);
-			rs = stmt.executeQuery();
-			// if the result set has anything, return true
-			if (rs.next()) {
-				conn.close();
-				return true;
-			}
-			conn.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	//returns true if department with department name already exists in database
+	//returns true if table with column name with column value exists in database
 	public static boolean recordExists(String tableName, String columnName, String value) {
 		sql = "SELECT * FROM ? WHERE ? = ?";
 		try{
