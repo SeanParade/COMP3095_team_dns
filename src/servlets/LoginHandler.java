@@ -76,11 +76,12 @@ public class LoginHandler extends HttpServlet {
 				response.addCookie(c);
 			}			
 		}
-		 	else { redirectURL = "login.jsp"; // TODO figure out error logic http://www.studytonight.com/servlet/login-system-example-in-servlet.php
+		 	else { redirectURL = "login.jsp"; 
+		 	request.getSession().setAttribute("error", "Username/Password Invalid");
 		}
 
 
-	     request.getSession().setAttribute("error", "Username/Password Invalid");
+	     
 		 response.sendRedirect(redirectURL);
 		
 
