@@ -15,32 +15,35 @@
 <div class="container">
 	<h2>Employee Entry</h2>
 	<br />
+		<div>${error}</div>
 	<form action="EmployeeHandler" method="post">
 		First Name: 
-		<input type="text" name="fname" /><br />
+		<input type="text" name="First name" /><br />
 		Last Name: 
-		<input type="text" name="lname"/><br />
+		<input type="text" name="Last name"/><br />
 		Employee #:
-		<input type="text" name="empnumber" /><br />
+		<input type="text" name="Employee number" /><br />
 		Email:
-		<input type="text" name="email" /><br />
-		<select name="hireyear" id="ddHire">
-			<option value="">Hire Year</option>
-		</select><br /><div id="hireError"></div><br />
-		<!--- department selection?
-		<select name="department" id="ddDepartment">
-			<option value="">Department</option>
+		<input type="text" name="Email" /><br />
+		<select name="Hire year" id="ddHire">
+			<option value="" disabled selected>Select Hire Year</option>
+			<option value="2017">2017</option>
 		</select><br />
-		--->
-		<select name="position" id="ddPosition">
-			<option value="">Job Position</option>
+		<select name="Position" id="ddPosition">
+			<option value="" disabled selected>Select Position</option>
+			<option value="Accountant">Accountant</option>
+			<option value="Receptionist">Receptionist</option>
+			<option value="Sales">Sales</option>
+			<option value="Network Admin">Network Admin</option>
+			<option value="Database Admin">Database Admin</option>
+			<option value="HR Manager">HR Manager</option>
+			<option value="HR Advisor">HR Advisor</option>
 		</select><br />
-		<div id="positionError"></div><br />
 		<input type="submit" />
 		<input type="reset" value="Cancel"  />
 		
 	</form>
-	<div>${result}</div>
+
 </div>
 </body>
 </html>

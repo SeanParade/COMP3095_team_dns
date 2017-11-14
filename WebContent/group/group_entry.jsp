@@ -18,6 +18,9 @@
 <div class="container">
 	<h2>Group Entry</h2>
 	<br />
+		<div>
+		<div>${error}</div>
+	</div>
 	<form action="/COMP3095_TEAM_DNS/Group" method="post">
 		Department: 
 		<select name="department" id="ddDepartment" 
@@ -27,11 +30,11 @@
 			</c:forEach>
 		</select><br />
 		Group Name: 
-		<input type="text" name="groupname" placeholder="Please enter a Name"/><br />
+		<input type="text" name="Group name" placeholder="Please enter a Name"/><br />
 		
 		<c:forEach items="${employees}" var="employee" varStatus="loop">
 		Employee ${loop.index+1}: 
-		        <select name="employee">
+		        <select name="Employee name">
 					<option value="">
 						<c:forEach items="${employees}" var="employee" varStatus="loop">
 							<option value="${employee.employeeId}"><c:out value="${employee}" />
@@ -44,10 +47,7 @@
 		<input type="reset" value="Cancel"  />
 		
 	</form>
-	<div>
-		<div>${message}</div>
-		<div>${empMessage}</div>
-	</div>
+
 </div>
 
 <script type="text/javascript">

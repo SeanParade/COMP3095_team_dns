@@ -29,43 +29,66 @@ public class EmployeeHandler extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		String firstName = request.getParameter("fname");
-		String lastName = request.getParameter("lname");
-		String employeeNo = request.getParameter("empnumber");
-		String email = request.getParameter("email");
-		//temporarily commented out until dropdown is populated
-		String hireYear = "1990"; //request.getParameter("hireyear");
-		String position = "receptionist";//request.getParameter("position");
-		//get department selection
-		RegularExpressionValidator regExValidator = new RegularExpressionValidator();
-		
-		String message;
-		//run through validation
-		if (HelperUtility.isMissing(firstName)|| regExValidator.validateAlphabetic(firstName))
-			message = "Invalid first name";
-		if(HelperUtility.isMissing(lastName) || regExValidator.validateAlphabetic(lastName))
-			message = "Invalid last name";
-		if(HelperUtility.isMissing(employeeNo) || !HelperUtility.isInteger(employeeNo))
-			message = "Invalid employee number";
-		if(HelperUtility.isMissing(email))//|| regExValidator.validateEmail(email)) regex not working properly?
-			message = "Invalid email address";
-		/*temporarily commented out until dropdown is populated
-		 * if(HelperUtility.isMissing(hireYear))
-			message = "Invalid year selection";
-		if (HelperUtility.isMissing(position))
-			message = "Invalid position selection";
-			*/
-		//check if department is missing
-		
-		else {
-			//add to DB logic here
+		String[] employeeParams = {"First name", "Last name", "Employee number", 
+				"Email"};
+
+		String error = HelperUtility.errorMessage(employeeParams, request);
+		if(HelperUtility.isMissing(error))
+		{
+			String firstName = request.getParameter("First name");
+			String lastName = request.getParameter("Last name");
+			String employeeNo = request.getParameter("Employee number");
+			String email = request.getParameter("Email");
 			
-			//edit this to include department
-			Employee emp = new Employee(Integer.parseInt(employeeNo), firstName, lastName, email, hireYear, position);
+			//temporarily commented out until dropdown is po pulated
+			String hireYear = request.getParameter("Hire year");
+			String position = request.getParameter("Position");
+			//get department selection
+			RegularExpressionValidator regExValidator = new RegularExpressionValidator();
 			
-			message = DatabaseAccess.insertEmployee(emp);
+			if(regExValidator.validateAlphabetic(firstName))
+			{
+				error = "Invalid first name";
+			}
+			else if (regExValidator.validateAlphabetic(lastName))
+			{
+				error = "Invalid last name";
+			}
+			else if (!HelperUtility.isInteger(employeeNo))
+			{
+				error = "Invalid employee number";
+			}
+			else
+			{
+				if(DatabaseAccess.employeeExists(firstName, lastName))
+				{
+					request.setAttribute(error, "There is already an employee with the same name");
+				}
+				else
+				{
+					Employee emp = new Employee(Integer.parseInt(employeeNo), firstName, lastName, email, hireYear, position);
+					String result = DatabaseAccess.insertEmployee(emp);
+					if(result.equals("success"))
+					{
+						//set attribles with "Employee" and employee name
+						request.setAttribute("table", "Employee");
+						request.setAttribute("name", firstName + " " + lastName);
+						request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
+						return;
+						
+					}
+					else
+					{
+						request.setAttribute("error", "Database error");
+					}
+				}
+			}
 		}
-		request.setAttribute("result", message);
+		else
+		{
+			request.setAttribute("error", error);
+		}
+		
 		request.getRequestDispatcher("/employee/employee_entry.jsp").forward(request, response);
 		
 		
