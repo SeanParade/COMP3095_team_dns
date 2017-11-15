@@ -14,9 +14,7 @@ if (session.getAttribute("user") == null){
 }
 User user = (User) session.getAttribute("user");
 
-	if (session.getAttribute("table") == null) {
-		response.sendRedirect("/COMP3095_TEAM_DNS/home.jsp");
-	}
+
 %>	
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
