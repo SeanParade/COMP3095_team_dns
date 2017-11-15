@@ -1,14 +1,14 @@
 # Java Web-App Assignment
 ### TODO
-- [ ] login functionality 
+- [x] login functionality 
   - [x] storing the logged in user in session
   - [x] displaying the user's first name in home page
   - [x] remember me cookie
-  - [ ] auth check on redirect requests
+  - [x] auth check on each page
   
-- [ ] error messages need to be polished (I put in a placeholder error message)
+- [x] error messages need to be polished (I put in a placeholder error message)
 
-- [ ] confirmation page needs to be implemented (for when successful insert into database)
+- [x] confirmation page needs to be implemented (for when successful insert into database)
 
 - [x] GroupHandler needs to be finished 
   - [x] information only displays in the drop down boxes if the submit button is pressed 
@@ -17,3 +17,6 @@
   
 - [x] go through the website and test the navigation 
   - (noticed some mismatch between the links in the menu and the jsps)
+  
+- [ ] Documentation (oversaturating code with comments to appease academic overlords)
+- [ ] Java file team headings 

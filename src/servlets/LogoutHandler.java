@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import classes.User;
+import utilities.DatabaseAccess;
+
 /**
  * Servlet implementation class Logout
  */
@@ -29,15 +32,20 @@ public class LogoutHandler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// loop through cookies to remove "Remember me" token
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("userToken")) {
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);			
+				}
+			}
+		}
 		HttpSession session = request.getSession();
 		session.invalidate();	
 		
-		// loop through cookies to remove "Remember me" token
-		Cookie[] jar = request.getCookies();
-		for(Cookie cookie : jar){
-			if(cookie.getName() == "userToken")
-				cookie.setMaxAge(0);
-		}
+
 		response.sendRedirect("/COMP3095_TEAM_DNS/");
 	}
 

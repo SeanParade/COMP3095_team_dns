@@ -31,16 +31,7 @@ public class LoginHandler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		Cookie[] cookies = request.getCookies();
-
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("userToken")) {
-					
-				}
-			}
-		}
+		doPost(request, response);
 	}
 
 	/**
@@ -70,7 +61,7 @@ public class LoginHandler extends HttpServlet {
 				user.createToken();
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
-				
+				DatabaseAccess.updateAuthToken(user);
 				Cookie c = new Cookie("userToken", user.getToken());
 				c.setMaxAge(60*60*24*30);
 				response.addCookie(c);
@@ -79,12 +70,8 @@ public class LoginHandler extends HttpServlet {
 		 	else { redirectURL = "login.jsp"; 
 		 	request.getSession().setAttribute("error", "Username/Password Invalid");
 		}
-
-
-	     
+   
 		 response.sendRedirect(redirectURL);
-		
-
 
 	}
 

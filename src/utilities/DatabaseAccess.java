@@ -98,6 +98,7 @@ public class DatabaseAccess {
 			if (rs.next()) {
 				flag = true;
 			}
+			conn.close();
 		}catch(Exception e) {/*returns false anyway*/}
 		
 		
