@@ -80,49 +80,43 @@ public class GroupHandler extends HttpServlet {
 			List<String> employeeIDs = Arrays.asList(request.getParameterValues("Employee name"));
 			String groupName = request.getParameter("Group name");
 			
-			try {
-				if(DatabaseAccess.groupExists(groupName))
-				{
-					request.setAttribute("error", "There is already a group with that name");
+			if(DatabaseAccess.recordExists("egroup", "groupName", groupName))
+			{
+				request.setAttribute("error", "There is already a group with that name");
+			}
+			else
+			{
+				Group newGroup = new Group(groupName);
+				if(DatabaseAccess.insertGroup(newGroup).equals("success"))
+					{
+					request.setAttribute("table", "Group");
+					request.setAttribute("name", groupName);
+					
+					// Employee update loop
+					
+					for (String employeeID : employeeIDs) {
+						if (!HelperUtility.isMissing(employeeID)) {
+						
+							try {
+								String result = DatabaseAccess.updateEmployeeGroupByName(Integer.parseInt(employeeID), groupName);
+								if(!result.equals("success"))
+								{
+									request.setAttribute("error", result);
+								}
+							} catch (SQLException e) {
+								request.setAttribute("error", "Database Error: Employee Insert");
+							}
+							 
+						}
+						
+					}
+					request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
+					return;
 				}
 				else
 				{
-					Group newGroup = new Group(groupName);
-					if(DatabaseAccess.insertGroup(newGroup).equals("success"))
-						{
-						request.setAttribute("table", "Group");
-						request.setAttribute("name", groupName);
-						
-						// Employee update loop
-						
-						for (String employeeID : employeeIDs) {
-							if (!HelperUtility.isMissing(employeeID)) {
-							
-								try {
-									String result = DatabaseAccess.updateEmployeeGroupByName(Integer.parseInt(employeeID), groupName);
-									if(!result.equals("success"))
-									{
-										request.setAttribute("error", result);
-									}
-								} catch (SQLException e) {
-									request.setAttribute("error", "Database Error: Employee Insert");
-								}
-								 
-							}
-							
-						}
-						if(null == request.getAttribute("error"))
-						{
-							request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
-						}
-					}
-					else
-					{
-						request.setAttribute("error", "Database error: Group Insert");
-					}
+					request.setAttribute("error", "Database error: Group Insert");
 				}
-			} catch (SQLException e) {
-				request.setAttribute("error", "Database Error: Group Insert");
 			}
 		}
 		else{

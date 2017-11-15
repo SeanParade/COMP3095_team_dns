@@ -28,15 +28,17 @@ User user = (User) session.getAttribute("user");
 <div class="container">
 	<h2>Department Entry</h2>
 	<br />
+	<div> ${error} </div>
+	<br>
 	<form action="DepartmentHandler" method="post">
 		Department Name: 
-		<input type="text" name="depname" /><br />
+		<input type="text" name="Department name" /><br />
 		Department Location/Floor: 
-		<input type="text" name="deploc"/><br />
+		<input type="text" name="Department location"/><br />
 		<input type="submit" />
 		<input type="button" value="Cancel">
 	</form>
-	<div> ${result} </div>
+	
 </div>
 </body>
 </html>

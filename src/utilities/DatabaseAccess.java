@@ -311,7 +311,7 @@ public class DatabaseAccess {
 
 			conn.close();
 
-			return "Successful updating employee group";
+			return "success";
 		} catch (Exception e) {
 			// replace this with something nicer
 			return "failed " + e.getMessage();
@@ -335,41 +335,60 @@ public class DatabaseAccess {
 				// if group exists update an employee's groupID
 				if (groupID != 0) {
 					updateEmployeeGroupById(employeeId, groupID);
-					return "Success";
+					return "success";
 				}
 			}
 		} catch (Exception e) {
-			return "failed: " + e.getMessage();
+			return "failed";
 		} finally {
 			conn.close();
 		}
 
-		return "Something went wrong! Employee " + employeeId + " was not updated. ";
+		return "failed";
 	}
 
-	// Check to see if a group exists by a name and return true if it does; false if not
-	public static boolean groupExists(String groupName) throws SQLException {
-		sql = "SELECT * FROM egroup WHERE groupName = ?";
-		try {
+	//returns true if table with column name with column value exists in database
+	public static boolean recordExists(String tableName, String columnName, String value) {
+		sql = "SELECT * FROM ? WHERE ? = ?";
+		try{
 			conn = connectDataBase();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, groupName);
+			stmt.setString(1,  tableName);
+			stmt.setString(2, columnName);
+			stmt.setString(3,  value);
 			rs = stmt.executeQuery();
-			// if the result set has anything, return true
-			if (rs.next()) {
+			if(rs.next())
+			{
 				conn.close();
 				return true;
 			}
 			conn.close();
-
-		} catch (Exception e) {
+		}
+		catch(Exception e)
+		{
 			e.printStackTrace();
 		}
 		return false;
 	}
-
-	public static boolean departmentExists(String departmentName) {
-		// TODO Auto-generated method stub
+	public static boolean employeeExists(String firstName, String lastName) {
+		sql = "SELECT * FROM employee WHERE firstName = ? AND lastname= ?";
+		try{
+			conn = connectDataBase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, firstName);
+			stmt.setString(2, lastName);
+			rs = stmt.executeQuery();
+			if(rs.next())
+			{
+				conn.close();
+				return true;
+			}
+			conn.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		return false;
 	}
 }

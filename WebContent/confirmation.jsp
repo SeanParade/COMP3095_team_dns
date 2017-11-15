@@ -29,8 +29,8 @@ User user = (User) session.getAttribute("user");
 <body>
 <%= HelperUtility.popNav(user) %>
 	<div class="container">
-		<h1><% session.getAttribute("table"); %> successfully added!</h1>
-		<p><% session.getAttribute("table"); session.getAttribute("name"); %> has been added to the system</p>
+		<h1>${table} successfully added!</h1>
+		<p>${table} ${name} has been added to the system</p>
 	</div>
 
 </body>
