@@ -30,7 +30,7 @@ public class EmployeeHandler extends HttpServlet {
 		response.setContentType("text/html");
 		
 		String[] employeeParams = {"First name", "Last name", "Employee number", 
-				"Email"};
+				"Email", "Hire year", "Position"};
 
 		String error = HelperUtility.errorMessage(employeeParams, request);
 		if(HelperUtility.isMissing(error))
@@ -46,23 +46,23 @@ public class EmployeeHandler extends HttpServlet {
 			//get department selection
 			RegularExpressionValidator regExValidator = new RegularExpressionValidator();
 			
-			if(regExValidator.validateAlphabetic(firstName))
+			if(!regExValidator.validateAlphabetic(firstName))
 			{
-				error = "Invalid first name";
+				request.setAttribute("error", "Invalid first name");
 			}
-			else if (regExValidator.validateAlphabetic(lastName))
+			else if (!regExValidator.validateAlphabetic(lastName))
 			{
-				error = "Invalid last name";
+				request.setAttribute("error", "Invalid last name");
 			}
 			else if (!HelperUtility.isInteger(employeeNo))
 			{
-				error = "Invalid employee number";
+				request.setAttribute("error", "Invalid employee number");
 			}
 			else
 			{
 				if(DatabaseAccess.employeeExists(firstName, lastName))
 				{
-					request.setAttribute(error, "There is already an employee with the same name");
+					request.setAttribute("error", "There is already an employee with the same name");
 				}
 				else
 				{
@@ -71,6 +71,7 @@ public class EmployeeHandler extends HttpServlet {
 					if(result.equals("success"))
 					{
 						//set attribles with "Employee" and employee name
+						request.setAttribute("error", "");
 						request.setAttribute("table", "Employee");
 						request.setAttribute("name", firstName + " " + lastName);
 						request.getRequestDispatcher("/confirmation.jsp").forward(request, response);

@@ -10,7 +10,7 @@ public class RegularExpressionValidator {
 	private Matcher matcher;
 
 	private static final String EMAIL_PATTERN = "([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$";
-	private static final String ALPHABET_PATTERN = "/^[A-z]+$/";
+	private static final String ALPHABET_PATTERN = "^[A-z]+$";
 	
 	public RegularExpressionValidator() {
 		emailPattern = Pattern.compile(EMAIL_PATTERN);

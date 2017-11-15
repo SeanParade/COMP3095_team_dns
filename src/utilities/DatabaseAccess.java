@@ -323,7 +323,7 @@ public class DatabaseAccess {
 	public static String updateEmployeeGroupByName(int employeeId, String groupName) throws SQLException {
 
 		int groupID;
-		sql = "SELECT id FROM egroup WHERE groupName = ?";
+		sql = "SELECT id FROM egroup WHERE groupName = ?;";
 		try {
 			conn = connectDataBase();
 			stmt = conn.prepareStatement(sql);
@@ -348,7 +348,7 @@ public class DatabaseAccess {
 
 	//returns true if table with column name with column value exists in database
 	public static boolean recordExists(String tableName, String columnName, String value) {
-		sql = "SELECT * FROM ? WHERE ? = ?";
+		sql = "SELECT * FROM ? WHERE ? = ?;";
 		try{
 			conn = connectDataBase();
 			stmt = conn.prepareStatement(sql);
@@ -370,7 +370,7 @@ public class DatabaseAccess {
 		return false;
 	}
 	public static boolean employeeExists(String firstName, String lastName) {
-		sql = "SELECT * FROM employee WHERE firstName = ? AND lastname= ?";
+		sql = "SELECT * FROM employee WHERE firstName = ? AND lastName= ?;";
 		try{
 			conn = connectDataBase();
 			stmt = conn.prepareStatement(sql);
