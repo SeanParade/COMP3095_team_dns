@@ -60,7 +60,6 @@ public class GroupHandler extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.getRequestDispatcher("/group/group_entry.jsp").forward(request, response);
-
 	}
 
 	/**
@@ -69,12 +68,11 @@ public class GroupHandler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-
 		// if the submission has selected employees then it must be a group;
 		// check that name was filled
-		String [] employeeParams = {"Group name", "Employee name"};
-		String error = HelperUtility.errorMessage(employeeParams, request);
+		String [] employeeFields = {"Group name", "Employee name"};
+		String error = HelperUtility.emptyFieldsCheck(employeeFields, request);
+		
 		if(HelperUtility.isMissing(error))
 		{
 			List<String> employeeIDs = Arrays.asList(request.getParameterValues("Employee name"));
@@ -92,29 +90,24 @@ public class GroupHandler extends HttpServlet {
 					request.setAttribute("table", "Group");
 					request.setAttribute("name", groupName);
 					
-					// Employee update loop
-					
+					// Employee update loop					
 					for (String employeeID : employeeIDs) {
 						if (!HelperUtility.isMissing(employeeID)) {
 						
 							try {
 								String result = DatabaseAccess.updateEmployeeGroupByName(Integer.parseInt(employeeID), groupName);
-								if(!result.equals("success"))
-								{
+								if(!result.equals("success")){
 									request.setAttribute("error", result);
 								}
 							} catch (SQLException e) {
 								request.setAttribute("error", "Database Error: Employee Insert");
-							}
-							 
+							  }							 
 						}
-						
 					}
 					request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 					return;
 				}
-				else
-				{
+				else{
 					request.setAttribute("error", "Database error: Group Insert");
 				}
 			}
@@ -138,10 +131,8 @@ public class GroupHandler extends HttpServlet {
 							.selectEmployeesByDepartment(Integer.parseInt(selectedDep) + 1);
 					request.setAttribute("employees", employeeList);
 					request.setAttribute("selected", selectedDep);
-				}
-			
+				}			
 			request.getRequestDispatcher("/group/group_entry.jsp").forward(request, response);
-
 	}
 
 }

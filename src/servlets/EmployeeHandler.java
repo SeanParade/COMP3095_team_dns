@@ -18,8 +18,8 @@ import utilities.RegularExpressionValidator;
 @WebServlet("/employee/EmployeeHandler")
 public class EmployeeHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		doPost(request, response);
 	}
 
@@ -29,10 +29,10 @@ public class EmployeeHandler extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		String[] employeeParams = {"First name", "Last name", "Employee number", 
+		String[] employeeFields = {"First name", "Last name", "Employee number", 
 				"Email", "Hire year", "Position"};
 
-		String error = HelperUtility.errorMessage(employeeParams, request);
+		String error = HelperUtility.emptyFieldsCheck(employeeFields, request);
 		if(HelperUtility.isMissing(error))
 		{
 			String firstName = request.getParameter("First name");
@@ -40,7 +40,7 @@ public class EmployeeHandler extends HttpServlet {
 			String employeeNo = request.getParameter("Employee number");
 			String email = request.getParameter("Email");
 			
-			//temporarily commented out until dropdown is po pulated
+			//temporarily commented out until dropdown is populated
 			String hireYear = request.getParameter("Hire year");
 			String position = request.getParameter("Position");
 			//get department selection
@@ -70,7 +70,7 @@ public class EmployeeHandler extends HttpServlet {
 					String result = DatabaseAccess.insertEmployee(emp);
 					if(result.equals("success"))
 					{
-						//set attribles with "Employee" and employee name
+						//set attributes with "Employee" and employee name
 						request.setAttribute("error", "");
 						request.setAttribute("table", "Employee");
 						request.setAttribute("name", firstName + " " + lastName);

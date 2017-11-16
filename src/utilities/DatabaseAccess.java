@@ -16,7 +16,8 @@ public class DatabaseAccess {
 
 	private static String username = "admin";
 	private static String password = "admin";
-	private static String database = "COMP3095";
+	private static String databaseName = "COMP3095";
+	private static String databaseAddress = "jdbc:mysql://localhost:3306/";
 
 	private static Connection conn;
 	private static PreparedStatement stmt = null;
@@ -26,13 +27,20 @@ public class DatabaseAccess {
 	private static Connection connect = null;
 
 	// connect to database
-	public static Connection connectDataBase() throws Exception {
+	public static Connection connectDatabase() throws Exception 
+	/**
+	 * Dynamically loads a mysql driver then uses databaseAddress, databaseName, username, and password. 
+	 * Returns a connection object that various functions can be ran off of.
+	 * 
+	 * @return      Connection object
+	 */
+	{
 		try {
 			// register the jdbc driver
 			Class.forName("com.mysql.jdbc.Driver");
 			// open the connection
 			connect = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/" + database + "?" + "user=" + username + "&password=" + password);
+					databaseAddress + databaseName + "?" + "user=" + username + "&password=" + password);
 			return connect;
 		} catch (Exception e) {
 			throw e;
@@ -41,10 +49,22 @@ public class DatabaseAccess {
 
 	// User login
 	// Return true/false based on if credentials exist
-	public static boolean userCredentialCheck(String usrName, String pass) {
+	public static boolean userCredentialCheck(String usrName, String pass) 
+	/**
+	 * User Login credential check:
+	 * Takes username and password and checks against the user table for a
+	 * row with match credentials. Returns a true if the credentials match a user
+	 * in the table. Returns false if not.
+	 * 
+	 * @param  usrName  Username string
+	 * @param  pass     Password string
+	 * @return          Boolean based on whether or not a user exists with
+	 *                  that username and password.
+	 */
+	{
 		boolean exists = false;
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			sql = "SELECT * FROM user WHERE username = ? AND password = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, usrName.toLowerCase());
@@ -53,7 +73,6 @@ public class DatabaseAccess {
 			exists = rs.next();
 
 			conn.close();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -61,14 +80,22 @@ public class DatabaseAccess {
 		return exists;
 	}
 
-	// Update Token
-	// insert a users auth token into the DB, return success flag
-	public static boolean updateAuthToken(User user) {
+
+	public static boolean updateAuthToken(User user) 
+	/**
+	 * Authentication Token Update:
+	 * Takes a user object to grab a username and an auth token. Updates the
+	 * the token column of a user row in the database based on the username. Returns
+	 * a failure/success flag.
+	 * 
+	 * @param  user  User object used to get username and token attributes.
+	 * @return       Success/Failure boolean.
+	 */
+	{
 		boolean result;
 		sql = "UPDATE user SET token = ? WHERE username = ?";
-
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, user.getToken());
 			stmt.setString(2, user.getUsername());
@@ -81,57 +108,41 @@ public class DatabaseAccess {
 		}
 		return false;
 	}
-	
-	// Check Token Validity
-	// Pass in token and return user if there is a token match
-	public static boolean checkUserToken(String token) {
-		boolean flag = false;
-		sql = "SELECT * FROM user WHERE token = ?";
-		
-		
-		try {
-			conn = connectDataBase();
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, token);
-			rs = stmt.executeQuery();
-			
-			if (rs.next()) {
-				flag = true;
-			}
-			conn.close();
-		}catch(Exception e) {/*returns false anyway*/}
-		
-		
-		return flag;
-	}
 
-	// insert into department into database
-	public static String insertDepartment(Department dep) {
+	public static String insertDepartment(Department dep) 
+	/**
+	 * Inserts a new department into the department table of the database.
+	 * 
+	 * @param  dep  Department object containing all the column data for a department row
+	 * @return      Success or Failed( + error message) string
+	 */
+	{
 		sql = "INSERT INTO DEPARTMENT(departmentName, location)" + "VALUES( ?, ?);";
-
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, dep.getDepartmentName());
 			stmt.setString(2, dep.getDepartmentLocation());
-
 			stmt.execute();
 
 			conn.close();
 			return "success";
-
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			return "failed: " + e.getMessage();
 		}
 	}
 
-	// insert employee into database
-	public static String insertEmployee(Employee emp) {
-
+	public static String insertEmployee(Employee emp) 
+	/**
+	 * Inserts a new employee into the employee table of the database.
+	 * 
+	 * @param  emp  Employee object containing all the column data for a employee row
+	 * @return      Success or Failed( + error message) string
+	 */
+	{
 		sql = "INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position)" + "VALUES(?,?,?,?,?,?);";
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, emp.getEmployeeId());
 			stmt.setString(2, emp.getFirstName());
@@ -139,48 +150,56 @@ public class DatabaseAccess {
 			stmt.setString(4, emp.getEmail());
 			stmt.setString(5, emp.getHireYear());
 			stmt.setString(6, emp.getPosition());
-
 			stmt.execute();
 
 			conn.close();
 			return "success";
-
 		} catch (Exception e) {
-			// for testing - make more user friendly
 			return "failed: " + e.getMessage();
 		}
 	}
 
-	// insert group into database
-	public static String insertGroup(Group group) {
+	public static String insertGroup(Group group) 
+	/**
+	 * Inserts a new group into the group table of the database.
+	 * 
+	 * @param  group  Group object containing all the column data for a group row
+	 * @return        Success or Failed( + error message) string
+	 */
+	{
 		sql = "INSERT INTO EGROUP(groupName) VALUES(?);";
-
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, group.getGroupName());
-
 			stmt.execute();
+			
 			conn.close();
 			return "success";
-
 		} catch (Exception e) {
-			// change to be more user friendly
 			return "failed: " + e.getMessage();
 		}
 	}
 
-	// select user by username from database
-	public static User getUser(String userName, String password) {
+	public static User getUser(String userName, String password) 
+	/**
+	 * Populates a user object with column data from a row matching the given
+	 * username and password. If no row matches the given credentials, an empty 
+	 * user object is returned.
+	 * 
+	 * @param  username  Username string.
+	 * @param  password  Password string.
+	 * @return           Fully populated user object if matching credentials
+	 *                   exists. Empty user object if not.
+	 */
+	{
 		User user = new User();
 		sql = "SELECT * FROM USER WHERE username = ? AND password = ?;";
-
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, userName);
 			stmt.setString(2, password);
-
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -203,19 +222,27 @@ public class DatabaseAccess {
 		}
 	}
 	
-	
-	//Create a user object based on a user token
-	public static User getUserByToken(String token) {
+	public static User getUserByToken(String token) 
+	/**
+	 * Populates a user object with column data from a row matching the given
+	 * auth token. If no row matches the given token, an empty user object
+	 * is returned. A password is not returned for security reasons 
+	 * as no password is given.
+	 * 
+	 * @param  token  32-byte base64-encoded authorization token.
+	 * @return        Partially populated user object (no password) if matching credentials
+	 *                exists. Empty user object if not.
+	 */
+	{
 		User user = new User();
 		sql = "SELECT * FROM USER WHERE token = ?;";
-
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, token);
-			
+			stmt.setString(1, token);			
 			rs = stmt.executeQuery();
-
+			
+			// Instantiate user
 			while (rs.next()) {
 				int userId = rs.getInt("id");
 				String first = rs.getString("firstName");
@@ -237,17 +264,27 @@ public class DatabaseAccess {
 		}
 	}
 	
-	// select from employee where department id = value
-	public static ArrayList<Employee> selectEmployeesByDepartment(int departmentId) {
+	
+	public static ArrayList<Employee> selectEmployeesByDepartment(int departmentId) 
+	/**
+	 * Fetches all the employees in a given department and returns an array of 
+	 * employee objects instantiated from employee rows in the database that
+	 * have a matching department id
+	 * 
+	 * @param  departmentId  Unique department identification number
+	 * @return               Collection of employee objects that belong to a 
+	 *                       given department.
+	 */
+	{
 		ArrayList<Employee> emps = new ArrayList<Employee>();
 		sql = "SELECT * FROM EMPLOYEE WHERE departmentId = ?;";
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, departmentId);
-
 			rs = stmt.executeQuery();
 
+			// Instantiate employee and add to emps arraylist
 			while (rs.next()) {
 				int employeeId = rs.getInt("id");
 				String first = rs.getString("firstName");
@@ -257,27 +294,30 @@ public class DatabaseAccess {
 				String position = rs.getString("position");
 
 				Employee emp = new Employee(employeeId, first, last, email, hireYear, position, departmentId);
-
 				emps.add(emp);
 			}
-
 			conn.close();
 			return emps;
-
 		} catch (Exception e) {
 			return emps;
 		}
 
 	}
 
-	// select all departments from database
-	public static ArrayList<Department> selectDepartments() {
+	public static ArrayList<Department> selectDepartments() 
+	/**
+	 * Fetches every department from the department table in the database.
+	 * Then instantiates Department object with the department details and
+	 * adds them to a collection
+	 * 
+	 *  @return      An array of department objects instantiated from all 
+	 *               departments in the database.
+	 */
+	{
 		ArrayList<Department> deps = new ArrayList<Department>();
-
 		sql = "SELECT * FROM DEPARTMENT;";
-
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 
@@ -289,44 +329,54 @@ public class DatabaseAccess {
 				Department dep = new Department(departmentId, departmentName, location);
 				deps.add(dep);
 			}
-
 			conn.close();
 			return deps;
-
 		} catch (Exception e) {
-			// return empty arraylist
 			return deps;
 		}
 	}
 
-	// update employee with groupId
-	public static String updateEmployeeGroupById(int employeeId, int groupId) {
+	public static String updateEmployeeGroupById(int employeeId, int groupId) 
+	/**
+	 * Update an employee column with the passed group id.
+	 * 
+	 * @param  employeeId  Unique employee identification number
+	 * @param  groupId     Unique group identification number.
+	 * @return
+	 */
+	{
 		sql = "UPDATE EMPLOYEE SET groupId = ? WHERE id = ?;";
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, groupId);
 			stmt.setInt(2, employeeId);
 			stmt.execute();
 
 			conn.close();
-
 			return "success";
 		} catch (Exception e) {
-			// replace this with something nicer
 			return "failed " + e.getMessage();
 		}
-
 	}
 
-	// update employee with group by group name
 
-	public static String updateEmployeeGroupByName(int employeeId, String groupName) throws SQLException {
-
+	public static String updateEmployeeGroupByName(int employeeId, String groupName) throws SQLException 
+	/**
+	 * Fetches a group id from the groups table based on a passed group name,
+	 * then updateEmployeeGroupById is called with the passed employee id and
+	 * the group id that was fetched.
+	 * 
+	 * @param  employeeId  Integer that represents an employee id number
+	 *                     used to update an employee's group column.
+	 * @param  groupName   Group name used to lookup a groupid.
+	 * @return             "success" or "failed" used for checking expressions.
+	 */
+	{
 		int groupID;
 		sql = "SELECT id FROM egroup WHERE groupName = ?;";
 		try {
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, groupName);
 			rs = stmt.executeQuery();
@@ -343,43 +393,63 @@ public class DatabaseAccess {
 		} finally {
 			conn.close();
 		}
-
 		return "failed";
 	}
 
 	//returns true if table with column name with column value exists in database
-	public static boolean recordExists(String tableName, String columnName, String value) {
+	public static boolean recordExists(String tableName, String columnName, String value) 
+	/**
+	 * Generic lookup to check if something exists in the database. Returns a boolean
+	 * stating whether or not it does.
+	 * 
+	 * @param  tableName   String of a table name in the database
+	 * @param  columnName  String of a column name in a given table
+	 * @param  value       String of the desired value the function is checking for
+	 * @return             Boolean for whether or not the value exists in the
+	 *                     database. 
+	 */
+	{
 		sql = "SELECT * FROM ? WHERE ? = ?;";
 		try{
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1,  tableName);
 			stmt.setString(2, columnName);
 			stmt.setString(3,  value);
 			rs = stmt.executeQuery();
-			if(rs.next())
-			{
+			
+			if(rs.next()){
 				conn.close();
 				return true;
 			}
 			conn.close();
 		}
-		catch(Exception e)
-		{
+		catch(Exception e){
 			e.printStackTrace();
 		}
 		return false;
 	}
-	public static boolean employeeExists(String firstName, String lastName) {
+	
+	public static boolean employeeExists(String firstName, String lastName) 
+	/**
+	 * Checks whether an employee with the given firstName and lastName
+	 * exists in the employee table of the database. Returns a 
+	 * boolean.
+	 * 
+	 * @param  firstName  Potential employee's first name string
+	 * @param  lastName   Potential employee's last name string
+	 * @return            Employee already exists boolean
+	 */
+	{
 		sql = "SELECT * FROM employee WHERE firstName = ? AND lastName= ?;";
 		try{
-			conn = connectDataBase();
+			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, firstName);
 			stmt.setString(2, lastName);
 			rs = stmt.executeQuery();
-			if(rs.next())
-			{
+			
+			if(rs.next()){
 				conn.close();
 				return true;
 			}

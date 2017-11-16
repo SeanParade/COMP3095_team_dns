@@ -5,7 +5,6 @@ import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import classes.User;
 
@@ -91,23 +90,23 @@ public class HelperUtility {
 	}
 	
 
-	public static String errorMessage(String[] paramNames, HttpServletRequest request)
+	public static String emptyFieldsCheck(String[] fieldNames, HttpServletRequest request)
 	/**
-	 * Checks String array paramNames against request parameters, returns missing 
+	 * Checks String array fieldNames against request parameters, returns missing 
 	 * parameters name error message
 	 * 
-	 * @param  paramNames  Array of parameters passed by a form.
+	 * @param  fieldNames  Array of parameters passed by a form.
 	 * @param  request     Servlet request object used to get parameters   
 	 * @return             String with a formatted error message for all form 
 	 *                     parameters missing
 	 */           
 	{
 		String errorMessage = "";
-		for(int i=0; i< paramNames.length; i++)
+		for(int i=0; i< fieldNames.length; i++)
 		{
-			if(HelperUtility.isMissing(request.getParameter(paramNames[i])))
+			if(HelperUtility.isMissing(request.getParameter(fieldNames[i])))
 			{
-				errorMessage += paramNames[i] + " is required <br>";
+				errorMessage += fieldNames[i] + " is required <br>";
 			}
 		}
 		return errorMessage; 
@@ -129,7 +128,7 @@ public class HelperUtility {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("userToken")) {
-					if(DatabaseAccess.checkUserToken(cookie.getValue())) {
+					if(DatabaseAccess.recordExists("user", "token", cookie.getValue())) {
 						return cookie.getValue();
 					}
 				}

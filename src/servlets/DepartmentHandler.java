@@ -31,18 +31,20 @@ public class DepartmentHandler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Department:
+	 * 
+	 * 
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String [] departmentParams = {"Department name", "Department location"};
+		String [] departmentFields = {"Department name", "Department location"};
 		
-		String error = HelperUtility.errorMessage(departmentParams, request);
+		String error = HelperUtility.emptyFieldsCheck(departmentFields, request);
 		
 		if(HelperUtility.isMissing(error))
 		{
@@ -56,8 +58,7 @@ public class DepartmentHandler extends HttpServlet {
 			
 			else
 			{
-				Department dep = new Department(departmentName, departmentLocation);
-				
+				Department dep = new Department(departmentName, departmentLocation);			
 					//check if result is success
 				String result = DatabaseAccess.insertDepartment(dep);
 				if(result.equals("success"))
@@ -81,8 +82,7 @@ public class DepartmentHandler extends HttpServlet {
 			}
 		else{
 			request.setAttribute("error", error);
-		}
-		
+		}		
 		request.getRequestDispatcher("/department/department_entry.jsp").forward(request, response);
 	}
 		

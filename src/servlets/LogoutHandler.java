@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import classes.User;
-import utilities.DatabaseAccess;
 
 /**
  * Servlet implementation class Logout
@@ -24,7 +22,6 @@ public class LogoutHandler extends HttpServlet {
      */
     public LogoutHandler() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -38,17 +35,16 @@ public class LogoutHandler extends HttpServlet {
 		// Cookie Removal Loop
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("userToken")) {
-					cookie.setMaxAge(0);
-					response.addCookie(cookie);			
+			for (Cookie c : cookies) {
+				if (c.getName().equals("userToken")) {
+					c.setMaxAge(0);
+					response.addCookie(c);			
 				}
 			}
 		}
 		HttpSession session = request.getSession();
 		session.invalidate();	
 		
-
 		response.sendRedirect("/COMP3095_TEAM_DNS/");
 	}
 
@@ -56,7 +52,6 @@ public class LogoutHandler extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
