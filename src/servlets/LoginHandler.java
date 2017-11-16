@@ -36,6 +36,13 @@ public class LoginHandler extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Login:
+	 * Takes Username, Password, and Remember Me flag. User credentials are checked against the
+	 * user table in the database. If the credentials are good, a user object is populated 
+	 * with the user details and then stored in the session. If the Remember Me flag was checked 
+	 * then a 32 byte base-64 token is passed to the user's row in the db and a cookie is created
+	 * to store that token. On credential failure, user is redirect to the login again with an 
+	 * error message.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");

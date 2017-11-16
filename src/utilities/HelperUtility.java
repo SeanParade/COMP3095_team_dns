@@ -62,7 +62,17 @@ public class HelperUtility {
 		return r.nextInt((max - min) + 1) + min;
 	}
 	
-	public static String popNav(User user)  {
+	public static String popNav(User user) 
+	/**
+	 * Takes the currently logged in user and populates a navigation with a
+	 * welcome message for the user. This method is mostly used to hide this ugly
+	 * block html for the navigation. 
+	 * 
+	 * @param   user   The current user that is logged in.
+	 * @return         A navigation html string that contains a welcome message 
+	 *                 for the current user.
+	 */
+	{
 
 		String nav = "<div class=\"header\">" +
 		"<ul>" +
@@ -81,24 +91,39 @@ public class HelperUtility {
 	}
 	
 
-
-
-	//checks paramNames against request parameters, returns first missing param name error message
 	public static String errorMessage(String[] paramNames, HttpServletRequest request)
+	/**
+	 * Checks String array paramNames against request parameters, returns missing 
+	 * parameters name error message
+	 * 
+	 * @param  paramNames  Array of parameters passed by a form.
+	 * @param  request     Servlet request object used to get parameters   
+	 * @return             String with a formatted error message for all form 
+	 *                     parameters missing
+	 */           
 	{
 		String errorMessage = "";
 		for(int i=0; i< paramNames.length; i++)
 		{
 			if(HelperUtility.isMissing(request.getParameter(paramNames[i])))
 			{
-				errorMessage+= paramNames[i] + " is required <br>";
+				errorMessage += paramNames[i] + " is required <br>";
 			}
 		}
 		return errorMessage; 
 	}
 
 	
-	public static String tokenCheck(HttpServletRequest request) throws IOException {
+	public static String tokenCheck(HttpServletRequest request) throws IOException
+	/**
+	 * Takes a request to access cookies. Checks cookies for a user token to
+	 * see whether or not the user has a user token. Returns the user token.
+	 * 
+	 * @param  request  Servlet request object used to access cookies.
+	 * @return          Either a string with a user's token or "fail"
+	 *                  which is used in checking expressions
+	 */
+	{
 		Cookie[] cookies = request.getCookies();
 
 		if (cookies != null) {

@@ -29,10 +29,13 @@ public class LogoutHandler extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Logout:
+	 * Loops through cookies to find a Remember Me token and deletes it. Session is then 
+	 * invalidated and then user is passed to login.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// loop through cookies to remove "Remember me" token
+		// Cookie Removal Loop
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
