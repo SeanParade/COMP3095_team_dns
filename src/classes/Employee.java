@@ -1,5 +1,13 @@
 package classes;
 
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #1
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 20/11/2017
+ * Description: Employee -  Class for the Employee object. Stores Employee information
+ ***********************************************************************/
 public class Employee {
 	private int employeeId; //primary key
 	private String firstName;

@@ -1,5 +1,4 @@
 package servlets;
-
 import java.io.IOException;
 
 
@@ -12,6 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import classes.Department;
 import utilities.DatabaseAccess;
 import utilities.HelperUtility;
+/**********************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #1
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 20/11/2017
+ * Description: DepartmentHandler - Servlet that handles the processes on the Department Entry page.
+ * Inserts Department information is form is filled out properly and unique
+ ***********************************************************************/
 
 /**
  * Servlet implementation class DepartmentHandler

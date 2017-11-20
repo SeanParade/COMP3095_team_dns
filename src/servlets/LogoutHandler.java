@@ -8,7 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #1
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 20/11/2017
+ * Description: LogoutHandler - Handles logging out of the website
+ ***********************************************************************/
 
 /**
  * Servlet implementation class Logout

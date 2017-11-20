@@ -12,6 +12,14 @@ import javax.servlet.http.HttpSession;
 
 import classes.User;
 import utilities.DatabaseAccess;
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #1
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 20/11/2017
+ * Description: LoginHandler - Handles logging into the website
+ ***********************************************************************/
 
 /**
  * Servlet implementation class Login

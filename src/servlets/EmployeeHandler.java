@@ -11,6 +11,14 @@ import classes.Employee;
 import utilities.DatabaseAccess;
 import utilities.HelperUtility;
 import utilities.RegularExpressionValidator;
+/**********************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #1
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 20/11/2017
+ * Description: EmployeeHandler - Creates Employees in the database if the form validation is successful
+ ***********************************************************************/
 
 /**
  * Servlet implementation class EmployeeHandler

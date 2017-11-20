@@ -1,9 +1,15 @@
 package classes;
-
 import java.util.Random;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #1
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 20/11/2017
+ * Description: User - Class for User object. Holds user information.
+ ***********************************************************************/
 public class User {
 
 	

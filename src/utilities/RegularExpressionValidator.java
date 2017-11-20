@@ -2,6 +2,14 @@ package utilities;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #1
+ * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 20/11/2017
+ * Description: RegularExpressionValidator - Patterns to check if input strings match what we require
+ ***********************************************************************/
 
 public class RegularExpressionValidator {
 

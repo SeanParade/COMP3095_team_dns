@@ -6,11 +6,16 @@ import classes.Department;
 import classes.Employee;
 import classes.Group;
 import classes.User;
-
-/****************************************************************************************************
-* Description: DatabaseAccess - Example provides access to database
-****************************************************************************************************/
 import java.sql.*;
+
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #1
+ * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 20/11/2017
+ * Description: DatabaseAccess - Provides access to database
+ ***********************************************************************/
 
 public class DatabaseAccess {
 
