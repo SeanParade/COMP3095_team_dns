@@ -19,4 +19,4 @@
   - (noticed some mismatch between the links in the menu and the jsps)
   
 - [ ] Documentation (oversaturating code with comments to appease academic overlords)
-- [ ] Java file team headings 
+- [x] Java file team headings 
