@@ -6,8 +6,6 @@ import java.util.Random;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import classes.User;
-
 /************************************************************************
  * Project: COMP3095_team_dns
  * Assignment: Assignment #1
@@ -71,35 +69,6 @@ public class HelperUtility {
 		return r.nextInt((max - min) + 1) + min;
 	}
 	
-	public static String popNav(User user) 
-	/**
-	 * Takes the currently logged in user and populates a navigation with a
-	 * welcome message for the user. This method is mostly used to hide this ugly
-	 * block html for the navigation. 
-	 * 
-	 * @param   user   The current user that is logged in.
-	 * @return         A navigation html string that contains a welcome message 
-	 *                 for the current user.
-	 */
-	{
-
-		String nav = "<div class=\"header\">" +
-		"<ul>" +
-		"<li><a href=\"/COMP3095_TEAM_DNS/department/index.jsp\">Departments</a></li>" +
-		"<li><a href=\"/COMP3095_TEAM_DNS/employee/index.jsp\">Employees</a></li>" +
-		"<li><a href=\"/COMP3095_TEAM_DNS/group/index.jsp\">Group</a></li>" +
-		"<li><a href=\"/COMP3095_TEAM_DNS/reports/index.jsp\">Reports</a></li>" +
-		"<li><a href=\"/COMP3095_TEAM_DNS/attendance/index.jsp\">Attendance</a></li>" +
-	    "</ul>	<ul id=\"logout\" class=\"rightinfo\">" +
-		"<li>Welcome, " + user.getFirstName() + "</li>" +
-		"<li><a href=\"/COMP3095_TEAM_DNS/Logout\">Logout</a></li>" +
-	    "</ul>" +
-	    "</div>";
-		
-		return nav;
-	}
-	
-
 	public static String emptyFieldsCheck(String[] fieldNames, HttpServletRequest request)
 	/**
 	 * Checks String array fieldNames against request parameters, returns missing 
@@ -138,7 +107,7 @@ public class HelperUtility {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("userToken")) {
-					if(DatabaseAccess.recordExists("user", "token", cookie.getValue())) {
+					if(DatabaseAccess.tokenExists(cookie.getValue())) {
 						return cookie.getValue();
 					}
 				}

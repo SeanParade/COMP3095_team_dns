@@ -28,10 +28,8 @@ public class DatabaseAccess {
 	private static PreparedStatement stmt = null;
 	private static String sql;
 	private static ResultSet rs;
-
 	private static Connection connect = null;
 
-	// connect to database
 	public static Connection connectDatabase() throws Exception 
 	/**
 	 * Dynamically loads a mysql driver then uses databaseAddress, databaseName, username, and password. 
@@ -52,8 +50,6 @@ public class DatabaseAccess {
 		}
 	}
 
-	// User login
-	// Return true/false based on if credentials exist
 	public static boolean userCredentialCheck(String usrName, String pass) 
 	/**
 	 * User Login credential check:
@@ -400,27 +396,79 @@ public class DatabaseAccess {
 		}
 		return "failed";
 	}
-
-	//returns true if table with column name with column value exists in database
-	public static boolean recordExists(String tableName, String columnName, String value) 
+	
+	public static boolean departmentExists(String value) 
 	/**
-	 * Generic lookup to check if something exists in the database. Returns a boolean
+	 * Department lookup to check if it exists in the database. Returns a boolean
 	 * stating whether or not it does.
 	 * 
-	 * @param  tableName   String of a table name in the database
-	 * @param  columnName  String of a column name in a given table
 	 * @param  value       String of the desired value the function is checking for
 	 * @return             Boolean for whether or not the value exists in the
 	 *                     database. 
 	 */
 	{
-		sql = "SELECT * FROM ? WHERE ? = ?;";
+		sql = "SELECT * FROM department WHERE departmentName = ?;";
 		try{
 			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1,  tableName);
-			stmt.setString(2, columnName);
-			stmt.setString(3,  value);
+			stmt.setString(1, value);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()){
+				conn.close();
+				return true;
+			}
+			conn.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static boolean groupExists(String value) 
+	/**
+	 * Group lookup by name to check if a group exists in the database. Returns a boolean
+	 * stating whether or not it does.
+	 * 
+	 * @param  value       String of the desired value the function is checking for
+	 * @return             Boolean for whether or not the value exists in the
+	 *                     database. 
+	 */
+	{
+		sql = "SELECT * FROM egroup WHERE groupName = ?;";
+		try{
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, value);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()){
+				conn.close();
+				return true;
+			}
+			conn.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static boolean tokenExists(String value) 
+	/**
+	 * Token lookup to check if it exists in the database. Returns a boolean
+	 * stating whether or not it does.
+	 * @param  value       String of the desired value the function is checking for
+	 * @return             Boolean for whether or not the value exists in the
+	 *                     database. 
+	 */
+	{
+		sql = "SELECT * FROM user WHERE token = ?;";
+		try{
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, value);
 			rs = stmt.executeQuery();
 			
 			if(rs.next()){

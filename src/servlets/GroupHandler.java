@@ -87,7 +87,7 @@ public class GroupHandler extends HttpServlet {
 			List<String> employeeIDs = Arrays.asList(request.getParameterValues("Employee name"));
 			String groupName = request.getParameter("Group name");
 			
-			if(DatabaseAccess.recordExists("egroup", "groupName", groupName))
+			if(DatabaseAccess.groupExists(groupName))
 			{
 				request.setAttribute("error", "There is already a group with that name");
 			}

@@ -59,7 +59,7 @@ public class DepartmentHandler extends HttpServlet {
 			String departmentName = request.getParameter("Department name");
 			String departmentLocation = request.getParameter("Department location");
 			//check if department name already exists
-			if(DatabaseAccess.recordExists("department", "departmentName", departmentName))
+			if(DatabaseAccess.departmentExists(departmentName))
 			{
 				request.setAttribute("error", "There is already a department with that name"); 
 			}

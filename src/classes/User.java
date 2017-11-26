@@ -1,6 +1,5 @@
 package classes;
 import java.util.Random;
-
 import org.apache.tomcat.util.codec.binary.Base64;
 /************************************************************************
  * Project: COMP3095_team_dns
@@ -120,7 +119,7 @@ public class User {
 		r.nextBytes(a);
 		
 		this.token = Base64.encodeBase64String(a);		
-	}
+}
 	public void setToken(String token) {
 		this.token = token;
 	}
