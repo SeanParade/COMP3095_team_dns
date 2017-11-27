@@ -33,6 +33,13 @@ public class EmployeeHandler extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Employee Entry:
+	 * Takes all form information and checks if any of the form entries are missing. 
+	 * If nothing is missing all the parameters are grabbed. The first name, last name
+	 * employee number are checked for validity and then checked against the DB if the
+	 * employee already exists. Any errors are redirected to the employee entry page
+	 * and the errors are displayed. If there are no errors the employee is added to 
+	 * the DB and user is sent to a confirmation page.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
@@ -47,8 +54,7 @@ public class EmployeeHandler extends HttpServlet {
 			String lastName = request.getParameter("Last name");
 			String employeeNo = request.getParameter("Employee number");
 			String email = request.getParameter("Email");
-			
-			//temporarily commented out until dropdown is populated
+		
 			String hireYear = request.getParameter("Hire year");
 			String position = request.getParameter("Position");
 			//get department selection

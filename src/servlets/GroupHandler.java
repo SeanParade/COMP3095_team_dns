@@ -42,8 +42,11 @@ public class GroupHandler extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Group Entry: 
+	 * Takes the selected Department on the form and populates the Employee 1 and Employee 2
+	 * fields with the names of the people in that department. When the department selection 
+	 * is changed on the page, the page reloads with the proper employees.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -72,8 +75,15 @@ public class GroupHandler extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Group Entry:
+	 * Takes group name and employee names fields and checks if they're empty.
+	 * If not the servlet grabs the parameters and checks if the group name already
+	 * exists in the database. If it's unique the group with all the employee
+	 * information is inserted into the database. All Employee records are updated
+	 * to include the group they are  part of. If everything is successful the user
+	 * is redirected to a confirmation page. If not, the appropriate errors are displayed
+	 * on the group entry page.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

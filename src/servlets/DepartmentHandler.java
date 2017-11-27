@@ -44,9 +44,12 @@ public class DepartmentHandler extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 * Department:
-	 * 
-	 * 
+	 * Department Entry:
+	 * Takes department name and department location and checks if the fields are empty.
+	 * If there are no errors the department name and department location parameters are
+	 * grabbed from the form. Checks if the department name already exists, if not the department
+	 * is entered into the database and a confirmation page is shown. If there are any form entry failures
+	 * or the department already exist, the user is returned to the department entry page with the errors shown.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
