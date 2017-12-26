@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import classes.Department;
 import classes.Employee;
 import classes.Group;
-import classes.User;
 import java.sql.*;
 
 /************************************************************************
@@ -53,20 +52,20 @@ public class DatabaseAccess {
 	public static boolean userCredentialCheck(String usrName, String pass) 
 	/**
 	 * User Login credential check:
-	 * Takes username and password and checks against the user table for a
-	 * row with match credentials. Returns a true if the credentials match a user
+	 * Takes username and password and checks against the employee table for a
+	 * row with match credentials. Returns true if the credentials match a employee
 	 * in the table. Returns false if not.
 	 * 
 	 * @param  usrName  Username string
 	 * @param  pass     Password string
-	 * @return          Boolean based on whether or not a user exists with
+	 * @return          Boolean based on whether or not a employee exists with
 	 *                  that username and password.
 	 */
 	{
 		boolean exists = false;
 		try {
 			conn = connectDatabase();
-			sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+			sql = "SELECT * FROM Employee WHERE username = ? AND password = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, usrName.toLowerCase());
 			stmt.setString(2, pass);
@@ -82,19 +81,19 @@ public class DatabaseAccess {
 	}
 
 
-	public static boolean updateAuthToken(User user) 
+	public static boolean updateAuthToken(Employee user) 
 	/**
 	 * Authentication Token Update:
-	 * Takes a user object to grab a username and an auth token. Updates the
-	 * the token column of a user row in the database based on the username. Returns
+	 * Takes a employee object to grab a username and an auth token. Updates the
+	 * the token column of a employee row in the database based on the username. Returns
 	 * a failure/success flag.
 	 * 
-	 * @param  user  User object used to get username and token attributes.
+	 * @param  user  Employee object used to get username and token attributes.
 	 * @return       Success/Failure boolean.
 	 */
 	{
 		boolean result;
-		sql = "UPDATE user SET token = ? WHERE username = ?";
+		sql = "UPDATE Employee SET token = ? WHERE username = ?";
 		try {
 			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
@@ -150,7 +149,7 @@ public class DatabaseAccess {
 			stmt.setString(3, emp.getLastName());
 			stmt.setString(4, emp.getEmail());
 			stmt.setString(5, emp.getHireYear());
-			stmt.setString(6, emp.getPosition());
+			stmt.setString(6, emp.getRole());
 			stmt.execute();
 
 			conn.close();
@@ -182,20 +181,20 @@ public class DatabaseAccess {
 		}
 	}
 
-	public static User getUser(String userName, String password) 
+	public static Employee getUser(String userName, String password) 
 	/**
-	 * Populates a user object with column data from a row matching the given
+	 * Populates a employee object with column data from a row matching the given
 	 * username and password. If no row matches the given credentials, an empty 
-	 * user object is returned.
+	 * employee object is returned.
 	 * 
 	 * @param  username  Username string.
 	 * @param  password  Password string.
-	 * @return           Fully populated user object if matching credentials
-	 *                   exists. Empty user object if not.
+	 * @return           Fully populated employee object if matching credentials
+	 *                   exists. Empty employee object if not.
 	 */
 	{
-		User user = new User();
-		sql = "SELECT * FROM USER WHERE username = ? AND password = ?;";
+		Employee user = new Employee();
+		sql = "SELECT * FROM Employee WHERE username = ? AND password = ?;";
 		try {
 			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
@@ -209,7 +208,7 @@ public class DatabaseAccess {
 				String last = rs.getString("lastName");
 				String email = rs.getString("email");
 
-				user.setUserId(userId);
+				user.setEmployeeId(userId);
 				user.setFirstName(first);
 				user.setLastName(last);
 				user.setEmail(email);
@@ -223,34 +222,34 @@ public class DatabaseAccess {
 		}
 	}
 	
-	public static User getUserByToken(String token) 
+	public static Employee getUserByToken(String token) 
 	/**
-	 * Populates a user object with column data from a row matching the given
-	 * auth token. If no row matches the given token, an empty user object
+	 * Populates a employee object with column data from a row matching the given
+	 * auth token. If no row matches the given token, an empty employee object
 	 * is returned. A password is not returned for security reasons 
 	 * as no password is given.
 	 * 
 	 * @param  token  32-byte base64-encoded authorization token.
-	 * @return        Partially populated user object (no password) if matching credentials
-	 *                exists. Empty user object if not.
+	 * @return        Partially populated employee object (no password) if matching credentials
+	 *                exists. Empty employee object if not.
 	 */
 	{
-		User user = new User();
-		sql = "SELECT * FROM USER WHERE token = ?;";
+		Employee user = new Employee();
+		sql = "SELECT * FROM Employee WHERE token = ?;";
 		try {
 			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, token);			
 			rs = stmt.executeQuery();
 			
-			// Instantiate user
+			// Instantiate employee
 			while (rs.next()) {
 				int userId = rs.getInt("id");
 				String first = rs.getString("firstName");
 				String last = rs.getString("lastName");
 				String email = rs.getString("email");
 				String userName = rs.getString("username");
-				user.setUserId(userId);
+				user.setEmployeeId(userId);
 				user.setFirstName(first);
 				user.setLastName(last);
 				user.setEmail(email);
@@ -464,7 +463,7 @@ public class DatabaseAccess {
 	 *                     database. 
 	 */
 	{
-		sql = "SELECT * FROM user WHERE token = ?;";
+		sql = "SELECT * FROM Employee WHERE token = ?;";
 		try{
 			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);

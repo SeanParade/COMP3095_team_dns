@@ -49,26 +49,38 @@ public class GroupHandler extends HttpServlet {
 	 * is changed on the page, the page reloads with the proper employees.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException 
+	{
 		ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
 		String selectedDep = request.getParameter("dep");
+		
 		try {
 			// Load with defaults on original GET request
-			if (!departmentList.isEmpty() && selectedDep == null) {
+			if (!departmentList.isEmpty() && selectedDep == null) 
+			{
 				request.setAttribute("departments", departmentList);
+				
 				ArrayList<Employee> employeeList = DatabaseAccess.selectEmployeesByDepartment(1);
 				request.setAttribute("employees", employeeList);
-			} // reload with correct department on department selection change
-			else if (!departmentList.isEmpty() && selectedDep != null) {
+			} 
+			// reload with correct department on department selection change
+			else if (!departmentList.isEmpty() && selectedDep != null) 
+			{
 				request.setAttribute("departments", departmentList);
+				
 				ArrayList<Employee> employeeList = DatabaseAccess
 						.selectEmployeesByDepartment(Integer.parseInt(selectedDep) + 1);
+				
 				request.setAttribute("employees", employeeList);
 				request.setAttribute("selected", selectedDep);
-			} else {
+			} 
+			else 
+			{
 				request.setAttribute("error", "empty list");
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 		request.getRequestDispatcher("/group/group_entry.jsp").forward(request, response);
@@ -79,7 +91,7 @@ public class GroupHandler extends HttpServlet {
 	 * Group Entry:
 	 * Takes group name and employee names fields and checks if they're empty.
 	 * If not the servlet grabs the parameters and checks if the group name already
-	 * exists in the database. If it's unique the group with all the employee
+	 * exists in the database. If it's unique, the group with all the employee
 	 * information is inserted into the database. All Employee records are updated
 	 * to include the group they are  part of. If everything is successful the user
 	 * is redirected to a confirmation page. If not, the appropriate errors are displayed
@@ -105,53 +117,62 @@ public class GroupHandler extends HttpServlet {
 			{
 				Group newGroup = new Group(groupName);
 				if(DatabaseAccess.insertGroup(newGroup).equals("success"))
-					{
+				{
 					request.setAttribute("table", "Group");
 					request.setAttribute("name", groupName);
 					
 					// Employee update loop					
-					for (String employeeID : employeeIDs) {
-						if (!HelperUtility.isMissing(employeeID)) {
-						
-							try {
+					for (String employeeID : employeeIDs) 
+					{
+						if (!HelperUtility.isMissing(employeeID)) 
+						{
+							try 
+							{
 								String result = DatabaseAccess.updateEmployeeGroupByName(Integer.parseInt(employeeID), groupName);
-								if(!result.equals("success")){
+								
+								if(!result.equals("success"))
 									request.setAttribute("error", result);
-								}
-							} catch (SQLException e) {
+								
+							} 
+							catch (SQLException e) 
+							{
 								request.setAttribute("error", "Database Error: Employee Insert");
-							  }							 
+							}							 
 						}
 					}
 					request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 					return;
 				}
-				else{
+				else
 					request.setAttribute("error", "Database error: Group Insert");
-				}
 			}
 		}
-		else{
+		else
 			request.setAttribute("error", error);
-		}
 		
-
+		
 			ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
 			String selectedDep = request.getParameter("dep");
-				// Load with defaults
-				if (!departmentList.isEmpty() && selectedDep == null) {
+				
+			// Load with defaults
+				if (!departmentList.isEmpty() && selectedDep == null) 
+				{
 					request.setAttribute("departments", departmentList);
+					
 					ArrayList<Employee> employeeList = DatabaseAccess.selectEmployeesByDepartment(1);
 					request.setAttribute("employees", employeeList);
 				}
-				else if (!departmentList.isEmpty() && selectedDep != null) {
+				else if (!departmentList.isEmpty() && selectedDep != null) 
+				{
 					request.setAttribute("departments", departmentList);
+					
 					ArrayList<Employee> employeeList = DatabaseAccess
 							.selectEmployeesByDepartment(Integer.parseInt(selectedDep) + 1);
+				
 					request.setAttribute("employees", employeeList);
 					request.setAttribute("selected", selectedDep);
 				}			
-			request.getRequestDispatcher("/group/group_entry.jsp").forward(request, response);
+		request.getRequestDispatcher("/group/group_entry.jsp").forward(request, response);
 	}
 
 }

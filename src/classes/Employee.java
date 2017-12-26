@@ -1,5 +1,9 @@
 package classes;
 
+import java.util.Random;
+
+import org.apache.tomcat.util.codec.binary.Base64;
+
 /************************************************************************
  * Project: COMP3095_team_dns
  * Assignment: Assignment #1
@@ -14,9 +18,14 @@ public class Employee {
 	private String lastName;
 	private String email;
 	private String hireYear;
-	private String position;
+	private String role;
+	private String username;
+	private String password;
+	private String token;
 	private int departmentId; //foreign key
 	private int groupId; //foreign key
+	
+	public Employee() {}
 	
 	//public constructor without userId
 	public Employee(int eId, String first, String last, String email, String hireYear,
@@ -26,7 +35,7 @@ public class Employee {
 		this.lastName = last;
 		this.email = email;
 		this.hireYear = hireYear;
-		this.position = position;
+		this.role = position;
 		
 	}
 	//public constructor with departmentId
@@ -38,7 +47,7 @@ public class Employee {
 		this.lastName = last;
 		this.email = email;
 		this.hireYear = hireYear;
-		this.position = position;
+		this.role = position;
 		this.departmentId = departmentId;
 
 	}
@@ -51,10 +60,48 @@ public class Employee {
 		this.lastName = last;
 		this.email = email;
 		this.hireYear = hireYear;
-		this.position = position;
+		this.role = position;
 		this.departmentId = departmentId;
 		this.groupId = groupId;
 	}
+	
+	//public constructor with userid - for select from database
+	public Employee(int id, String first, String last, String email,
+			String role, String username, String password)
+	{
+		this.employeeId = id;
+		this.firstName = first;
+		this.lastName = last;
+		this.email = email;
+		this.role = role;
+		this.username = username;
+		this.password= password;
+	}
+	
+	public Employee(int id, String first, String last, String email, String role,
+			String username, String password, String token) {
+		this.employeeId = id;
+		this.firstName = first;
+		this.lastName = last;
+		this.email = email;
+		this.role = role;
+		this.username = username;
+		this.password = password;
+		this.token = token;
+	}
+	
+	public Employee(String first, String last, String email,
+			String role, String username, String password, int employeeId)
+	{
+		this.firstName = first;
+		this.lastName = last;
+		this.email = email;
+		this.role = role;
+		this.username = username;
+		this.password= password;
+		this.employeeId = employeeId;
+	}
+	
 	//getters and setters
 	//possibly delete setters
 	public int getEmployeeId() {
@@ -87,11 +134,37 @@ public class Employee {
 	public void setHireYear(String hireYear) {
 		this.hireYear = hireYear;
 	}
-	public String getPosition() {
-		return position;
+	public String getRole() {
+		return role;
 	}
-	public void setPosition(String position) {
-		this.position = position;
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public void createToken() 
+	{
+		Random r = new Random();
+		byte[] a = new byte[32];
+		r.nextBytes(a);
+		
+		this.token = Base64.encodeBase64String(a);		
+    }
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public String getToken() {
+		return this.token;
 	}
 	public int getDepartmentId() {
 		return departmentId;

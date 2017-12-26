@@ -1,5 +1,5 @@
-<%@ page import="classes.User"%>
-<% User user = (User) session.getAttribute("user");%>
+<%@ page import="classes.Employee"%>
+<% Employee user = (Employee) session.getAttribute("user");%>
 
 	<div class="header">
 		<ul> 

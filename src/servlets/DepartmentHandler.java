@@ -61,37 +61,32 @@ public class DepartmentHandler extends HttpServlet {
 		{
 			String departmentName = request.getParameter("Department name");
 			String departmentLocation = request.getParameter("Department location");
+			
 			//check if department name already exists
 			if(DatabaseAccess.departmentExists(departmentName))
 			{
 				request.setAttribute("error", "There is already a department with that name"); 
-			}
-			
+			}			
 			else
 			{
 				Department dep = new Department(departmentName, departmentLocation);			
-					//check if result is success
+				
 				String result = DatabaseAccess.insertDepartment(dep);
 				if(result.equals("success"))
 				{
-					//set attributes with "Department", departmentName
-					 request.setAttribute("table", "Department");
-					 request.setAttribute("name", departmentName);
-					//redirect to confirmation page
-					 //HttpSession session = request.getSession();
-					 //session.setAttribute("confirmTable", "Department");
-					 //session.setAttribute("confirmName", departmentName);
+					request.setAttribute("table", "Department");
+					request.setAttribute("name", departmentName);
 					request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 					return;
 				}
 				else
 				{
-				//set error message with general database error
-				 request.setAttribute("error", "Database error");
-				}
+				    request.setAttribute("error", "Database error");
 				}
 			}
-		else{
+		}
+		else
+		{
 			request.setAttribute("error", error);
 		}		
 		request.getRequestDispatcher("/department/department_entry.jsp").forward(request, response);

@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-import classes.User;
+import classes.Employee;
 import utilities.DatabaseAccess;
 /************************************************************************
  * Project: COMP3095_team_dns
@@ -65,17 +64,12 @@ public class LoginHandler extends HttpServlet {
 	    {	    	
 			redirectURL = "home.jsp";
 			
-			if (rememberMe == false) {
-				User user = DatabaseAccess.getUser(username, password);
-				user.createToken();
-				HttpSession session = request.getSession();
-				session.setAttribute("user", user);
-			}
-			else {
-				User user = DatabaseAccess.getUser(username, password);
-				user.createToken();
-				HttpSession session = request.getSession();
-				session.setAttribute("user", user);
+			Employee user = DatabaseAccess.getUser(username, password);
+			user.createToken();
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+
+			if (rememberMe == true) {
 				DatabaseAccess.updateAuthToken(user);
 				Cookie c = new Cookie("userToken", user.getToken());
 				c.setMaxAge(60*60*24*30);

@@ -8,40 +8,40 @@ grant all on COMP3095.* to 'admin'@'localhost' identified by 'admin';
 CREATE TABLE DEPARTMENT
 (
 	id int(11) AUTO_INCREMENT PRIMARY KEY,
-	departmentName varchar(255),
+	departmentName varchar(255) NOT NULL UNIQUE,
 	location varchar(255)
 	);
+    
 INSERT INTO DEPARTMENT(departmentName, location)
-VALUES("Accounting", "Room 1B");
+VALUES
+("Accounting", "Room 1B"),
+("Administration", "Room 1A"),
+("Marketing", "Room 2B"),
+("IT", "Room B01"),
+("Human Resources", "Room 1D");
 
-INSERT INTO DEPARTMENT(departmentName, location)
-VALUES("Administration", "Room 1A");
-
-INSERT INTO DEPARTMENT(departmentName, location)
-VALUES("Marketing", "Room 2B");
-
-INSERT INTO DEPARTMENT(departmentName, location)
-VALUES("IT", "Room B01");
-
-INSERT INTO DEPARTMENT(departmentName, location)
-VALUES("Human Resources", "Room 1D");
 
 CREATE TABLE EGROUP
 (
 	id int(11) AUTO_INCREMENT PRIMARY KEY,
-	groupName varchar(255)
+	groupName varchar(255) UNIQUE
 	
 );
+
 CREATE TABLE EMPLOYEE
 (
 	id int(11) PRIMARY KEY,
-	firstName varchar(255),
-	lastName varchar(255),
-	email varchar(255),
+	firstName varchar(255) NOT NULL,
+	lastName varchar(255) NOT NULL,
+	email varchar(255) NOT NULL,
+    username varchar(255) UNIQUE,
 	hireYear varchar(255),
-	position varchar(255),
 	departmentId int(11),
 	groupId int(11),
+    role varchar(255),
+    password varchar(30),
+    token varchar(255),
+    UNIQUE(firstName, lastname, email),
 	
 	
 	INDEX(departmentId),
@@ -51,56 +51,23 @@ CREATE TABLE EMPLOYEE
 		ON UPDATE CASCADE ON DELETE RESTRICT
 
 );
-# 1 accounting
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(1001,"Rich", "Gregory", "rich.gregory@gmail.com", "2017", "Accountant", 1);
 
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(1002, "Nita", "Cochrane", "nita.cochrane@gmail.com", "2017", "Accountant", 1);
-
+INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, role, departmentId, username, password)
+VALUES
+(0000, "admin", "!", "admin@domain.ca", "2015", "Administrator", 4, "admin", "admin"),
+#accounting
+(1001,"Rich", "Gregory", "rich.gregory@gmail.com", "2017", "Accountant", 1, "rgregory", "password"),
+(1002, "Nita", "Cochrane", "nita.cochrane@gmail.com", "2017", "Accountant", 1, "ncochrane", "password"),
 #admin
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(2001, "Simon", "Martin", "simon.martin@gmail.com", "2017", "Receptionist", 2);
-
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(2002, "Mindy", "Kelly", "mindy.kelly@gmail.com", "2017", "Office Administrator", 2);
-
+(2001, "Simon", "Martin", "simon.martin@gmail.com", "2017", "Receptionist", 2, "smartin", "password"),
+(2002, "Mindy", "Kelly", "mindy.kelly@gmail.com", "2017", "Office Administrator", 2, "mkelly", "password"),
 #marketing
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(3001, "Magaret", "Oneill", "magaret.oneill@gmail.com", "2017", "Sales", 3);
-
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(3002, "Donnie", "Zhang", "donnie.zhang@gmail.com", "2017", "Sales", 3);
-
+(3001, "Magaret", "Oneill", "magaret.oneill@gmail.com", "2017", "Sales", 3, "moneill", "password"),
+(3002, "Donnie", "Zhang", "donnie.zhang@gmail.com", "2017", "Sales", 3, "dzhang",  "password"),
 #it
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(4001, "Hyon", "Barnhill", "hyon.barnhill@gmail.com", "2017", "Network Admin", 4);
-
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(4002, "Jazmine", "Velasquez", "jazmine.velasquez@gmail.com", "2017", "Database Admin", 4);
-
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(4003, "Deb", "Jude", "deb.jude@gmail.com", "2017", "Web Developer", 4);
-
+(4001, "Hyon", "Barnhill", "hyon.barnhill@gmail.com", "2017", "Network Admin", 4, "hbarnhill", "password"),
+(4002, "Jazmine", "Velasquez", "jazmine.velasquez@gmail.com", "2017", "Database Admin", 4, "jvelasquez", "password"),
+(4003, "Deb", "Jude", "deb.jude@gmail.com", "2017", "Web Developer", 4, "djude", "password"),
 #human resources
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(5001, "Sui", "Layne", "sui.layne@gmail.com", "2017", "HR Manager", 5);
-
-INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position, departmentId)
-VALUES(5002, "Leota", "Luckett", "leota.luckett@gmail.com", "2017", "HR Advisor", 5);
-
-
-CREATE TABLE USER 
-( 
-	id int(11) AUTO_INCREMENT PRIMARY KEY, 
-	firstName varchar(255),
-	lastName varchar(255),
-	email varchar(255), 
-	role varchar(20),
-	username varchar(20),
-	password varchar(20),
-	token varchar(255)
-);
-
-INSERT INTO USER (firstName, lastName, email, role, username, password) 
-VALUES ("admin", "!", "admin@domain.ca", "Administrator", "admin", "admin");
+(5001, "Sui", "Layne", "sui.layne@gmail.com", "2017", "HR Manager", 5, "slayne", "password"),
+(5002, "Leota", "Luckett", "leota.luckett@gmail.com", "2017", "HR Advisor", 5, "lluckett", "password");

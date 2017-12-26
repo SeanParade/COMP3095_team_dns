@@ -1,22 +1,21 @@
-# Java Web-App Assignment
-### TODO
-- [x] login functionality 
-  - [x] storing the logged in user in session
-  - [x] displaying the user's first name in home page
-  - [x] remember me cookie
-  - [x] auth check on each page
-  
-- [x] error messages need to be polished (I put in a placeholder error message)
+### Change log 
+##### Dec/26
+- Login handler
+  - Removed duplicate code in the way remember was handled. Switched to one conditional and moved the duplicate code out (L68:L71)
+- Database
+  - added `not null` and `unique` constraints to department name, group name, and combination of employee first name last name and email. added unique constraint to username
+  - removed redundant insert statements
+  - combined employee and user table
+    - gave employee token, username, and password. Switched `position` to `role`
+- Removed User class
+- DatabaseAccess
+  - changed all references of User to Employee as well as a couple logic errors as a result
+- Employee
+  - Combined employee and user
+  - added an empty default constructor
+  - moved over any important methods from user
+- includes/Navigation
+  - changed the user object reference into and Employee
 
-- [x] confirmation page needs to be implemented (for when successful insert into database)
-
-- [x] GroupHandler needs to be finished 
-  - [x] information only displays in the drop down boxes if the submit button is pressed 
-  - [x] need to figure out a way to populate the drop down boxes when the page loads
-  - [x] figure out CRUD login
-  
-- [x] go through the website and test the navigation 
-  - (noticed some mismatch between the links in the menu and the jsps)
-  
-- [ ] Documentation (oversaturating code with comments to appease academic overlords)
-- [x] Java file team headings 
+    
+ 

@@ -85,7 +85,7 @@ public class HelperUtility {
 		{
 			if(HelperUtility.isMissing(request.getParameter(fieldNames[i])))
 			{
-				errorMessage += fieldNames[i] + " is required <br>";
+				errorMessage += fieldNames[i] + " is required. <br>";
 			}
 		}
 		return errorMessage; 
