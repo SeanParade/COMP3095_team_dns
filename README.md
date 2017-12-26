@@ -1,6 +1,6 @@
 ### Change log 
 ___
-##### Dec/26
+#### Dec/26
 - Login handler
   - Removed duplicate code in the way remember was handled. Switched to one conditional and moved the duplicate code out (L68:L71)
 - Database
