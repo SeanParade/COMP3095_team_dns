@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import classes.Department;
 import classes.Employee;
 import utilities.DatabaseAccess;
-import utilities.HelperUtility;
 
 /**
  * Servlet implementation class ViewEmployeesHandler

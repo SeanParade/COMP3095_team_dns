@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import classes.Department;
 import classes.Employee;
 import classes.Group;
+import classes.Report;
+import classes.ReportItem;
+
 import java.sql.*;
 
 /************************************************************************
@@ -180,7 +183,95 @@ public class DatabaseAccess {
 			return "failed: " + e.getMessage();
 		}
 	}
-
+	
+	public static int insertReport(Report report)
+	{
+		int generatedKey = 0;
+		sql = "INSERT INTO REPORT(templateName, title, date, departmentId, groupId, employeeId, totalEvaluation)" +
+	"VALUES (?, ?, ?, ?, ?, ?, ?);";
+		
+		try{
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, report.getTemplate());
+			stmt.setString(2,  report.getTitle());
+			stmt.setDate(3,  (Date) report.getDate());
+			stmt.setInt(4,  report.getDepartmentId());
+			if(report.getGroupId() == 0)
+			{
+				stmt.setNull(5, java.sql.Types.INTEGER);
+			}
+			else
+			{
+				stmt.setInt(5,  report.getGroupId());
+			}
+			if(report.getEmployeeId()==0)
+			{
+				stmt.setNull(6, java.sql.Types.INTEGER);
+			}
+			else
+			{
+				stmt.setInt(6, report.getEmployeeId());
+			}
+			stmt.setInt(7,  report.getTotalEvaluation());
+			
+			stmt.execute();
+	
+			ResultSet rs = stmt.getGeneratedKeys();
+			if(rs.next())
+			{
+				generatedKey = rs.getInt(1);
+			}
+			
+			conn.close();
+			return generatedKey;
+		}
+		catch(Exception e)
+		{
+			return generatedKey;
+		}
+	
+	}
+	public static String insertReportItems(ArrayList<ReportItem> reportItems)
+	{
+		sql = "INSERT INTO REPORT_ITEM(subTitle, evaluation, description, reportId)" +
+	"VALUES(?, ?, ?, ?);";
+		try
+		{
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			
+			for(ReportItem item : reportItems)
+			{
+				if(item.getSubTitle() == null)
+				{
+					stmt.setNull(1, java.sql.Types.VARCHAR);
+				}
+				else
+				{
+					stmt.setString(1, item.getSubTitle());
+				}
+				stmt.setInt(2, item.getEvaluation());
+				if(item.getDescription() == null)
+				{
+					stmt.setNull(3,  java.sql.Types.VARCHAR);
+				}
+				else
+				{
+					stmt.setString(3,  item.getDescription());
+				}
+				stmt.setInt(4, item.getReportId());
+				
+				stmt.execute();	
+			}
+			conn.close();
+			return "success";
+		}
+		catch(Exception e)
+		{
+			return "failed " + e.getMessage();
+		}
+	}
 	public static Employee getUser(String userName, String password) 
 	/**
 	 * Populates a employee object with column data from a row matching the given
