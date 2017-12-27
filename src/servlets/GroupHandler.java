@@ -108,6 +108,7 @@ public class GroupHandler extends HttpServlet {
 		{
 			List<String> employeeIDs = Arrays.asList(request.getParameterValues("Employee name"));
 			String groupName = request.getParameter("Group name");
+			int departmentId = Integer.parseInt(request.getParameter("department"));
 			
 			if(DatabaseAccess.groupExists(groupName))
 			{
@@ -115,7 +116,7 @@ public class GroupHandler extends HttpServlet {
 			}
 			else
 			{
-				Group newGroup = new Group(groupName);
+				Group newGroup = new Group(groupName, departmentId);
 				if(DatabaseAccess.insertGroup(newGroup).equals("success"))
 				{
 					request.setAttribute("table", "Group");
