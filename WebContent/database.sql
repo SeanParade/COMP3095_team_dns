@@ -24,7 +24,8 @@ VALUES
 CREATE TABLE EGROUP
 (
 	id int(11) AUTO_INCREMENT PRIMARY KEY,
-	groupName varchar(255) UNIQUE
+	groupName varchar(255) UNIQUE,
+	departmentId int(11)
 	
 );
 

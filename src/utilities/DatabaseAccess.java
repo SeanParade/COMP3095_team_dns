@@ -170,11 +170,12 @@ public class DatabaseAccess {
 	 * @return        Success or Failed( + error message) string
 	 */
 	{
-		sql = "INSERT INTO EGROUP(groupName) VALUES(?);";
+		sql = "INSERT INTO EGROUP(groupName, departmentId) VALUES(?, ?);";
 		try {
 			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, group.getGroupName());
+			stmt.setInt(2,  group.getDepartmentId());
 			stmt.execute();
 			
 			conn.close();
