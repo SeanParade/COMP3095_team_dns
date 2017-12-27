@@ -140,7 +140,7 @@ public class DatabaseAccess {
 	 * @return      Success or Failed( + error message) string
 	 */
 	{
-		sql = "INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, position)" + "VALUES(?,?,?,?,?,?);";
+		sql = "INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, role)" + "VALUES(?,?,?,?,?,?);";
 		try {
 			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
@@ -291,9 +291,9 @@ public class DatabaseAccess {
 				String last = rs.getString("lastName");
 				String email = rs.getString("email");
 				String hireYear = rs.getString("hireYear");
-				String position = rs.getString("role");
+				String role = rs.getString("role");
 
-				Employee emp = new Employee(employeeId, first, last, email, hireYear, position, departmentId);
+				Employee emp = new Employee(employeeId, first, last, email, hireYear, role, departmentId);
 				emps.add(emp);
 			}
 			conn.close();
