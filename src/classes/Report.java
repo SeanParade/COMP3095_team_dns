@@ -105,16 +105,6 @@ public class Report {
 	public void setTotalEvaluation(int totalEvaluation) {
 		this.totalEvaluation = totalEvaluation;
 	}
-	//calculate total evaluation
-	public int calculateTotalEvaluation()
-	{
-		int total = 0;
-		for(ReportItem item  : this.items)
-		{
-			total+= item.getEvaluation();
-		}
-		return total;
-	}
-	
+
 }
 
