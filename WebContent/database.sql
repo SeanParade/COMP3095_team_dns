@@ -96,16 +96,23 @@ CREATE TABLE REPORT
 
 		FOREIGN KEY(employeeId)
 			REFERENCES employee(id)
-			ON UPDATE CASCADE ON DELETE RESTRICT
-
-	
+			ON UPDATE CASCADE ON DELETE RESTRICT	
 );
-CREATE TABLE REPORT_ITEM
+CREATE TABLE REPORT_SECTION
 (
-	id int(11) AUTO_INCREMENT PRIMARY KEY,
-	subTitle varchar(255),
-	evaluation int(1),
-	description varchar(255),
+	id int(20) AUTO_INCREMENT PRIMARY KEY,
+	sectionTitle varchar(255),
+	crit1 varchar(255) NOT NULL,
+	eval1 int(1) NOT NULL,
+	crit2 varchar(255),
+	eval2 int(1),
+	crit3 varchar(255),
+	eval3 int(1),
+	crit4 varchar(255),
+	eval4 int(1),
+	crit5 varchar(255),
+	eval5 int(1),
+	comment varchar(255),
 	reportId int(11),
 
 	INDEX(reportId),
@@ -113,7 +120,6 @@ CREATE TABLE REPORT_ITEM
 	FOREIGN KEY(reportId)
 		REFERENCES report(id)
 		ON UPDATE CASCADE ON DELETE RESTRICT
-
 );
 
 CREATE TABLE EMPLOYEE_ATTENDANCE
