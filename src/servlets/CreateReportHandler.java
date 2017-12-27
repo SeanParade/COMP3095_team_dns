@@ -2,6 +2,9 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,9 +46,13 @@ public class CreateReportHandler extends HttpServlet {
 	 * Create Report:
 	 * 
 	 */
+	@SuppressWarnings("rawtypes")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		
+	    Map<String, String[]> pMap = request.getParameterMap();
+	    
+        Set set = pMap.entrySet();
+	    Iterator it = set.iterator();
 	}
 
 }
