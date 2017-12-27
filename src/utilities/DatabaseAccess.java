@@ -428,6 +428,92 @@ public class DatabaseAccess {
 		}
 	}
 
+	/**
+	 * Fetches all the groups in a given department and returns an array of 
+	 * employee objects instantiated from group rows in the database that
+	 * have a matching department id
+	 * 
+	 * @param  departmentId  Unique department identification number
+	 * @return               Collection of group objects that belong to a 
+	 *                       given department.
+	 */
+	
+	public static ArrayList<Group> selectGroupsByDepartment(int departmentId) 
+	{
+		ArrayList<Group> groups = new ArrayList<Group>();
+		sql = "SELECT * FROM EGROUP WHERE departmentId = ?;";
+		try {
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, departmentId);
+			rs = stmt.executeQuery();
+
+			// Instantiate employee and add to emps arraylist
+			while (rs.next()) {
+				int groupId = rs.getInt("id");
+				String groupName = rs.getString("groupName");
+				int depId = rs.getInt("departmentId");
+				
+				Group group  = new Group(groupId, groupName, depId);
+				groups.add(group);
+			}
+			conn.close();
+			return groups;
+		} catch (Exception e) {
+			return groups;
+		}
+
+	}
+	
+	public static int getGroupIdByGroupName(String groupName)
+	{
+		int groupId = 0;
+		sql = "SELECT id FROM EGROUP WHERE groupName = ?;";
+		try {
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, groupName);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				groupId = rs.getInt("id");
+			}
+			conn.close();
+			return groupId;
+		}catch (Exception e) {
+			return groupId;
+		}
+			
+	}
+	
+	public static ArrayList<Employee> selectEmployeesByGroupId(int groupId)
+	{
+		ArrayList<Employee> emps = new ArrayList<Employee>();
+		sql = "SELECT * FROM EMPLOYEE WHERE groupId = ?;";
+		try {
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, groupId);
+			rs = stmt.executeQuery();
+
+			// Instantiate employee and add to emps arraylist
+			while (rs.next()) {
+				int employeeId = rs.getInt("id");
+				String first = rs.getString("firstName");
+				String last = rs.getString("lastName");
+				String email = rs.getString("email");
+				String hireYear = rs.getString("hireYear");
+				String role = rs.getString("role");
+
+				Employee emp = new Employee(employeeId, first, last, email, hireYear, role);
+				emps.add(emp);
+			}
+			conn.close();
+			return emps;
+		} catch (Exception e) {
+			return emps;
+		}
+	}
+
 	public static String updateEmployeeGroupById(int employeeId, int groupId) 
 	/**
 	 * Update an employee column with the passed group id.
