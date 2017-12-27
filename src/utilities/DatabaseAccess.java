@@ -486,7 +486,29 @@ public class DatabaseAccess {
 		}
 		return "failed";
 	}
-	
+	public static String updateReportItem(ReportItem item)
+	{
+		
+		sql = "UPDATE report_item SET evaluation= ?, description=? WHERE ID= ?;";
+		
+		try
+		{
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1,  item.getEvaluation());
+			stmt.setString(2, item.getDescription());
+			stmt.setInt(3, item.getReportId());
+			
+			stmt.execute();
+			conn.close();
+			
+			return "success";
+		}
+		catch(Exception e)
+		{
+			return "failed " + e.getMessage();
+		}
+	}
 	public static boolean departmentExists(String value) 
 	/**
 	 * Department lookup to check if it exists in the database. Returns a boolean
