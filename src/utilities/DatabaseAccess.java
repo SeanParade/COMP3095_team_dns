@@ -452,6 +452,31 @@ public class DatabaseAccess {
 		}
 	}
 
+	public static Department selectDepartmentById(int id)
+	{
+		Department department = new Department();
+		sql = "SELECT * FROM DEPARTMENT WHERE id = ?;";
+		try {
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				int depId = rs.getInt("id");
+				String depName = rs.getString("departmentName");
+				String location = rs.getString("location");
+				department.setDepartmentId(depId);
+				department.setDepartmentName(depName);
+				department.setDepartmentLocation(location);
+			}
+			conn.close();
+			return department;
+		}catch (Exception e) {
+			return department;
+		}
+
+		
+	}
 	/**
 	 * Fetches all the groups in a given department and returns an array of 
 	 * employee objects instantiated from group rows in the database that

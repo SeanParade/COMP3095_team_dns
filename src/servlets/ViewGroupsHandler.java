@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import classes.Department;
 import classes.Employee;
@@ -75,9 +76,20 @@ public class ViewGroupsHandler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		String groupName = request.getParameter("group");
+		HttpSession session = request.getSession();
+		String groupName = request.getParameter("group");	
+		int depId = Integer.parseInt(request.getParameter("department"));
+		Department department = DatabaseAccess.selectDepartmentById(depId);
 		int groupId = DatabaseAccess.getGroupIdByGroupName(groupName);
+		
+		ArrayList<Employee> employeesList = DatabaseAccess.selectEmployeesByGroupId(groupId);
+		session.setAttribute("employeesList", employeesList);
+		session.setAttribute("depName", department.getDepartmentName());
+		session.setAttribute("grpName", groupName);
+		doGet(request, response);
+		request.getRequestDispatcher("/group/view.jsp").forward(request, response);
+		
+		
 		
 	}
 

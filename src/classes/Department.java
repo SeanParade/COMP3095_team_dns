@@ -44,7 +44,7 @@ public class Department {
 		this.departmentName = name;
 		this.departmentLocation = location;
 	}
-
+	public Department () {}
 	@Override
 	public String toString() {
 		return departmentName;
