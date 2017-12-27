@@ -12,8 +12,9 @@
 <jsp:include page="../includes/navigation.jsp" />
 <table border="1">
 <tr><th>Department Name</th><th>Location</th></tr>
+
 <c:forEach var="department" items="${departmentList}">
-<td><c:out value="${department.departmentName}"/></td><td><c:out value="${department.departmentLocation}"/></td> </tr><br>
+<tr><td><c:out value="${department.departmentName}"/></td><td><c:out value="${department.departmentLocation}"/></td> </tr>
 </c:forEach>
 </table>
 </body>

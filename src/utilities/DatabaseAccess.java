@@ -291,7 +291,7 @@ public class DatabaseAccess {
 				String last = rs.getString("lastName");
 				String email = rs.getString("email");
 				String hireYear = rs.getString("hireYear");
-				String position = rs.getString("position");
+				String position = rs.getString("role");
 
 				Employee emp = new Employee(employeeId, first, last, email, hireYear, position, departmentId);
 				emps.add(emp);

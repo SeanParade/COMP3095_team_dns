@@ -13,6 +13,7 @@
 
 	<div class="container">
 		<h2><a href="employee_entry.jsp">Add an employee</a></h2>
+		<h2><a href="/COMP3095_TEAM_DNS/ViewEmployeesHandler">View Employees</a></h2>
 	</div>
 	
 </body>

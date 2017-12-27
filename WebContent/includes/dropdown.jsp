@@ -2,10 +2,13 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="utilities.DatabaseAccess" %>
 <%@page import="classes.Department" %>
-<form method="POST" action="${action} }">
+<form method="POST" action="${action}">
 <select name="departments" onchange="this.form.submit()">
-	<c:forEach var="department" items="<% DatabaseAccess.selectDepartments(); %>">
-	<option><c:out value="${department.departmentName}"/></option>
+<option value="">${placeholder}</option>
+	<c:forEach var="department" items="${departmentList}">
+	<option value="${department.departmentId}" 
+		<c:if test="${department.departmentId == selected}"> "selected" </c:if>>
+		<c:out value="${department.departmentName}"/></option>
 	</c:forEach>
 </select>
 </form>

@@ -33,7 +33,7 @@ public class ViewDepartmentsHandler extends HttpServlet {
 		ArrayList<Department> departments = DatabaseAccess.selectDepartments();
 		HttpSession session = request.getSession();
 		session.setAttribute("departmentList", departments);
-		request.getRequestDispatcher("/department/view_departments.jsp").forward(request, response);
+		request.getRequestDispatcher("/department/view.jsp").forward(request, response);
 	}
 
 	
