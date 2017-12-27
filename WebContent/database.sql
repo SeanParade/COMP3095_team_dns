@@ -71,3 +71,61 @@ VALUES
 #human resources
 (5001, "Sui", "Layne", "sui.layne@gmail.com", "2017", "HR Manager", 5, "slayne", "password"),
 (5002, "Leota", "Luckett", "leota.luckett@gmail.com", "2017", "HR Advisor", 5, "lluckett", "password");
+
+CREATE TABLE REPORT
+(
+	id int(11) AUTO_INCREMENT PRIMARY KEY,
+	templateName varchar(255) NOT NULL,
+	title varchar(255) NOT NULL UNIQUE,
+	date DATE NOT NULL,
+	departmentId int(11) NOT NULL,
+	groupId int(11),
+	employeeId int(11),
+	totalEvaluation int(2),
+
+		INDEX(departmentId), INDEX(groupId), INDEX(employeeId),
+
+		FOREIGN KEY(departmentId)
+			REFERENCES department(id)
+			ON UPDATE CASCADE ON DELETE RESTRICT,
+
+		FOREIGN KEY(groupId)
+			REFERENCES egroup(id)
+			ON UPDATE CASCADE ON DELETE RESTRICT,
+
+		FOREIGN KEY(employeeId)
+			REFERENCES employee(id)
+			ON UPDATE CASCADE ON DELETE RESTRICT
+
+	
+);
+CREATE TABLE REPORT_ITEM
+(
+	id int(11) AUTO_INCREMENT PRIMARY KEY,
+	subTitle varchar(255),
+	evaluation int(1),
+	description varchar(255),
+	reportId int(11),
+
+	INDEX(reportId),
+	
+	FOREIGN KEY(reportId)
+		REFERENCES report(id)
+		ON UPDATE CASCADE ON DELETE RESTRICT
+
+);
+
+CREATE TABLE EMPLOYEE_ATTENDANCE
+(
+	id int(11) AUTO_INCREMENT PRIMARY KEY,
+	date DATE NOT NULL,
+	present BOOLEAN NOT NULL,
+	employeeId int(11) NOT NULL,
+
+	INDEX(employeeId),
+	
+	FOREIGN KEY(employeeId)
+		REFERENCES employee(id)
+		ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
