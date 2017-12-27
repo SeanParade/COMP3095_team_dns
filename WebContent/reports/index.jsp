@@ -11,7 +11,9 @@
 <body>
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
-		<img class="uc_img" src="../img/underconstruction.png" height="40%" width="40%" alt="Under Construction" />
+		<h3>
+			<a href="CreateReport">Create a Report Template</a>
+		</h3>
 	</div>
 </body>
 </html>
