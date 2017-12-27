@@ -10,16 +10,19 @@ package classes;
 public class Group {
 	private int groupId; //primary key
 	private String groupName;
+	private int departmentId;
 	
 	
-	public Group(int groupId, String groupName)
+	public Group(int groupId, String groupName, int departmentId)
 	{
 		this.groupId = groupId;
 		this.groupName = groupName;
+		this.departmentId = departmentId;
 	}
-	public Group(String groupName)
+	public Group(String groupName, int departmentId)
 	{
 		this.groupName = groupName;
+		this.departmentId = departmentId;
 	}
 	public int getGroupId() {
 		return groupId;
@@ -37,6 +40,11 @@ public class Group {
 	public String toString() {
 		return groupName;
 	}
-	
-	
+	public int getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
+	}
+
 }
