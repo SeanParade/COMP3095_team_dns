@@ -16,15 +16,15 @@
 	<jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
 		<h1>Create Report Template</h1>
-		<form action="POST" method="CreateReportHandler">
+		<form action="CreateReport" method="POST">
 			<fieldset>
 				<legend class="left-label">1. Details: </legend>
 				<label>Report Template: </label> <input type="text"
-					name="report-name" /> <label>Date: </label> <input type="date"
+					name="templateName" /> <label>Date: </label> <input type="date"
 					name="report-date" id="report-date"
 					value='<fmt:formatDate value="${date}" pattern='dd-MM-yyyy'/>'
 					disabled> <br /> <label>Department: </label> <select
-					name="report-department" id="ddlDepartment">
+					name="departmentId" id="ddlDepartment">
 					<c:forEach items="${departments}" var="department">
 						<option value="${department.departmentId}"><c:out
 								value="${department.departmentName}" />
@@ -34,43 +34,45 @@
 				<hr />
 				
 				<legend class="left-label">
-					2.Section I: <input type="text" name="sec1label" />
+					2.Section I: <input type="text" name="sec1Title" />
 				</legend>
 				<fieldset>
-					<label>Criteria 1:</label> <input type="text" name="s1-crit1" />
-					<label>Maximum: </label> <select name="s1-crit1-max">
+					<label>Criteria 1:</label> <input type="text" name="s1criteria" />
+					<label>Maximum: </label> <select name="s1criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
-					</select> <br /> <label>Criteria 2:</label> <input type="text"
-						name="s1-crit2" /> <label>Maximum: </label> <select
-						name="s1-crit2-max">
+					</select> 
+					<br /> 
+					<label>Criteria 2:</label> <input type="text" name="s1criteria" /> 
+						<label>Maximum: </label> 
+						<select	name="s1criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select> <br /> <label for=>Criteria 3:</label> <input type="text"
-						name="s1-crit3" /> <label>Maximum: </label> <select
-						name="s1-crit3-max">
+						name="s1criteria" /> <label>Maximum: </label> <select
+						name="s1criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select> <br /> <label>Criteria 4:</label> <input type="text"
-						name="s1-crit4" /> <label>Maximum: </label> <select
-						name="s1-crit4-max">
+						name="s1criteria" /> <label>Maximum: </label> <select
+						name="s1criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select> <br /> <label>Criteria 5:</label> <input type="text"
-						name="s1-crit5" /> <label>Maximum: </label> <select
-						name="s1-crit5-max">
+						name="s1criteria" /> <label>Maximum: </label> <select
+						name="s1criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -81,27 +83,27 @@
 				<hr />
 
 				<legend class="left-label">
-					3.Section II: <input type="text" name="sec2label" />
+					3.Section II: <input type="text" name="sec2Title" />
 				</legend>
 				<fieldset>
-					<label>Criteria 1:</label> <input type="text" name="s2-crit1" />
-					<label>Maximum: </label> <select name="s2-crit1-max">
+					<label>Criteria 1:</label> <input type="text" name="s2criteria" />
+					<label>Maximum: </label> <select name="s2criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select> <br /> <label>Criteria 2:</label> <input type="text"
-						name="s2-crit2" /> <label>Maximum: </label> <select
-						name="s2-crit2-max">
+						name="s2criteria" /> <label>Maximum: </label> <select
+						name="s2criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select> <br /> <label for=>Criteria 3:</label> <input type="text"
-						name="s2-crit3" /> <label>Maximum: </label> <select
-						name="s2-crit3-max">
+						name="s2criteria" /> <label>Maximum: </label> <select
+						name="s2criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -112,27 +114,27 @@
 				<hr />
 
 				<legend>
-					3.Section III: <input type="text" name="sec3label" />
+					3.Section III: <input type="text" name="sec3Title" />
 				</legend>
 				<fieldset>
-					<label>Criteria 1:</label> <input type="text" name="s3-crit1" />
-					<label>Maximum: </label> <select name="s3-crit1-max">
+					<label>Criteria 1:</label> <input type="text" name="s3criteria" />
+					<label>Maximum: </label> <select name="s3criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select> <br /> <label>Criteria 2:</label> <input type="text"
-						name="s3-crit2" /> <label>Maximum: </label> <select
-						name="s3-crit2-max">
+						name="s3criteria" /> <label>Maximum: </label> <select
+						name="s3criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select> <br /> <label for=>Criteria 3:</label> <input type="text"
-						name="s3-crit3" /> <label>Maximum: </label> <select
-						name="s3-crit3-max">
+						name="s3criteria" /> <label>Maximum: </label> <select
+						name="s3criteria">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -144,9 +146,9 @@
 				<input type="submit" value="Create" /> <input type="reset"
 					value="Cancel" />
 			</fieldset>
-
-
 		</form>
+		
+		<h3>${error}</h3>
 	</div>
 </body>
 </html>

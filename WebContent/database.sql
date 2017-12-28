@@ -98,20 +98,33 @@ CREATE TABLE REPORT
 			REFERENCES employee(id)
 			ON UPDATE CASCADE ON DELETE RESTRICT	
 );
+
+CREATE TABLE REPORT_TEMPLATE
+(
+	id int(11) AUTO_INCREMENT PRIMARY KEY,
+	templateName varchar(30) NOT NULL,
+	departmentId int(11) NOT NULL,
+	sec1_title varchar(30) NOT NULL,
+	sec2_title varchar(30) NOT NULL,
+	sec3_title varchar(30) NOT NULL,
+	sec1_criteria varchar(255) NOT NULL,
+	sec2_criteria varchar(255) NOT NULL,
+	sec3_criteria varchar(255) NOT NULL,
+	
+	UNIQUE(templateName, departmentId),
+	
+	INDEX(departmentId),
+	
+	FOREIGN KEY(departmentId)
+		REFERENCES department(id)
+		ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
 CREATE TABLE REPORT_SECTION
 (
 	id int(20) AUTO_INCREMENT PRIMARY KEY,
-	sectionTitle varchar(255),
-	crit1 varchar(255) NOT NULL,
-	eval1 int(1) NOT NULL,
-	crit2 varchar(255),
-	eval2 int(1),
-	crit3 varchar(255),
-	eval3 int(1),
-	crit4 varchar(255),
-	eval4 int(1),
-	crit5 varchar(255),
-	eval5 int(1),
+	sectionTitle varchar(30),
+	criteria varchar(255) NOT NULL,
 	comment varchar(255),
 	reportId int(11),
 

@@ -7,6 +7,7 @@ import classes.Employee;
 import classes.Group;
 import classes.Report;
 import classes.ReportItem;
+import classes.ReportTemplate;
 
 import java.sql.*;
 
@@ -184,6 +185,88 @@ public class DatabaseAccess {
 			return "failed: " + e.getMessage();
 		}
 	}
+	
+	public static String insertReportTemplate(ReportTemplate template) throws Exception
+	{
+	    sql = "INSERT INTO REPORT_TEMPLATE(templateName, departmentId, "
+	            + "sec1_title, sec2_title, sec3_title, sec1_criteria, "
+	            + "sec2_criteria, sec3_criteria) VALUES(?,?,?,?,?,?,?,?);";
+	    try {
+	        conn = connectDatabase();
+	        stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, template.getTemplateName());
+	        stmt.setInt(2, template.getDepartmentId());
+	        stmt.setString(3, template.getSec1Title());
+	        stmt.setString(4, template.getSec2Title());
+	        stmt.setString(5, template.getSec3Title());
+	        stmt.setString(6, template.getSec3Title());
+	        stmt.setString(7, template.getSec3Title());
+	        stmt.setString(8, template.getSec3Title());
+	        stmt.execute();
+	        
+	        conn.close();
+	        return "success";
+	    }catch(Exception e) {
+	        throw e;
+	    }
+	}
+	
+	public static ReportTemplate getReportTemplateByNameDepId(String templateName, int departmentId)
+	throws Exception
+	{
+	    ReportTemplate template = new ReportTemplate();
+	    sql = "SELECT * FROM REPORT_TEMPLATE WHERE templateName = ? AND departmentId = ?;";
+	    try
+	    {
+	        conn = connectDatabase();
+	        stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, templateName);
+	        stmt.setInt(2, departmentId);
+	        rs = stmt.executeQuery();
+	        
+	        while(rs.next()) 
+	        {
+	            template.setId(rs.getInt("id"));
+	            template.setTemplateName(rs.getString("templateName"));
+	            template.setDepartmentId(rs.getInt("departmentId"));
+	            template.setSec1Title(rs.getString("sec1_title"));
+	            template.setSec2Title(rs.getString("sec2_title"));
+	            template.setSec3Title(rs.getString("sec3_title"));
+	            template.setSec1Criteria(rs.getString("sec1_criteria"));
+	            template.setSec2Criteria(rs.getString("sec2_criteria"));
+	            template.setSec3Criteria(rs.getString("sec3_criteria"));
+	        }
+	        conn.close();
+	        return template;
+	    }
+	    catch(Exception e) { throw e; }	    
+	}
+	
+    public static ArrayList<String> getReportTemplatesByDepId(int departmentId)
+    throws Exception
+    {
+        ArrayList<String> templateNames = new ArrayList<>();
+        sql = "SELECT templateName FROM REPORT_TEMPLATE WHERE departmentId = ?;";
+        
+        try
+        {
+            conn = connectDatabase();
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, departmentId);
+            rs = stmt.executeQuery();
+            
+            while(rs.next()) 
+            {
+                String name = rs.getString("templateName");
+                templateNames.add(name);
+            }
+            conn.close();
+            return templateNames;
+        }
+        catch(Exception e) { throw e; }     
+    }	
+	
+	
 	/*
 	public static int insertReport(Report report)
 	{
