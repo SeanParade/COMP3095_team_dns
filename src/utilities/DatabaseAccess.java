@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import classes.Department;
 import classes.Employee;
 import classes.Group;
-import classes.Report;
-import classes.ReportItem;
 import classes.ReportTemplate;
 
 import java.sql.*;

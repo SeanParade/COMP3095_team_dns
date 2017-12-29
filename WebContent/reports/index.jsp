@@ -14,6 +14,9 @@
 		<h3>
 			<a href="CreateReport">Create a Report Template</a>
 		</h3>
+		<h3>
+		    <a href="EnterReport">Enter a Report</a>
+		</h3>
 	</div>
 </body>
 </html>

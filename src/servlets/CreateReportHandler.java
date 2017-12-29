@@ -2,18 +2,11 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.catalina.tribes.util.Arrays;
 
 import classes.Department;
 import classes.ReportTemplate;
@@ -102,7 +95,8 @@ public class CreateReportHandler extends HttpServlet {
 	        } 
 	        catch (Exception e) 
 	        {
-	            errorMsg = "Database Error. Please check that your information is valid.";
+	            errorMsg = "Database Error. Please check that your information is valid and that a report template of that name"
+	                    + "doesn't already exist for the selected department.";
 	        }
 	    }
 	    else 

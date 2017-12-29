@@ -120,6 +120,13 @@ CREATE TABLE REPORT_TEMPLATE
 		ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
+INSERT INTO REPORT_TEMPLATE (id, templateName, departmentId, sec1_title, sec2_title, sec3_title, 
+                             sec1_criteria, sec2_criteria, sec3_criteria) VALUES 
+(0000, "Sample Report", 4, "Contribution", "Responsibility", "Value", 
+"Research and Gathering,4,Sharing Information,3,Using Time Wisely,4,Ready to Work,5",
+"Fulfill Teams Role,4,Sharing Work Equally,5,Helping Team Members,4",
+"Listens to others,5,Include Teammates,4,Make fair decisions,3");
+
 CREATE TABLE REPORT_SECTION
 (
 	id int(20) AUTO_INCREMENT PRIMARY KEY,
