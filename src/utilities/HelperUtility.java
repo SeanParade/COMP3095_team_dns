@@ -1,6 +1,8 @@
 package utilities;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import javax.servlet.http.Cookie;
@@ -117,6 +119,32 @@ public class HelperUtility {
 		else {
 			return "fail";
 		}
+	}
+	
+	public static String parseTemplateCriteria(String[] secCrit, String[] secEval)
+	/**
+	 * Takes the Criteria and Maximum Evaluation from report template input and returns 
+	 * a CSV string that alternates between the Criteria and the Max Evaluation while
+	 * throwing out empty inputs and unmatched evaluation numbers
+	 * 
+	 * @param secCrit  String array containing criteria input from the report template creation form
+	 * @param secEval  String array containing evaluation input from the report template creation form
+	 * @return         Properly formatted csv string with alternating data from the two arrays to be 
+	 *                 stored into the database.
+	 */
+	{
+	    String critString = "";
+	    ArrayList<String> secCritList = new ArrayList<String>(Arrays.asList(secCrit));
+	    //remove empty Criteria values
+	    secCritList.removeAll(Arrays.asList("",null));
+	    
+	    for(int i = 0; i < secCritList.size(); i++) {
+	        critString += secCritList.get(i) + "," + secEval[i];
+	        //as long as not the last iteration add trailing comma
+	        if(i+1 < secCritList.size())
+	            critString += ",";
+	    }	    
+	    return critString;
 	}
 	
 }

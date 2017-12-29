@@ -199,9 +199,9 @@ public class DatabaseAccess {
 	        stmt.setString(3, template.getSec1Title());
 	        stmt.setString(4, template.getSec2Title());
 	        stmt.setString(5, template.getSec3Title());
-	        stmt.setString(6, template.getSec3Title());
-	        stmt.setString(7, template.getSec3Title());
-	        stmt.setString(8, template.getSec3Title());
+	        stmt.setString(6, template.getSec1Criteria());
+	        stmt.setString(7, template.getSec2Criteria());
+	        stmt.setString(8, template.getSec3Criteria());
 	        stmt.execute();
 	        
 	        conn.close();

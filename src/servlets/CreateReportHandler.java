@@ -18,6 +18,7 @@ import org.apache.catalina.tribes.util.Arrays;
 import classes.Department;
 import classes.ReportTemplate;
 import utilities.DatabaseAccess;
+import utilities.HelperUtility;
 
 /**
  * Servlet implementation class CreateReportHandler
@@ -36,7 +37,9 @@ public class CreateReportHandler extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+	        throws ServletException, IOException 
+	{
 		ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
 		
 		try{ request.setAttribute("departments", departmentList); }
@@ -50,59 +53,66 @@ public class CreateReportHandler extends HttpServlet {
 	 * Create Report:
 	 * 
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+	        throws ServletException, IOException 
 	{
-	    String errorMsg = "";
-	    String templateName = request.getParameter("templateName");
-	    int departmentId = Integer.parseInt(request.getParameter("departmentId"));
-	    String sec1Title = request.getParameter("sec1Title");
-	    String sec2Title = request.getParameter("sec2Title");
-	    String sec3Title = request.getParameter("sec3Title");
-	    // create csv for criteria to store in database 
-	    String sec1Criteria = String.join(",", request.getParameterValues("s1criteria"));
-	    String sec2Criteria = String.join(",", request.getParameterValues("s2criteria"));
-	    String sec3Criteria = String.join(",", request.getParameterValues("s3criteria"));
+	   
+	   ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
+	        
+	   try{ request.setAttribute("departments", departmentList); }
+	   catch (Exception e){ e.getMessage();} 
+	   
+	   String errorMsg = "";
+	    // Check if all fields were entered
+	    errorMsg += HelperUtility.emptyFieldsCheck(new String[] {
+	            "templateName", "departmentId", "sec1Title", "sec2Title",
+	            "sec3Title", "s1criteria", "s2criteria", "s3criteria",
+	    }, request);
 	    
-	    boolean invalid = false;
-	    // form validity rules
-	    boolean[] rules = {
-	            templateName.isEmpty(),
-	            sec1Title.isEmpty(),
-	            sec2Title.isEmpty(),
-	            sec3Title.isEmpty(),
-	            sec1Criteria.isEmpty(),
-	            sec2Criteria.isEmpty(),
-	            sec3Criteria.isEmpty()
-	    };
-	    // loop rules. if a rule is broken, set the invalid flag to true
-	    for(boolean rule:rules) {
-	        if(rule)
-	            invalid = true;
-	    }
-	    
-	    if(!invalid) {
-	    // build report object from form input
-	        try 
+	    if(errorMsg.equals("")) {
+	        try
 	        {
+	            String templateName = request.getParameter("templateName");
+	            int departmentId = 0;
+
+	            departmentId = Integer.parseInt(request.getParameter("departmentId"));
+
+	            String sec1Title = request.getParameter("sec1Title");
+	            String sec2Title = request.getParameter("sec2Title");
+	            String sec3Title = request.getParameter("sec3Title");
+
+	            String sec1Criteria = HelperUtility.parseTemplateCriteria(
+	                    request.getParameterValues("s1criteria"), 
+	                    request.getParameterValues("s1eval"));
+	            String sec2Criteria = HelperUtility.parseTemplateCriteria(
+	                    request.getParameterValues("s2criteria"), 
+	                    request.getParameterValues("s2eval"));
+	            String sec3Criteria = HelperUtility.parseTemplateCriteria(
+	                    request.getParameterValues("s3criteria"), 
+	                    request.getParameterValues("s3eval"));
+
+	            // build report template object from form input and insert to db
 	            ReportTemplate template = new ReportTemplate
-                    (templateName, departmentId, sec1Title, sec2Title, sec3Title,
-                            sec1Criteria, sec2Criteria, sec3Criteria);
-            
-                DatabaseAccess.insertReportTemplate(template);
-	        } catch (Exception e) {
+	                    (templateName, departmentId, sec1Title, sec2Title, sec3Title,
+	                            sec1Criteria, sec2Criteria, sec3Criteria);
+
+	            DatabaseAccess.insertReportTemplate(template);
+	            request.getRequestDispatcher("/reports/index.jsp").forward(request, response);
+	            return;
+	        } 
+	        catch (Exception e) 
+	        {
 	            errorMsg = "Database Error. Please check that your information is valid.";
-	            e.printStackTrace();
-        }
-	    }else {
+	        }
+	    }
+	    else 
+	    {
 	        errorMsg = "All details, all Section Titles, and at least "
 	                + "one criteria in each section is required.";
-	        request.setAttribute("error", errorMsg);
 	    }
-	    if(errorMsg.equals(""))
-	        request.getRequestDispatcher("/reports/index.jsp").forward(request, response);    
-	    else
-	        request.getRequestDispatcher("/reports/create_report.jsp").forward(request, response);
-	        
+	    
+        request.setAttribute("error", errorMsg);
+        doGet(request,response);       
 	}
 
 }

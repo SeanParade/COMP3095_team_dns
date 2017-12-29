@@ -38,17 +38,17 @@
 				</legend>
 				<fieldset>
 					<label>Criteria 1:</label> <input type="text" name="s1criteria" />
-					<label>Maximum: </label> <select name="s1criteria">
+					<label>Maximum: </label> <select name="s1eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
-						<option value="5">5</option>
+						<option value="5" selected>5</option>
 					</select> 
 					<br /> 
 					<label>Criteria 2:</label> <input type="text" name="s1criteria" /> 
 						<label>Maximum: </label> 
-						<select	name="s1criteria">
+						<select	name="s1eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -56,7 +56,7 @@
 						<option value="5">5</option>
 					</select> <br /> <label for=>Criteria 3:</label> <input type="text"
 						name="s1criteria" /> <label>Maximum: </label> <select
-						name="s1criteria">
+						name="s1eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -64,7 +64,7 @@
 						<option value="5">5</option>
 					</select> <br /> <label>Criteria 4:</label> <input type="text"
 						name="s1criteria" /> <label>Maximum: </label> <select
-						name="s1criteria">
+						name="s1eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -72,7 +72,7 @@
 						<option value="5">5</option>
 					</select> <br /> <label>Criteria 5:</label> <input type="text"
 						name="s1criteria" /> <label>Maximum: </label> <select
-						name="s1criteria">
+						name="s1eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -87,15 +87,15 @@
 				</legend>
 				<fieldset>
 					<label>Criteria 1:</label> <input type="text" name="s2criteria" />
-					<label>Maximum: </label> <select name="s2criteria">
+					<label>Maximum: </label> <select name="s2eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
-						<option value="5">5</option>
+						<option value="5" selected>5</option>
 					</select> <br /> <label>Criteria 2:</label> <input type="text"
 						name="s2criteria" /> <label>Maximum: </label> <select
-						name="s2criteria">
+						name="s2eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -103,7 +103,7 @@
 						<option value="5">5</option>
 					</select> <br /> <label for=>Criteria 3:</label> <input type="text"
 						name="s2criteria" /> <label>Maximum: </label> <select
-						name="s2criteria">
+						name="s2eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -118,15 +118,15 @@
 				</legend>
 				<fieldset>
 					<label>Criteria 1:</label> <input type="text" name="s3criteria" />
-					<label>Maximum: </label> <select name="s3criteria">
+					<label>Maximum: </label> <select name="s3eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
-						<option value="5">5</option>
+						<option value="5" selected>5</option>
 					</select> <br /> <label>Criteria 2:</label> <input type="text"
 						name="s3criteria" /> <label>Maximum: </label> <select
-						name="s3criteria">
+						name="s3eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -134,7 +134,7 @@
 						<option value="5">5</option>
 					</select> <br /> <label for=>Criteria 3:</label> <input type="text"
 						name="s3criteria" /> <label>Maximum: </label> <select
-						name="s3criteria">
+						name="s3eval">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
