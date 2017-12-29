@@ -266,7 +266,26 @@ public class DatabaseAccess {
         catch(Exception e) { throw e; }     
     }	
 	
-	
+    public static String insertEmployeeAttendance(int employeeId, Date date)
+	{
+		sql = "INSERT INTO EMPLOYEE_ATTENDANCE(date, present, employeeId) VALUES (?,?,?);";
+		try {
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setDate(1, date);
+			stmt.setInt(2, 1);
+			stmt.setInt(3, employeeId);
+			stmt.execute();
+			
+			conn.close();
+			return "success";	
+		}catch (Exception e) {
+			return "failed: " + e.getMessage();
+		}
+		
+		
+	}
+    
 	/*
 	public static int insertReport(Report report)
 	{
