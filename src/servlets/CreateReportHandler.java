@@ -52,8 +52,11 @@ public class CreateReportHandler extends HttpServlet {
 	   
 	   ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
 	        
-	   try{ request.setAttribute("departments", departmentList); }
-	   catch (Exception e){ e.getMessage();} 
+	   try{ 
+	       request.setAttribute("departments", departmentList); 
+	   } catch (Exception e){
+	       e.getMessage();
+	   } 
 	   
 	   String errorMsg = "";
 	    // Check if all fields were entered

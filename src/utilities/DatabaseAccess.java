@@ -209,17 +209,16 @@ public class DatabaseAccess {
 	    }
 	}
 	
-	public static ReportTemplate getReportTemplateByNameDepId(String templateName, int departmentId)
+	public static ReportTemplate getReportTemplateById(int id)
 	throws Exception
 	{
 	    ReportTemplate template = new ReportTemplate();
-	    sql = "SELECT * FROM REPORT_TEMPLATE WHERE templateName = ? AND departmentId = ?;";
+	    sql = "SELECT * FROM REPORT_TEMPLATE WHERE id = ?;";
 	    try
 	    {
 	        conn = connectDatabase();
 	        stmt = conn.prepareStatement(sql);
-	        stmt.setString(1, templateName);
-	        stmt.setInt(2, departmentId);
+	        stmt.setInt(1, id);
 	        rs = stmt.executeQuery();
 	        
 	        while(rs.next()) 
@@ -240,11 +239,11 @@ public class DatabaseAccess {
 	    catch(Exception e) { throw e; }	    
 	}
 	
-    public static ArrayList<String> getReportTemplatesByDepId(int departmentId)
+    public static ArrayList<ReportTemplate> getReportTemplatesByDepId(int departmentId)
     throws Exception
     {
-        ArrayList<String> templateNames = new ArrayList<>();
-        sql = "SELECT templateName FROM REPORT_TEMPLATE WHERE departmentId = ?;";
+        ArrayList<ReportTemplate> templatesList = new ArrayList<>();
+        sql = "SELECT * FROM REPORT_TEMPLATE WHERE departmentId = ?;";
         
         try
         {
@@ -255,11 +254,20 @@ public class DatabaseAccess {
             
             while(rs.next()) 
             {
-                String name = rs.getString("templateName");
-                templateNames.add(name);
+                ReportTemplate template = new ReportTemplate();
+                template.setId(rs.getInt("id"));
+                template.setTemplateName(rs.getString("templateName"));
+                template.setDepartmentId(rs.getInt("departmentId"));
+                template.setSec1Title(rs.getString("sec1_title"));
+                template.setSec2Title(rs.getString("sec2_title"));
+                template.setSec3Title(rs.getString("sec3_title"));
+                template.setSec1Criteria(rs.getString("sec1_criteria"));
+                template.setSec2Criteria(rs.getString("sec2_criteria"));
+                template.setSec3Criteria(rs.getString("sec3_criteria"));
+                templatesList.add(template);
             }
             conn.close();
-            return templateNames;
+            return templatesList;
         }
         catch(Exception e) { throw e; }     
     }	
@@ -280,8 +288,6 @@ public class DatabaseAccess {
 		}catch (Exception e) {
 			return "failed: " + e.getMessage();
 		}
-		
-		
 	}
     
 	/*
@@ -465,10 +471,12 @@ public class DatabaseAccess {
 				String last = rs.getString("lastName");
 				String email = rs.getString("email");
 				String userName = rs.getString("username");
+				int departmentId = rs.getInt("departmentId");
 				user.setEmployeeId(userId);
 				user.setFirstName(first);
 				user.setLastName(last);
 				user.setEmail(email);
+				user.setDepartmentId(departmentId);
 				user.setUsername(userName);
 				user.setPassword("");
 				user.setToken(token);
