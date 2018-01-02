@@ -41,9 +41,9 @@
 				<br/>
 				<label>Report-Type:</label>
 				<fieldset>
-					<input type="radio" name="reportType" id="groupType" value="group" />
+					<input type="radio" name="reportType" id="groupType" value="group" onclick="disable(this)"/>
 					<label for="groupType">Group</label>
-					<input type="radio" name="reportType" id="employeeType" value="employee" />
+					<input type="radio" name="reportType" id="employeeType" value="employee" onclick="disable(this)" />
 					<label for="employeeType">Employee</label>
 				</fieldset>
 				<select
@@ -71,7 +71,7 @@
 				<fieldset>  
 					<c:forEach var="s1m" items="${section1Map}" >
 						<input type="text" name="s1criteria" value="${s1m.key}" disabled/>
-						<select name="s1eval" class="evaluation">
+						<select name="s1eval" class="evaluation" onchange="calculateSum()">
 							<c:forEach var="i" begin="1" end="${s1m.value}">
 							    <option value="${i}">${i}</option>
 							</c:forEach>
@@ -88,7 +88,7 @@
 				<fieldset>  
 					<c:forEach var="s2m" items="${section2Map}" >
 						<input type="text" name="s2criteria" value="${s2m.key}" disabled/>
-						<select name="s2eval" class="evaluation">
+						<select name="s2eval" class="evaluation" onchange="calculateSum()">
 							<c:forEach var="i" begin="1" end="${s2m.value}">
 							    <option value="${i}">${i}</option>
 							</c:forEach>
@@ -106,7 +106,7 @@
 				<fieldset>  
 					<c:forEach var="s3m" items="${section3Map}" >
 						<input type="text" name="s3criteria" value="${s3m.key}" disabled/>
-						<select name="s3eval" class="evaluation">
+						<select name="s3eval" class="evaluation" onchange="calculateSum()">
 							<c:forEach var="i" begin="1" end="${s3m.value}">
 							    <option value="${i}">${i}</option>
 							</c:forEach>
@@ -127,8 +127,36 @@
 	</div>
 	<script>	    	
        //function for getting sum of evaluations and populating
-       
+       function calculateSum()
+       {
+    	   var sum = 0;
+    	   var x = document.getElementsByClassName("evaluation");
+    	   for (var i=0; i<x.length; i++)
+    		   {
+    		   		sum+= x[i].value;
+    		   }
+    	   document.getElementById("sumBox").value = sum;
+       }
        // disable drop down list based on selection of employee rb or group rb
+       function disable(element){
+    	if(element.id == "groupType") 
+    		{
+    			//disable employee dropdown
+				 document.getElementById("ddlEmployee").disabled = true;   		
+    			//enable group dropdown
+    			document.getElementById("ddlGroup").disabled = false;
+    		}
+    	if(element.id == "employeeType")
+    		{
+    			//disable group dropdown
+    			document.getElementById("ddlGroup").disabled = true;   		
+				//enable employee dropdown
+				document.getElementById("ddlEmployee").disabled = false;
+    			
+    		}
+    	
+       }
+       
        
 	</script>
 </body>
