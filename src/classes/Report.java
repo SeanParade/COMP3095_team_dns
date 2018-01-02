@@ -1,110 +1,61 @@
 package classes;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
-public class Report {
-	
-	private int reportId;
-	private String template;
-	private String title;
-	private Date date;
-	private String reportType;
-	
-	private int departmentId;
-	private int employeeId;
-	private int groupId;
-	
-	private ArrayList<ReportItem> items;
-	private int totalEvaluation;
-	
-	//default constructor
-	public Report()
-	{
-		
-	}
-	public Report(int reportId, String template, String title, Date date, String reportType,
-			int departmentId, ArrayList<ReportItem> items)
-	{
-		this.reportId = reportId;
-		this.template = template;
-		this.title = title;
-		this.date = date;
-		this.reportType = reportType;
-		this.departmentId = departmentId;
-		this.items = items;
-	}
-	public Report(String template, String title, Date date, String reportType, 
-			int departmentId, ArrayList<ReportItem> items)
-	{
-		this.template = template;
-		this.title = title;
-		this.date = date;
-		this.reportType = reportType;
-		this.departmentId = departmentId;
-		this.items = items;
-	}
-	//getters and setters
-	public int getReportId() {
-		return reportId;
-	}
-	public void setReportId(int reportId) {
-		this.reportId = reportId;
-	}
-	public String getTemplate() {
-		return template;
-	}
-	public void setTemplate(String template) {
-		this.template = template;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	public String getReportType() {
-		return reportType;
-	}
-	public void setReportType(String reportType) {
-		this.reportType = reportType;
-	}
-	public int getDepartmentId() {
-		return departmentId;
-	}
-	public void setDepartmentId(int departmentId) {
-		this.departmentId = departmentId;
-	}
-	public int getEmployeeId() {
-		return employeeId;
-	}
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
-	public int getGroupId() {
-		return groupId;
-	}
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
-	}
-	public ArrayList<ReportItem> getItems() {
-		return items;
-	}
-	public void setItems(ArrayList<ReportItem> items) {
-		this.items = items;
-	}
-	public int getTotalEvaluation() {
-		return totalEvaluation;
-	}
-	public void setTotalEvaluation(int totalEvaluation) {
-		this.totalEvaluation = totalEvaluation;
-	}
+public class Report extends ReportTemplate {
+    private String reportTitle;
+    private String reportType;
+    private int evaluationMax;
+    private int evaluation;
+    private Date date;
+    
+    public Report() {}
 
+    public Report(String templateName, int departmentId, String sec1Title, String sec2Title, String sec3Title,
+            String sec1Criteria, String sec2Criteria, String sec3Criteria, String reportTitle, 
+            String reportType, int evaluationMax, int evaluation, Date date) {
+        super(templateName, departmentId, sec1Title, sec2Title, sec3Title, sec1Criteria, sec2Criteria, sec3Criteria);
+    }
+
+    public String getReportTitle() {
+        return reportTitle;
+    }
+
+    public void setReportTitle(String reportTitle) {
+        this.reportTitle = reportTitle;
+    }
+
+    public String getReportType() {
+        return reportType;
+    }
+
+    public void setReportType(String reportType) {
+        this.reportType = reportType;
+    }
+
+    public int getEvaluationMax() {
+        return evaluationMax;
+    }
+
+    public void setEvaluationMax(int evaluationMax) {
+        this.evaluationMax = evaluationMax;
+    }
+
+    public int getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(int evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
+    
 }
-

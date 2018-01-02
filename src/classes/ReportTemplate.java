@@ -12,10 +12,6 @@ public class ReportTemplate {
     private String sec1CriteriaCSV;
     private String sec2CriteriaCSV;
     private String sec3CriteriaCSV;
-    private TreeMap<String, Integer> sec1Map;
-    private TreeMap<String, Integer> sec2Map;
-    private TreeMap<String, Integer> sec3Map;
-    private static int evaluationMaximum = 0;
     
     public ReportTemplate() {}
     
@@ -86,7 +82,21 @@ public class ReportTemplate {
         this.sec3CriteriaCSV = sec3Criteria;
     }
     public int getMaximumEvaluation() {
-       return calculateEvaluationMaximum();
+        int sum = 0;
+        try{
+            String[][] criteria = { 
+                    this.sec1CriteriaCSV.split(","), 
+                    this.sec2CriteriaCSV.split(","),
+                    this.sec3CriteriaCSV.split(",")};            
+            
+            for(int i = 0; i < criteria.length; i++) 
+                for(int j = 0; j < criteria[i].length; j+=2) 
+                    sum += Integer.parseInt(criteria[i][j+1]);
+        }       
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return sum;
     }    
     public TreeMap<String,Integer> getS1Map(){
         return generateReportSection(this.sec1CriteriaCSV);
@@ -104,40 +114,14 @@ public class ReportTemplate {
     // in generating the report form and totals the max evaluation score a report may have
     {
         TreeMap<String,Integer> sectionMap = new TreeMap<String,Integer>();
-        try 
-        {
+        try {
             String[] sectionArray = sectionCSV.split(",");
-
-            for(int i = 0; i < sectionArray.length; i+=2) {
-                sectionMap.put(sectionArray[i],
-                        Integer.parseInt(sectionArray[i+1]));
-            }
+            for(int i = 0; i < sectionArray.length; i+=2)
+                sectionMap.put(sectionArray[i], Integer.parseInt(sectionArray[i+1]));
         }       
         catch(Exception e) {
             e.printStackTrace();
         }
         return sectionMap;      
-    }
-    protected int calculateEvaluationMaximum()
-    {
-        int sum = 0;
-        try 
-        {
-            String[][] criteria = {
-                    this.sec1CriteriaCSV.split(","), 
-                    this.sec2CriteriaCSV.split(","), 
-                    this.sec3CriteriaCSV.split(",")
-                    };
-            
-            for(int i = 0; i < criteria.length; i++) {
-                for(int j = 0; j < criteria[i].length; j+=2) {
-                    sum += Integer.parseInt(criteria[i][j+1]);
-                }
-            }
-        }       
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        return sum;      
     }
 }
