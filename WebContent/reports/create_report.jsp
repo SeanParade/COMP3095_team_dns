@@ -22,7 +22,7 @@
 				<label>Report Template: </label> <input type="text"
 					name="templateName" /> <label>Date: </label> <input type="text"
 					name="report-date" id="report-date"
-					value='<fmt:formatDate value="${date}" pattern='dd-MM-yyyy'/>'
+					value='<fmt:formatDate value="${date}" pattern='dd/MM/yyyy'/>'
 					disabled> <br /> <label>Department: </label> <select
 					name="departmentId" id="ddlDepartment">
 					<c:forEach items="${departments}" var="department">

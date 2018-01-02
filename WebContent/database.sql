@@ -55,7 +55,7 @@ CREATE TABLE EMPLOYEE
 
 INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, role, departmentId, username, password)
 VALUES
-(0000, "admin", "!", "admin@domain.ca", "2015", "Administrator", 4, "admin", "admin"),
+(0000, "Sergio", "Santilli", "admin@domain.ca", "2015", "Administrator", 4, "admin", "admin"),
 #accounting
 (1001,"Rich", "Gregory", "rich.gregory@gmail.com", "2017", "Accountant", 1, "rgregory", "password"),
 (1002, "Nita", "Cochrane", "nita.cochrane@gmail.com", "2017", "Accountant", 1, "ncochrane", "password"),
@@ -123,7 +123,7 @@ CREATE TABLE REPORT_TEMPLATE
 INSERT INTO REPORT_TEMPLATE (id, templateName, departmentId, sec1_title, sec2_title, sec3_title, 
                              sec1_criteria, sec2_criteria, sec3_criteria) VALUES 
 (0000, "Sample Report", 4, "Contribution", "Responsibility", "Value", 
-"Research and Gathering,4,Sharing Information,3,Using Time Wisely,4,Ready to Work,5",
+"Research and Gathering,4,Sharing Information,4,Using Time Wisely,4,Ready to Work,5",
 "Fulfill Teams Role,4,Sharing Work Equally,5,Helping Team Members,4",
 "Listens to others,5,Include Teammates,4,Make fair decisions,3");
 

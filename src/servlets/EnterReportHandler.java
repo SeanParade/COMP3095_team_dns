@@ -2,8 +2,6 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import classes.Department;
 import classes.Employee;
+import classes.Group;
 import classes.ReportTemplate;
 import utilities.DatabaseAccess;
 
@@ -22,6 +22,7 @@ import utilities.DatabaseAccess;
 @WebServlet("/reports/EnterReport")
 public class EnterReportHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -78,41 +79,30 @@ public class EnterReportHandler extends HttpServlet {
 	        {
 	            int templateId = Integer.parseInt(templateChoice);
 	            ReportTemplate selectedTemplate = DatabaseAccess.getReportTemplateById(templateId);
-	            request.setAttribute("section1Map", 
-	                    generateReportSection(selectedTemplate.getSec1Criteria()));
-	            request.setAttribute("section2Map", 
-	                    generateReportSection(selectedTemplate.getSec2Criteria()));
-	            request.setAttribute("section3Map", 
-	                    generateReportSection(selectedTemplate.getSec3Criteria()));
-	            request.setAttribute("template", selectedTemplate);
-	            request.getRequestDispatcher("/reports/enter_report.jsp").forward(request, response);
+	            // Map criteria and evaluations as attributes
+	            request.setAttribute("section1Map", selectedTemplate.getS1Map());
+	            request.setAttribute("section2Map", selectedTemplate.getS2Map());
+	            request.setAttribute("section3Map", selectedTemplate.getS3Map());
 	            
-	        } catch(Exception e)
-	        {
+	            // Template object as attribute
+	            request.setAttribute("template", selectedTemplate);
+	            // Department name as attribute
+	            Department d = DatabaseAccess.selectDepartmentById(selectedTemplate.getDepartmentId());
+	            request.setAttribute("departmentName", d.getDepartmentName());
+	            // Employees of that department as list attribute
+	            ArrayList<Employee> depEmployees = DatabaseAccess.selectEmployeesByDepartment(selectedTemplate.getDepartmentId());
+	            request.setAttribute("employees", depEmployees);
+	            // Groups of that department as attribute
+	            ArrayList<Group> depGroups = DatabaseAccess.selectGroupsByDepartment(selectedTemplate.getDepartmentId());
+	            request.setAttribute("groups", depGroups);	            
+	            
+	            request.setAttribute("evaluationMaximum", selectedTemplate.getMaximumEvaluation());
+	            
+	            
+	            request.getRequestDispatcher("/reports/enter_report.jsp").forward(request, response);   
+	        } catch(Exception e) {
 	            e.getMessage();
-	        }
-	        
+	        }	        
 	    }
-	}
-	
-   protected static Map<String,Integer> generateReportSection(String sectionCSV)
-    // converts the csv for a section stored into the database to a map usable 
-    // in generating the report form
-    {
-        Map<String,Integer> sectionMap = new TreeMap<String,Integer>();
-        try 
-        {
-            String[] sectionArray = sectionCSV.split(",");
-
-            for(int i = 0; i < sectionArray.length; i+=2) {
-                sectionMap.put(sectionArray[i],
-                        Integer.parseInt(sectionArray[i+1]));
-            }
-        }       
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        return sectionMap;      
-    }
-    
+	}    
 }
