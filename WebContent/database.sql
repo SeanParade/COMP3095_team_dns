@@ -73,32 +73,6 @@ VALUES
 (5001, "Sui", "Layne", "sui.layne@gmail.com", "2017", "HR Manager", 5, "slayne", "password"),
 (5002, "Leota", "Luckett", "leota.luckett@gmail.com", "2017", "HR Advisor", 5, "lluckett", "password");
 
-CREATE TABLE REPORT
-(
-	id int(11) AUTO_INCREMENT PRIMARY KEY,
-	templateName varchar(255) NOT NULL,
-	title varchar(255) NOT NULL UNIQUE,
-	date DATE NOT NULL,
-	departmentId int(11) NOT NULL,
-	groupId int(11),
-	employeeId int(11),
-	totalEvaluation int(2),
-
-		INDEX(departmentId), INDEX(groupId), INDEX(employeeId),
-
-		FOREIGN KEY(departmentId)
-			REFERENCES department(id)
-			ON UPDATE CASCADE ON DELETE RESTRICT,
-
-		FOREIGN KEY(groupId)
-			REFERENCES egroup(id)
-			ON UPDATE CASCADE ON DELETE RESTRICT,
-
-		FOREIGN KEY(employeeId)
-			REFERENCES employee(id)
-			ON UPDATE CASCADE ON DELETE RESTRICT	
-);
-
 CREATE TABLE REPORT_TEMPLATE
 (
 	id int(11) AUTO_INCREMENT PRIMARY KEY,
@@ -127,19 +101,40 @@ INSERT INTO REPORT_TEMPLATE (id, templateName, departmentId, sec1_title, sec2_ti
 "Fulfill Teams Role,4,Sharing Work Equally,5,Helping Team Members,4",
 "Listens to others,5,Include Teammates,4,Make fair decisions,3");
 
-CREATE TABLE REPORT_SECTION
+CREATE TABLE REPORT
 (
-	id int(20) AUTO_INCREMENT PRIMARY KEY,
-	sectionTitle varchar(30),
-	criteria varchar(255) NOT NULL,
-	comment varchar(255),
-	reportId int(11),
+	id int(11) AUTO_INCREMENT PRIMARY KEY,
+	templateId int(11) NOT NULL,
+    templateName varchar(255) NOT NULL,
+	title varchar(255) NOT NULL,
+    reportType varchar(15) NOT NULL,
+    sec1_evaluation varchar(50) NOT NULL,
+	sec2_evaluation varchar(50) NOT NULL,
+	sec3_evaluation varchar(50) NOT NULL,
+	date DATE NOT NULL,
+	departmentId int(11) NOT NULL,
+	groupId int(11),
+	employeeId int(11),
+	totalEvaluation int(2),
+    
+		UNIQUE(templateId, title),
+		INDEX(templateId), INDEX(departmentId), INDEX(groupId), INDEX(employeeId),
 
-	INDEX(reportId),
-	
-	FOREIGN KEY(reportId)
-		REFERENCES report(id)
-		ON UPDATE CASCADE ON DELETE RESTRICT
+		FOREIGN KEY(departmentId)
+			REFERENCES department(id)
+			ON UPDATE CASCADE ON DELETE RESTRICT,
+            
+		FOREIGN KEY(templateId)
+			REFERENCES report_template(id)
+			ON UPDATE CASCADE ON DELETE RESTRICT,
+
+		FOREIGN KEY(groupId)
+			REFERENCES egroup(id)
+			ON UPDATE CASCADE ON DELETE RESTRICT,
+
+		FOREIGN KEY(employeeId)
+			REFERENCES employee(id)
+			ON UPDATE CASCADE ON DELETE RESTRICT	
 );
 
 CREATE TABLE EMPLOYEE_ATTENDANCE

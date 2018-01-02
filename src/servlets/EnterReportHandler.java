@@ -95,7 +95,7 @@ public class EnterReportHandler extends HttpServlet {
 	            // Groups of that department as attribute
 	            ArrayList<Group> depGroups = DatabaseAccess.selectGroupsByDepartment(selectedTemplate.getDepartmentId());
 	            request.setAttribute("groups", depGroups);	            
-	            
+	            // maximum evaluation as attribute
 	            request.setAttribute("evaluationMaximum", selectedTemplate.getMaximumEvaluation());
 	            
 	            
