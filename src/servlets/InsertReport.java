@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
@@ -63,7 +62,8 @@ public class InsertReport extends HttpServlet {
                         request.getParameterValues("s3criteria"), request.getParameterValues("s3eval"));
                 
                 SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-                Date rDate = (Date) formatter.parse(request.getParameter("reportDate"));
+                java.util.Date rDate = (java.util.Date) formatter.parse(request.getParameter("reportDate"));
+                java.sql.Date sqlDate = new java.sql.Date(rDate.getTime());
                 String reportTitle = request.getParameter("reportTitle");
                 String reportType = request.getParameter("reportType");
                 int evalTotal = Integer.parseInt(request.getParameter("evaluationTotal"));                
@@ -75,7 +75,7 @@ public class InsertReport extends HttpServlet {
                         sec2Criteria, sec3Criteria,
                         template.getId(), reportTitle,
                         reportType, template.getMaximumEvaluation(),
-                        evalTotal, rDate );
+                        evalTotal, sqlDate );
                 
                 if(request.getParameter("s1comment") != null) {
                     rep.setComment1(request.getParameter("s1comment"));    
@@ -93,7 +93,7 @@ public class InsertReport extends HttpServlet {
                 }
                 if(rep.getReportType().equals("employee")) {
                     int employeeId = Integer.parseInt(request.getParameter("employeeId"));
-                    rep.setGroupId(employeeId);
+                    rep.setEmployeeId(employeeId);
                 }
                 
                 DatabaseAccess.insertReport(rep);

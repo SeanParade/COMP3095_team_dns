@@ -23,11 +23,21 @@
 	<div class="container">
 		<h1>Enter Report</h1>
 		<form action="InsertReport" method="POST">
+		<input type="hidden" name="templateId" value="${template.id}" />
+		<input type="hidden" name="departmentId" value="${template.departmentId}" />
+	    <c:forEach var="s1m" items="${section1Map}" >
+			<input type="hidden" name="s1criteria" value="${s1m.key}" />
+		</c:forEach>
+		<c:forEach var="s2m" items="${section2Map}" >
+			<input type="hidden" name="s2criteria" value="${s2m.key}" />
+		</c:forEach>
+		<c:forEach var="s3m" items="${section3Map}" >
+			<input type="hidden" name="s3criteria" value="${s3m.key}" />
+		</c:forEach>
 			<fieldset>
 				<legend class="left-label">1. Details: </legend>
 				<label>Report Template: </label> <input type="text"
 					name="templateName" value="${template.templateName}" disabled/>
-					<input type="hidden" name="templateId" value="${template.id}" />
 					<label>Report Title: </label> <input type="text"
 					name="reportTitle"/> 
 					<label>Date: </label> 
@@ -36,8 +46,9 @@
 					<br /> 
 					<label>Department: </label> 
 					<select	name="departmentId" id="ddlDepartment" disabled>
-						<option value="${template.departmentId}">${departmentName}
+						<option value="" selected>${departmentName}
 						</option>
+						
 				</select>
 				<br/>
 				<label>Report-Type:</label>
@@ -58,9 +69,9 @@
 				
 				<select
 					name="employeeId" id="ddlEmployee">
-					<c:forEach items="${employees}" var="employees">
-						<option value="${employees.employeeId}"><c:out
-								value="${employees}" />
+					<c:forEach items="${employees}" var="employees" varStatus="loop">
+						<option value="${employees.employeeId}" 
+						<c:if test="${loop.index == 0}">selected</c:if> > ${employees}
 						</option>
 					</c:forEach>
 			    </select>
@@ -74,7 +85,7 @@
 						<input type="text" name="s1criteria" value="${s1m.key}" disabled/>
 						<select name="s1eval" class="evaluation" onchange="calculateSum()">
 							<c:forEach var="i" begin="1" end="${s1m.value}">
-							    <option value="${i}">${i}</option>
+							    <option value="${i}" <c:if test="${i == 1}">selected</c:if> >${i}</option>
 							</c:forEach>
 						</select>
 						<br/>
@@ -91,7 +102,7 @@
 						<input type="text" name="s2criteria" value="${s2m.key}" disabled/>
 						<select name="s2eval" class="evaluation" onchange="calculateSum()">
 							<c:forEach var="i" begin="1" end="${s2m.value}">
-							    <option value="${i}">${i}</option>
+							    <option value="${i}" <c:if test="${i == 1}">selected</c:if>>${i}</option>
 							</c:forEach>
 						</select>
 						<br/>
@@ -109,7 +120,7 @@
 						<input type="text" name="s3criteria" value="${s3m.key}" disabled/>
 						<select name="s3eval" class="evaluation" onchange="calculateSum()">
 							<c:forEach var="i" begin="1" end="${s3m.value}">
-							    <option value="${i}">${i}</option>
+							    <option value="${i}" <c:if test="${i == 1}">selected</c:if> >${i}</option>
 							</c:forEach>
 						</select>
 						<br/>
@@ -122,7 +133,8 @@
 				<input type="submit" value="Submit" /> <input type="reset"
 					value="Cancel" />
 			</fieldset>
-			<input type="text" id="sumBox" value="0" name="evaluationTotal" disabled></input><p> / ${evaluationMaximum}</p>
+			<input type="text" id="sumBox" value="0" disabled></input><p> / ${evaluationMaximum}</p>
+			<input type="hidden" id="sumBoxHidden" value="0" name="evaluationTotal"></input>
 		</form>
 		
 		<h3>${error}</h3>
@@ -138,6 +150,7 @@
     		   		sum = sum + eval(x[i].value);
     		   }
     	   document.getElementById("sumBox").value = sum;
+    	   document.getElementById("sumBoxHidden").value = sum;
        }
        // disable drop down list based on selection of employee rb or group rb
        function disable(element){

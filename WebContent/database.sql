@@ -55,7 +55,7 @@ CREATE TABLE EMPLOYEE
 
 INSERT INTO EMPLOYEE(id, firstName, lastName, email, hireYear, role, departmentId, username, password)
 VALUES
-(0000, "Sergio", "Santilli", "admin@domain.ca", "2015", "Administrator", 4, "admin", "admin"),
+(9999, "Sergio", "Santilli", "admin@domain.ca", "2015", "Administrator", 4, "admin", "admin"),
 #accounting
 (1001,"Rich", "Gregory", "rich.gregory@gmail.com", "2017", "Accountant", 1, "rgregory", "password"),
 (1002, "Nita", "Cochrane", "nita.cochrane@gmail.com", "2017", "Accountant", 1, "ncochrane", "password"),
@@ -105,7 +105,6 @@ CREATE TABLE REPORT
 (
 	id int(11) AUTO_INCREMENT PRIMARY KEY,
 	templateId int(11) NOT NULL,
-    templateName varchar(255) NOT NULL,
 	title varchar(255) NOT NULL,
     reportType varchar(15) NOT NULL,
     sec1_evaluation varchar(50) NOT NULL,
@@ -113,6 +112,9 @@ CREATE TABLE REPORT
 	sec3_evaluation varchar(50) NOT NULL,
 	date DATE NOT NULL,
 	departmentId int(11) NOT NULL,
+    comment1 varchar(500),
+    comment2 varchar(500),
+    comment3 varchar(500),
 	groupId int(11),
 	employeeId int(11),
 	totalEvaluation int(2),

@@ -68,13 +68,9 @@
 			<jsp:include page="../includes/report.jsp" />
 		</c:if>
 		
-	</div>
-	
-	
+	</div>	
 	</div>
 
-	
-	
 	<!-- javascript functions -->
 	<script>
 		//function for enabling drop down lists

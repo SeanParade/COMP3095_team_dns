@@ -37,15 +37,19 @@ public class EnterReportHandler extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	// checks for a template selection. if it doesn't exist, department id is pulled from the user object in the session and 
 	// is used to get a list of templates matching that department id from the database. Then passes the user to template selection form.
-	{
-	    String templateChoice = request.getParameter("template");
+	{   
 		
-		if(templateChoice == null) 
+		if(request.getParameter("template") == null) 
 		{
 		    try 
 		    {
 		        HttpSession session = request.getSession();
 		        Employee user = (Employee) session.getAttribute("user");
+		        // weird work around for java
+		        if(user.getDepartmentId() == 0) {
+		            Employee emp = DatabaseAccess.getUserByToken(user.getToken());
+		            user.setDepartmentId(emp.getDepartmentId());
+		        }
                 ArrayList<ReportTemplate> templates = 
                         DatabaseAccess.getReportTemplatesByDepId(user.getDepartmentId());
                 request.setAttribute("reportTemplates", templates);
@@ -54,11 +58,9 @@ public class EnterReportHandler extends HttpServlet {
 		    {
                 e.printStackTrace();
             }
-		    request.getRequestDispatcher("/reports/select_template.jsp").forward(request, response);
-		} else 
-		{
-		    doPost(request,response);
 		}
+		
+		request.getRequestDispatcher("/reports/select_template.jsp").forward(request, response);
 		
 		
 	}

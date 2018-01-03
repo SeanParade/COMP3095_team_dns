@@ -304,7 +304,7 @@ public class DatabaseAccess {
 			stmt.setString(2,  report.getReportTitle());
 			stmt.setDate(3,  (Date) report.getDate());
 			stmt.setInt(4,  report.getDepartmentId());
-			if(report.getGroupId() == 0)
+			if(report.getGroupId() < 0)
 			{
 				stmt.setNull(5, java.sql.Types.INTEGER);
 			}
@@ -312,7 +312,7 @@ public class DatabaseAccess {
 			{
 				stmt.setInt(5,  report.getGroupId());
 			}
-			if(report.getEmployeeId()== 0)
+			if(report.getEmployeeId()< 0)
 			{
 				stmt.setNull(6, java.sql.Types.INTEGER);
 			}
@@ -327,7 +327,7 @@ public class DatabaseAccess {
 			
 			stmt.execute();
 	
-			ResultSet rs = stmt.getGeneratedKeys();
+			rs = stmt.getGeneratedKeys();
 			if(rs.next())
 			{
 				generatedKey = rs.getInt(1);
@@ -338,6 +338,7 @@ public class DatabaseAccess {
 		}
 		catch(Exception e)
 		{
+		    e.printStackTrace();
 			return generatedKey;
 		}
 	

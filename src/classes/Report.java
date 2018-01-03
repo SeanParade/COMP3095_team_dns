@@ -4,8 +4,8 @@ import java.sql.Date;
 
 public class Report extends ReportTemplate {
     private int templateId;
-    private int groupId;
-    private int employeeId;
+    private int groupId = -1;
+    private int employeeId = -1;
     private String reportTitle;
     private String reportType;
     private int evaluationMax;
@@ -21,7 +21,11 @@ public class Report extends ReportTemplate {
             String sec1Criteria, String sec2Criteria, String sec3Criteria, int templateId, String reportTitle, 
             String reportType, int evaluationMax, int evaluation, Date date) {
         super(templateName, departmentId, sec1Title, sec2Title, sec3Title, sec1Criteria, sec2Criteria, sec3Criteria);
-        
+        this.templateId = templateId;
+        this.reportTitle = reportTitle;
+        this.reportType = reportType;
+        this.evaluation = evaluation;
+        this.date = date;
     }
     
     public int getTemplateId() {

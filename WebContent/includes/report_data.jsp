@@ -14,8 +14,8 @@
 					<input type="text" name="reportDate" id="datepicker"
 					value=<c:if test="${not empty report}">"<fmt:formatDate value='${report.date}' pattern = 'MM/dd/yyyy'/>" "disabled"
 					</c:if>
-					<c:if test="${empty report}">"<fmt:formatDate value='${date}' pattern='MM/dd/yyyy'/>">
-					</c:if>>
+					<c:if test="${empty report}">"<fmt:formatDate value='${date}' pattern='MM/dd/yyyy'/>"
+					</c:if>/>
 					<br/> 
 					<label>Department: </label> 
 					<select	name="departmentId" id="ddlDepartment">
@@ -46,9 +46,7 @@
 				<select
 					name="employeeId" id="ddlEmployee">
 					<c:forEach items="${employees}" var="employees">
-						<option value="${employees.employeeId}"
-						<c:if test="${groups.employeeId == report.Id}">"selected"</c:if>>
-						<c:out value="${employees}" />
+						<option value="${employees.employeeId}">${employees}
 						</option>
 					</c:forEach>
 			    </select>
