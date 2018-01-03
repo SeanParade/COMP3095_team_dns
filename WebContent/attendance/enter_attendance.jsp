@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
-	<form class="form" action="/COMP3095_TEAM_DNS/attendance/Attendance" method="post">
+	<form action="/COMP3095_TEAM_DNS/attendance/Attendance" method="post">
 		Department: 
 		<select name="department">
 			<c:forEach items="${departments}" var ="department">
@@ -25,8 +25,9 @@
 	<hr>
 	<div class="container">
 		<form action="/COMP3095_TEAM_DNS/attendance/EnterAttendance" method="post">
+			Date:
 			<input type="date" name="date">
-			<table border="1">
+			<table style="margin-right: auto;margin-left:0px" border="1">
 				<tr>
 					<th>Last Name</th>
 					<th>First Name</th>

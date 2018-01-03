@@ -2,7 +2,7 @@ package classes;
 
 import java.util.Date;
 
-public class Attendance {
+public class Attendance implements Comparable<Attendance>{
 
 	private int attendanceId;
 	private Date date;
@@ -60,6 +60,15 @@ public class Attendance {
 	public void setPresent(boolean present) {
 		this.present = present;
 	}
+
+	@Override
+	public int compareTo(Attendance a) {
+		if (this.date == a.date) {
+			return 0;
+		}
+		else return 1;
+	}
+	
 	
 	
 }

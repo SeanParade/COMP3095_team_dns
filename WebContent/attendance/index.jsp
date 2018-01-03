@@ -12,7 +12,7 @@
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
 	<h2><a href="/COMP3095_TEAM_DNS/attendance/Attendance">Enter Attendance</a></h2>
-	<h2><a href="view.jsp">View Attendance</a></h2>
+	<h2><a href="/COMP3095_TEAM_DNS/attendance/ViewAttendance">View Attendance</a></h2>
 	</div>
 </body>
 </html>
