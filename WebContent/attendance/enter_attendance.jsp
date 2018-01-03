@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
-	<form action="/COMP3095_TEAM_DNS/attendance/Attendance" method="post">
+	<form class="form" action="/COMP3095_TEAM_DNS/attendance/Attendance" method="post">
 		Department: 
 		<select name="department">
 			<c:forEach items="${departments}" var ="department">

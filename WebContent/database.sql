@@ -143,6 +143,7 @@ CREATE TABLE EMPLOYEE_ATTENDANCE
 	date DATE NOT NULL,
 	present BOOLEAN NOT NULL,
 	employeeId int(11) NOT NULL,
+	UNIQUE(date, employeeId),
 
 	INDEX(employeeId),
 	
