@@ -141,7 +141,7 @@ public class HelperUtility {
 	    for(int i = 0; i < secCritList.size(); i++) {
 	        critString += secCritList.get(i) + "," + secEval[i];
 	        //as long as not the last iteration add trailing comma
-	        if(i+1 < secCritList.size())
+	        if(i < secCritList.size()-1)
 	            critString += ",";
 	    }	    
 	    return critString;

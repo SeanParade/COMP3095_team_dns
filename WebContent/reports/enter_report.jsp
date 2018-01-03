@@ -22,11 +22,12 @@
 	<jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
 		<h1>Enter Report</h1>
-		<form action="RecordReport" method="POST">
+		<form action="InsertReport" method="POST">
 			<fieldset>
 				<legend class="left-label">1. Details: </legend>
 				<label>Report Template: </label> <input type="text"
 					name="templateName" value="${template.templateName}" disabled/>
+					<input type="hidden" name="templateId" value="${template.id}" />
 					<label>Report Title: </label> <input type="text"
 					name="reportTitle"/> 
 					<label>Date: </label> 
@@ -43,11 +44,11 @@
 				<fieldset>
 					<input type="radio" name="reportType" id="groupType" value="group" onclick="disable(this)"/>
 					<label for="groupType">Group</label>
-					<input type="radio" name="reportType" id="employeeType" value="employee" onclick="disable(this)" />
+					<input type="radio" name="reportType" id="employeeType" value="employee" onclick="disable(this)" checked/>
 					<label for="employeeType">Employee</label>
 				</fieldset>
 				<select
-					name="groupId" id="ddlGroup">
+					name="groupId" id="ddlGroup" disabled>
 					<c:forEach items="${groups}" var="groups">
 						<option value="${groups.groupId}"><c:out
 								value="${groups.groupName}" />
@@ -115,12 +116,13 @@
 					</c:forEach>
 					<textarea name="s3comment" id="s3comment" cols="30" rows="10" 
 								placeholder="Please enter a comment here"></textarea>
+								
 				</fieldset>
 				<hr />
 				<input type="submit" value="Submit" /> <input type="reset"
 					value="Cancel" />
 			</fieldset>
-			<input type="text" id="sumBox" value="0"></input><p> / ${evaluationMaximum}</p>
+			<input type="text" id="sumBox" value="0" name="evaluationTotal" disabled></input><p> / ${evaluationMaximum}</p>
 		</form>
 		
 		<h3>${error}</h3>
@@ -133,7 +135,7 @@
     	   var x = document.getElementsByClassName("evaluation");
     	   for (var i=0; i<x.length; i++)
     		   {
-    		   		sum+= x[i].value;
+    		   		sum = sum + eval(x[i].value);
     		   }
     	   document.getElementById("sumBox").value = sum;
        }

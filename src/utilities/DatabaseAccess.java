@@ -339,48 +339,8 @@ public class DatabaseAccess {
 		}
 	
 	}
-	public static String insertReportItems(ArrayList<ReportItem> reportItems)
-	{
-		sql = "INSERT INTO REPORT_ITEM(subTitle, evaluation, description, reportId)" +
-	"VALUES(?, ?, ?, ?);";
-		try
-		{
-			conn = connectDatabase();
-			stmt = conn.prepareStatement(sql);
-			
-			for(ReportItem item : reportItems)
-			{
-				if(item.getSubTitle() == null)
-				{
-					stmt.setNull(1, java.sql.Types.VARCHAR);
-				}
-				else
-				{
-					stmt.setString(1, item.getSubTitle());
-				}
-				stmt.setInt(2, item.getEvaluation());
-				if(item.getDescription() == null)
-				{
-					stmt.setNull(3,  java.sql.Types.VARCHAR);
-				}
-				else
-				{
-					stmt.setString(3,  item.getDescription());
-				}
-				stmt.setInt(4, item.getReportId());
-				
-				stmt.execute();	
-			}
-			conn.close();
-			return "success";
-		}
-		catch(Exception e)
-		{
-			return "failed " + e.getMessage();
-		}
-	}
 	
-	   public static String updateReportItem(ReportItem item)
+	   public static String updateReport(Report item)
     {
         
         sql = "UPDATE report_item SET evaluation= ?, description=? WHERE ID= ?;";
@@ -403,6 +363,8 @@ public class DatabaseAccess {
             return "failed " + e.getMessage();
         }
     }*/
+    
+    
 	public static Employee getUser(String userName, String password) 
 	/**
 	 * Populates a employee object with column data from a row matching the given
