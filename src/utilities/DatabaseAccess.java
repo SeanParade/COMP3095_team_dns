@@ -2,6 +2,7 @@ package utilities;
 
 import java.util.ArrayList;
 
+import classes.Attendance;
 import classes.Department;
 import classes.Employee;
 import classes.Group;
@@ -818,5 +819,87 @@ public class DatabaseAccess {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public static ArrayList<Attendance> selectAllAttendance() {
+
+		ArrayList<Attendance> attendanceList = new ArrayList<Attendance>();
+		sql = "SELECT * FROM EMPLOYEE_ATTENDANCE;";
+		try {
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Date date  = rs.getDate("date");
+				boolean present = rs.getBoolean("present");
+				int employeeId = rs.getInt("employeeId");
+
+				Attendance attendance = new Attendance(date, employeeId, present);
+				attendanceList.add(attendance);
+			}
+			conn.close();
+			return attendanceList;
+		} catch (Exception e) {
+			return attendanceList;
+		}
+		
+	
+	}
+
+	public static Employee selectEmployeeById(int id) {
+		Employee employee = new Employee();
+		sql = "SELECT * FROM EMPLOYEE WHERE id = ?;";
+		try {
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				int employeeId = rs.getInt("id");
+				String fName = rs.getString("firstName");
+				String lName = rs.getString("lastName");
+				String email = rs.getString("email");
+				String role = rs.getString("role");
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				employee.setEmployeeId(id);
+				employee.setFirstName(fName);
+				employee.setLastName(lName);
+				employee.setEmail(email);
+				employee.setRole(role);
+				employee.setUsername(username);
+				employee.setPassword(password);
+			}
+			conn.close();
+			return employee;
+		}catch (Exception e) {
+			return employee;
+		}
+		
+		
+	}
+	
+	public static ArrayList<Date> selectUniqueDates() {
+		ArrayList<Date> dateList = new ArrayList<>();
+		
+		sql = "SELECT DISTINCT DATE FROM EMPLOYEE_ATTENDANCE;";
+		
+		try {
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Date date = rs.getDate("date");
+				dateList.add(date);
+			}
+			conn.close();
+			return dateList;
+		}
+		catch (Exception e) {
+		
+		return dateList;
+		}
 	}
 }
