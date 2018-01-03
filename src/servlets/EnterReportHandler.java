@@ -97,8 +97,7 @@ public class EnterReportHandler extends HttpServlet {
 	            request.setAttribute("groups", depGroups);	            
 	            // maximum evaluation as attribute
 	            request.setAttribute("evaluationMaximum", selectedTemplate.getMaximumEvaluation());
-	            
-	            
+	                      
 	            request.getRequestDispatcher("/reports/enter_report.jsp").forward(request, response);   
 	        } catch(Exception e) {
 	            e.getMessage();

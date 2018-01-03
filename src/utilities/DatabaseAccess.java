@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import classes.Department;
 import classes.Employee;
 import classes.Group;
+import classes.Report;
 import classes.ReportTemplate;
 
 import java.sql.*;
@@ -290,18 +291,17 @@ public class DatabaseAccess {
 		}
 	}
     
-	/*
 	public static int insertReport(Report report)
 	{
 		int generatedKey = 0;
-		sql = "INSERT INTO REPORT(templateName, title, date, departmentId, groupId, employeeId, totalEvaluation)" +
-	"VALUES (?, ?, ?, ?, ?, ?, ?);";
+		sql = "INSERT INTO REPORT(templateId, title, date, departmentId, groupId, employeeId, totalEvaluation, comment1, comment2, comment3)" +
+	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		
 		try{
 			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, report.getTemplate());
-			stmt.setString(2,  report.getTitle());
+			stmt.setInt(1, report.getTemplateId());
+			stmt.setString(2,  report.getReportTitle());
 			stmt.setDate(3,  (Date) report.getDate());
 			stmt.setInt(4,  report.getDepartmentId());
 			if(report.getGroupId() == 0)
@@ -312,7 +312,7 @@ public class DatabaseAccess {
 			{
 				stmt.setInt(5,  report.getGroupId());
 			}
-			if(report.getEmployeeId()==0)
+			if(report.getEmployeeId()== 0)
 			{
 				stmt.setNull(6, java.sql.Types.INTEGER);
 			}
@@ -320,7 +320,10 @@ public class DatabaseAccess {
 			{
 				stmt.setInt(6, report.getEmployeeId());
 			}
-			stmt.setInt(7,  report.getTotalEvaluation());
+			stmt.setInt(7, report.getEvaluation());
+			stmt.setString(8, report.getComment1());
+			stmt.setString(9, report.getComment2());
+			stmt.setString(10, report.getComment3());
 			
 			stmt.execute();
 	
@@ -339,7 +342,7 @@ public class DatabaseAccess {
 		}
 	
 	}
-	
+	/*
 	   public static String updateReport(Report item)
     {
         

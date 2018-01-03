@@ -35,7 +35,7 @@
 					value="<fmt:formatDate value='${date}' pattern='MM/dd/yyyy'/>"/> 
 					<br /> 
 					<label>Department: </label> 
-					<select	name="departmentId" id="ddlDepartment">
+					<select	name="departmentId" id="ddlDepartment" disabled>
 						<option value="${template.departmentId}">${departmentName}
 						</option>
 				</select>
