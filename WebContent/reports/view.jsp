@@ -24,7 +24,7 @@
 			</option>
 		</c:forEach>
 	</select>
-	&nbsp;&nbsp;&nbsp;
+	
 	<select name="departmentId" id="ddlDepartment" onchange="enable(this)" disabled>
 		<c:forEach items="${departments}" var="department">
 			<option value="${department.departmentId}" 
@@ -34,7 +34,7 @@
 			</option>
 		</c:forEach>
 	</select>
-	&nbsp;&nbsp;&nbsp;
+	
 	<select name="reportId" id="ddlReport" onchange="enable(this)" disabled>
 		<c:forEach items="${reports}" var="report">
 			<option value="${report.templateId}" 
@@ -45,7 +45,7 @@
 		</c:forEach>
 	</select>
 	<br>
-	<input type="submit" name="RequestType" value="View"> &nbsp;&nbsp;&nbsp; 
+	<input type="submit" name="RequestType" value="View">
 	<input type="submit" name="RequestType" value="Cancel">
 	<!-- in servlet: test whether requestType equals cancel or submit; 
 	reset selected values attributes; 
