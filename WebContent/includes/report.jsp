@@ -21,16 +21,14 @@
 <!-- report body will go here with editable text -->
 <!-- needs action to servlet -->
 <form action ="" method="POST">
-<h4>${report.sec1Title}</h4>
-	
-<h4>${report.sec2Title}</h4>
 
-<h4>${report.sec3Title}</h4>
+
 
 </form>
 
 <!-- javascript functions -->
 <script>
+	
 	//function to disable all dropdowns on load
 	function disable()
 	{
