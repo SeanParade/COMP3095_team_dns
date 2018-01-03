@@ -11,6 +11,7 @@ public class Report extends ReportTemplate {
     private int evaluationMax;
     private int evaluation;
     private Date date;
+    //Default values to avoid some nulls in the db insert logic
     private String comment1 = "No comments given";
     private String comment2 = "No comments given";
     private String comment3 = "No comments given";
