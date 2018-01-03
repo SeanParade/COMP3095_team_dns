@@ -4,11 +4,16 @@ import java.sql.Date;
 
 public class Report extends ReportTemplate {
     private int templateId;
+    private int groupId;
+    private int employeeId;
     private String reportTitle;
     private String reportType;
     private int evaluationMax;
     private int evaluation;
     private Date date;
+    private String comment1 = "No comments given";
+    private String comment2 = "No comments given";
+    private String comment3 = "No comments given";
     
     public Report() {}
 
@@ -16,6 +21,7 @@ public class Report extends ReportTemplate {
             String sec1Criteria, String sec2Criteria, String sec3Criteria, int templateId, String reportTitle, 
             String reportType, int evaluationMax, int evaluation, Date date) {
         super(templateName, departmentId, sec1Title, sec2Title, sec3Title, sec1Criteria, sec2Criteria, sec3Criteria);
+        
     }
     
     public int getTemplateId() {
@@ -65,6 +71,44 @@ public class Report extends ReportTemplate {
     public void setDate(Date date) {
         this.date = date;
     }
-    
-    
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getComment1() {
+        return comment1;
+    }
+
+    public void setComment1(String comment1) {
+        this.comment1 = comment1;
+    }
+
+    public String getComment2() {
+        return comment2;
+    }
+
+    public void setComment2(String comment2) {
+        this.comment2 = comment2;
+    }
+
+    public String getComment3() {
+        return comment3;
+    }
+
+    public void setComment3(String comment3) {
+        this.comment3 = comment3;
+    }
 }
