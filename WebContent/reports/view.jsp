@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/COMP3095_TEAM_DNS/css/main.css" />
 <title>View Reports</title>
 </head>
-<body>
+<body onload="disableAll()">
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
 	<h1>View Report</h1>

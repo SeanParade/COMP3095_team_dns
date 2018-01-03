@@ -10,6 +10,7 @@
 					<label>Report Title: </label> <input type="text"
 					name="reportTitle"/> 
 					<label>Date: </label> 
+					<!-- if report is not empty, view report page : set values as report values -->
 					<input type="text" name="reportDate" id="datepicker"
 					value=<c:if test="${not empty report}">"<fmt:formatDate value='${report.date}' pattern = 'MM/dd/yyyy'/>" "disabled"
 					</c:if>
@@ -34,7 +35,9 @@
 				<select
 					name="groupId" id="ddlGroup" disabled>
 					<c:forEach items="${groups}" var="groups">
-						<option value="${groups.groupId}"><c:out
+						<option value="${groups.groupId}"
+						<c:if test="${groups.groupId == report.groupId}">"selected"</c:if>>
+						<c:out
 								value="${groups.groupName}" />
 						</option>
 					</c:forEach>
@@ -43,8 +46,9 @@
 				<select
 					name="employeeId" id="ddlEmployee">
 					<c:forEach items="${employees}" var="employees">
-						<option value="${employees.employeeId}"><c:out
-								value="${employees}" />
+						<option value="${employees.employeeId}"
+						<c:if test="${groups.employeeId == report.Id}">"selected"</c:if>>
+						<c:out value="${employees}" />
 						</option>
 					</c:forEach>
 			    </select>
@@ -63,7 +67,7 @@
 						</select>
 						<br/>
 					</c:forEach>
-					<textarea name="s1comment" id="s1comment" cols="30" rows="10" placeholder="Please enter a comment here"></textarea>
+					<textarea name="s1comment" id="s1comment" class="comments" cols="30" rows="10" placeholder="Please enter a comment here"></textarea>
 				</fieldset>
 				<hr />
 
@@ -80,7 +84,7 @@
 						</select>
 						<br/>
 					</c:forEach>
-					<textarea name="s2comment" id="s2comment" cols="30" rows="10" 
+					<textarea name="s2comment" id="s2comment" class="comments" cols="30" rows="10" 
 					            placeholder="Please enter a comment here"></textarea>
 				</fieldset>
 				<hr />
@@ -98,7 +102,7 @@
 						</select>
 						<br/>
 					</c:forEach>
-					<textarea name="s3comment" id="s3comment" cols="30" rows="10" 
+					<textarea name="s3comment" id="s3comment" class="comments" cols="30" rows="10" 
 								placeholder="Please enter a comment here"></textarea>
 								
 				</fieldset>
