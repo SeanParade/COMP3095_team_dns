@@ -186,6 +186,12 @@ public class DatabaseAccess {
 	}
 	
 	public static String insertReportTemplate(ReportTemplate template) throws Exception
+	/**
+	 * Insert Report Template:
+	 * Takes a Report object and uses it to populate a row in the REPORT table.
+	 * 
+	 * @param
+	 */
 	{
 	    sql = "INSERT INTO REPORT_TEMPLATE(templateName, departmentId, "
 	            + "sec1_title, sec2_title, sec3_title, sec1_criteria, "
@@ -210,8 +216,10 @@ public class DatabaseAccess {
 	    }
 	}
 	
-	public static ReportTemplate getReportTemplateById(int id)
-	throws Exception
+	public static ReportTemplate getReportTemplateById(int id) throws Exception
+	/**
+	 * 
+	 */
 	{
 	    ReportTemplate template = new ReportTemplate();
 	    sql = "SELECT * FROM REPORT_TEMPLATE WHERE id = ?;";
@@ -240,8 +248,10 @@ public class DatabaseAccess {
 	    catch(Exception e) { throw e; }	    
 	}
 	
-    public static ArrayList<ReportTemplate> getReportTemplatesByDepId(int departmentId)
-    throws Exception
+    public static ArrayList<ReportTemplate> getReportTemplatesByDepId(int departmentId) throws Exception
+    /**
+     * 
+     */
     {
         ArrayList<ReportTemplate> templatesList = new ArrayList<>();
         sql = "SELECT * FROM REPORT_TEMPLATE WHERE departmentId = ?;";
@@ -292,9 +302,13 @@ public class DatabaseAccess {
 	}
     
 	public static int insertReport(Report report)
+	/**
+	 * 
+	 */
 	{
 		int generatedKey = 0;
-		sql = "INSERT INTO REPORT(templateId, title, date, departmentId, groupId, employeeId, totalEvaluation, comment1, comment2, comment3, reportType,"
+		sql = "INSERT INTO REPORT(templateId, title, date, departmentId, groupId, employeeId,"
+		        + " totalEvaluation, comment1, comment2, comment3, reportType,"
 		        + "sec1_evaluation, sec2_evaluation, sec3_evaluation)" +
 	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		
@@ -556,17 +570,17 @@ public class DatabaseAccess {
 
 		
 	}
-	/**
-	 * Fetches all the groups in a given department and returns an array of 
-	 * employee objects instantiated from group rows in the database that
-	 * have a matching department id
-	 * 
-	 * @param  departmentId  Unique department identification number
-	 * @return               Collection of group objects that belong to a 
-	 *                       given department.
-	 */
-	
-	public static ArrayList<Group> selectGroupsByDepartment(int departmentId) 
+
+	public static ArrayList<Group> selectGroupsByDepartment(int departmentId)
+	 /**
+     * Fetches all the groups in a given department and returns an array of 
+     * employee objects instantiated from group rows in the database that
+     * have a matching department id
+     * 
+     * @param  departmentId  Unique department identification number
+     * @return               Collection of group objects that belong to a 
+     *                       given department.
+     */
 	{
 		ArrayList<Group> groups = new ArrayList<Group>();
 		sql = "SELECT * FROM EGROUP WHERE departmentId = ?;";
