@@ -45,7 +45,7 @@ public class EnterReportHandler extends HttpServlet {
 		    {
 		        HttpSession session = request.getSession();
 		        Employee user = (Employee) session.getAttribute("user");
-		        // weird work around for java
+		        // weird workaround for user not passing departmentId. Would only work correctly in debug mode
 		        if(user.getDepartmentId() == 0) {
 		            Employee emp = DatabaseAccess.getUserByToken(user.getToken());
 		            user.setDepartmentId(emp.getDepartmentId());

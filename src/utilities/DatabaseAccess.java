@@ -294,8 +294,9 @@ public class DatabaseAccess {
 	public static int insertReport(Report report)
 	{
 		int generatedKey = 0;
-		sql = "INSERT INTO REPORT(templateId, title, date, departmentId, groupId, employeeId, totalEvaluation, comment1, comment2, comment3)" +
-	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+		sql = "INSERT INTO REPORT(templateId, title, date, departmentId, groupId, employeeId, totalEvaluation, comment1, comment2, comment3, reportType,"
+		        + "sec1_evaluation, sec2_evaluation, sec3_evaluation)" +
+	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		
 		try{
 			conn = connectDatabase();
@@ -324,6 +325,10 @@ public class DatabaseAccess {
 			stmt.setString(8, report.getComment1());
 			stmt.setString(9, report.getComment2());
 			stmt.setString(10, report.getComment3());
+			stmt.setString(11, report.getReportType());
+			stmt.setString(12, report.getSec1Criteria());
+			stmt.setString(13, report.getSec2Criteria());
+			stmt.setString(14, report.getSec3Criteria());
 			
 			stmt.execute();
 	
