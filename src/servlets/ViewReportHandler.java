@@ -144,12 +144,22 @@ public class ViewReportHandler extends HttpServlet {
 					session.setAttribute("group", group);
 				}
 					session.setAttribute("report", report);
-					 // Map criteria and evaluations as attributes
+					
+					
+					 // Map report evaluations as attributes
 		            request.setAttribute("section1Map", report.getS1Map());
 		            request.setAttribute("section2Map", report.getS2Map());
 		            request.setAttribute("section3Map", report.getS3Map());
 		            
+		            
+		            
 		            template = DatabaseAccess.getReportTemplateById(templateId);
+		            
+		            //map template criteria as attributes
+		            request.setAttribute("section1MapT", template.getS1Map());
+		            request.setAttribute("section2MapT", template.getS2Map());
+		            request.setAttribute("section3MapT", template.getS3Map());
+		            
 					int maxEval = template.getEvaluation();
 					session.setAttribute("template", template);
 					session.setAttribute("maxEvaluation", maxEval);

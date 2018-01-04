@@ -26,6 +26,7 @@
 	selected department = ${sessionScope.selectedDepartment }<br>
 	departments: ${sessionScope.department}<br>
 	reports: ${sessionScope.reports}<br>
+	map: ${section1Map}<br>
 	<c:if test="${not empty sessionScope.selectedReport}">selected report: ${sessionScope.selectedReport}</c:if>
 	
 	</h2>
