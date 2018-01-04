@@ -1,5 +1,15 @@
 package classes;
 
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 03/01/2018
+ * Description: ReportTemplate - Class for the Report Template Object.
+ *              Stores information relating to Report Templates
+ ***********************************************************************/
+
 import java.util.TreeMap;
 
 public class ReportTemplate {
@@ -81,7 +91,9 @@ public class ReportTemplate {
     public void setSec3Criteria(String sec3Criteria) {
         this.sec3CriteriaCSV = sec3Criteria;
     }
-    public int getMaximumEvaluation() {
+    public int getEvaluation() 
+    // takes all of the criteria csvs and counts the sum of the evaluation maximums
+    {
         int sum = 0;
         try{
             String[][] criteria = { 

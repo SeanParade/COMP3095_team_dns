@@ -1,5 +1,14 @@
 package servlets;
 
+/**********************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 03/01/20178
+ * Description: InsertReport - Servlet that handles insertion of a report object into the database
+ ***********************************************************************/
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
@@ -42,7 +51,10 @@ public class InsertReport extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	/**
 	 * Insert Report:
-	 * Sets the destination of the dispatcher to that of a successful operation. 
+	 * Sets the destination of the dispatcher to that of a successful operation. Checks for empty fields.
+	 * Instantiates a ReportTemplate object for the related template the report is based on. Runs the criteria 
+	 * through a CSV function so those values are easily stored in the db. Converts the date into an SQL usable format.
+	 * Check whether report is for group or employee and stores the appropriate id. Then inserts Report into the db.
 	 */
 	{
 	    String errorMsg = "";
@@ -79,7 +91,7 @@ public class InsertReport extends HttpServlet {
                         template.getSec3Title(), sec1Criteria,
                         sec2Criteria, sec3Criteria,
                         template.getId(), reportTitle,
-                        reportType, template.getMaximumEvaluation(),
+                        reportType, template.getEvaluation(),
                         evalTotal, sqlDate );
                 
                 if(request.getParameter("s1comment") != null) {

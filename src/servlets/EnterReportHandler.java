@@ -1,5 +1,15 @@
 package servlets;
 
+/**********************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 03/01/20178
+ * Description: EnterReportHandler - Servlet that handles the processes on the select_template and enter_report jsp.
+ * Inserts available template list on the get request and creates a report on the post request.
+ ***********************************************************************/
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -55,9 +65,7 @@ public class EnterReportHandler extends HttpServlet {
             }
 		}
 		
-		request.getRequestDispatcher("/reports/select_template.jsp").forward(request, response);
-		
-		
+		request.getRequestDispatcher("/reports/select_template.jsp").forward(request, response);		
 	}
 
 	/**
@@ -93,7 +101,7 @@ public class EnterReportHandler extends HttpServlet {
 	            ArrayList<Group> depGroups = DatabaseAccess.selectGroupsByDepartment(selectedTemplate.getDepartmentId());
 	            request.setAttribute("groups", depGroups);	            
 	            // maximum evaluation as attribute
-	            request.setAttribute("evaluationMaximum", selectedTemplate.getMaximumEvaluation());
+	            request.setAttribute("evaluationMaximum", selectedTemplate.getEvaluation());
 	                      
 	            request.getRequestDispatcher("/reports/enter_report.jsp").forward(request, response);   
 	        } catch(Exception e) {
