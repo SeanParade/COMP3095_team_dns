@@ -20,6 +20,7 @@
 		<div>
 		<div>${error}</div>
 	</div>
+	<!-- form for adding Employees to groups -->
 	<form action="/COMP3095_TEAM_DNS/Group" method="post">
 		Department: 
 		<select name="department" id="ddDepartment" 
@@ -31,6 +32,7 @@
 		Group Name: 
 		<input type="text" name="Group name" placeholder="Please enter a Name"/><br />
 		
+		<!-- loops through employees for two different dropdown boxes -->
 		<c:forEach items="${employees}" var="employee" varStatus="loop">
 		Employee ${loop.index+1}: 
 		        <select name="Employee name">
@@ -48,7 +50,7 @@
 	</form>
 
 </div>
-
+<!-- gives the department dropdown the correct list item  -->
 <script type="text/javascript">
 var ddlDepartment = document.getElementById('ddDepartment');
 

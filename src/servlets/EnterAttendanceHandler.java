@@ -26,14 +26,13 @@ public class EnterAttendanceHandler extends HttpServlet {
      */
     public EnterAttendanceHandler() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -41,18 +40,19 @@ public class EnterAttendanceHandler extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Grabs selected employees and the date. Parses the date and inserts it into the attendance table along with employee information
 		Date date = null;
 		request.removeAttribute("error");
 		String[] selectedEmployeeIds = request.getParameterValues("selected");
 		String dateStr = request.getParameter("date");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		try {
 			date = sdf.parse(dateStr);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		//checks if there were no employees selected
 		if (selectedEmployeeIds == null || selectedEmployeeIds.length == 0) {
 			request.setAttribute("error", "Please choose an employee");
 			request.getRequestDispatcher("enter_attendance.jsp").forward(request, response);
@@ -60,17 +60,16 @@ public class EnterAttendanceHandler extends HttpServlet {
 		
 		
 		
-		
+		//checks if date was entered correctly
 		if (date != null) {
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		
-	
-
-		
+		//inserting attendance into the table. redirect to confirmation page
 		for(String employeeId:selectedEmployeeIds)
 		{
 			DatabaseAccess.insertEmployeeAttendance(Integer.parseInt(employeeId), sqlDate);
 			request.setAttribute("table", "Employee attendance");
+			request.setAttribute("action", "added");
 			request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 		}
 			}else {

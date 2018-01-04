@@ -2,18 +2,18 @@
 
 <h4>Details</h4>
 <table>
-<tr><th>Report</th><td>${report.templateName}</td></tr>
-<tr><th>Report Title</th><td>${report.reportTitle}</td></tr>
-<tr><th>Date Created</th><td>${report.date}</td></tr>
-<tr><th>${report.reportType}</th><td> 
+<tr><th>Report</th><td>${sessionScope.template.templateName}</td></tr>
+<tr><th>Report Title</th><td>${sessionScope.report.title}</td></tr>
+<tr><th>Date Created</th><td>${sessionScope.report.date}</td></tr>
+<tr><th>${sessionScope.report.reportType}</th><td> 
 <!-- test report type to display either employee name or group name -->
-	<c:if test='${report.reportType == "Employee"}'>
+	<c:if test='${sessionScope.report.reportType == "employee"}'>
 	<!-- display employee name -->
-	${employee}
+	${sessionScope.employee}
 	</c:if>
-	<c:if test='${report.reportType == "Group"}'>
+	<c:if test='${sessionScope.report.reportType == "group"}'>
 	<!-- display employee name -->
-	${group.groupName}
+	${sessionScope.group.groupName}
 	</c:if>
 </td></tr>
 </table>

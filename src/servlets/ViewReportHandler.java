@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import classes.Department;
 import classes.Employee;
+import classes.Group;
 import classes.ReportTemplate;
 import classes.Report;
 import utilities.DatabaseAccess;
@@ -35,11 +36,19 @@ public class ViewReportHandler extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//first gets directed to this from view report link
 		HttpSession session = request.getSession();
+		System.out.println("GET");
 		try {
 			//get a list of templates to populate drop down box
 			ArrayList<ReportTemplate> templates =
 						DatabaseAccess.getAllReportTemplates();
 			session.setAttribute("templates", templates);
+
+			if(session.getAttribute("selectedTemplate")!=null)
+			    session.removeAttribute("selectedTemplate");
+			if(session.getAttribute("selectedDepartment")!=null)
+			    session.removeAttribute("selectedDeparment");
+			if(session.getAttribute("selectedReport")!=null)
+			    session.removeAttribute("selectedReport");
 			
 		} catch (Exception e) {
 			
@@ -51,7 +60,9 @@ public class ViewReportHandler extends HttpServlet {
 
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    
 		//when dropdown selection changes = submits to here
+	    System.out.println("POST");
 		HttpSession session = request.getSession();
 		
 		//get the selected template from dropdown
@@ -78,7 +89,7 @@ public class ViewReportHandler extends HttpServlet {
 		int departmentId =0;
 		if(session.getAttribute("selectedDepartment")!=null)//if departmentID is saved in session
 		{
-			departmentId = (Integer)session.getAttribute("departmentId");
+			departmentId = (Integer)session.getAttribute("selectedDepartment");
 		}
 		else if(selectedDepartment!= null)
 		{
@@ -111,9 +122,52 @@ public class ViewReportHandler extends HttpServlet {
 		
 		}
 		String selectedReport = request.getParameter("reportId");
-		
-		if(selectedReport == null)//if no report
+		int reportId = 0;
+		if(session.getAttribute("selectedReport")!=null)
 		{
+			reportId = (Integer)session.getAttribute("selectedReport");
+			Report report;
+			ReportTemplate template;
+			Employee employee;
+			Group group;
+			try {
+				report = DatabaseAccess.getReportById(reportId);
+				if(report.getReportType().equals("employee"))
+				{
+					employee = DatabaseAccess.selectEmployeeById(report.getEmployeeId());
+					session.setAttribute("employee", employee);
+				}
+				else
+				{
+					group = DatabaseAccess.getGroupById(report.getGroupId());
+					session.setAttribute("group", group);
+				}
+				session.setAttribute("report", report);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try
+			{
+				template = DatabaseAccess.getReportTemplateById(templateId);
+				session.setAttribute("template", template);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else if (selectedReport!= null)
+		{
+			try{
+				reportId = Integer.parseInt(selectedReport);
+				session.setAttribute("selectedReport", reportId);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else{
 			try
 			{
 				//populate dropdown of reports

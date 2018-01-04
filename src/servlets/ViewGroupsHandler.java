@@ -27,14 +27,14 @@ public class ViewGroupsHandler extends HttpServlet {
      */
     public ViewGroupsHandler() {
         super();
-        // TODO Auto-generated constructor stub
+     
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
 		String selectedDep = request.getParameter("dep");
 		
@@ -75,13 +75,14 @@ public class ViewGroupsHandler extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		//Finds all department by Id selected. Finds Group ID by the selected GroupName
 		HttpSession session = request.getSession();
 		String groupName = request.getParameter("group");	
 		int depId = Integer.parseInt(request.getParameter("department"));
 		Department department = DatabaseAccess.selectDepartmentById(depId);
 		int groupId = DatabaseAccess.getGroupIdByGroupName(groupName);
-		
+		//Adds all employee from selected group into a list.
+		//Displays list of employees along with department and group name
 		ArrayList<Employee> employeesList = DatabaseAccess.selectEmployeesByGroupId(groupId);
 		session.setAttribute("employeesList", employeesList);
 		session.setAttribute("depName", department.getDepartmentName());

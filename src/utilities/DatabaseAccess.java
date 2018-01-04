@@ -322,7 +322,50 @@ public class DatabaseAccess {
             return templatesList;
         }
         catch(Exception e) { throw e; }     
-    }	
+    }
+    public static Report getReportById(int id) throws Exception
+    {
+    	Report report = new Report();
+    	sql = "SELECT * FROM REPORT WHERE id=?;";
+    	
+    	try
+    	{
+    		conn = connectDatabase();
+    		stmt = conn.prepareStatement(sql);
+    		stmt.setInt(1, id);
+    		rs = stmt.executeQuery();
+    		
+    		while(rs.next())
+    		{
+    			report.setTemplateId(rs.getInt("templateId"));
+    			report.setReportTitle(rs.getString("title"));
+    			report.setReportType(rs.getString("reportType"));
+        		if(report.getReportType().equals("group"))
+        		{
+        			report.setGroupId(rs.getInt("groupId"));
+        		}
+        		else
+        		{
+        			report.setEmployeeId(rs.getInt("employeeId"));
+        		}
+        		report.setSec1Criteria(rs.getString("sec1Criteria"));
+        		report.setSec2Criteria(rs.getString("sec2Criteria"));
+        		report.setSec3Criteria(rs.getString("sec3Criteria"));
+        		report.setEvaluation(rs.getInt("totalEvaluation"));
+        		report.setDate(rs.getDate("date"));
+        		report.setComment1(rs.getString("comment1"));
+        		report.setComment2(rs.getString("comment2"));
+        		report.setComment3(rs.getString("comment3"));
+        		
+    		}
+    		conn.close();
+    		return report;
+    	}
+    	catch(Exception e)
+    	{
+    		throw e;
+    	}
+    }
 	public static ArrayList<Report> getReportsByTemplateId(int templateId) throws Exception
 	{
 		ArrayList<Report> reports = new ArrayList<Report>();
@@ -447,30 +490,36 @@ public class DatabaseAccess {
 		}
 	
 	}
-	/*
-	   public static String updateReport(Report item)
+	
+	   public static String updateReport(Report report)
     {
         
-        sql = "UPDATE report_item SET evaluation= ?, description=? WHERE ID= ?;";
+        sql = "UPDATE report_item SET sec1_evaluation=? sec2_evaluation=? sec3_evaluation=? "
+        		+ "comment1 = ? comment2 = ? comment3 = ? totalEvaluation = ?  WHERE ID= ?;";
         
         try
         {
             conn = connectDatabase();
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,  item.getEvaluation());
-            stmt.setString(2, item.getDescription());
-            stmt.setInt(3, item.getReportId());
+            stmt.setString(1, report.getSec1Criteria());
+            stmt.setString(2, report.getSec2Criteria());
+            stmt.setString(3, report.getSec3Criteria());
+            stmt.setString(4, report.getComment1());
+            stmt.setString(5, report.getComment2());
+            stmt.setString(6, report.getComment3());
+            stmt.setInt(7, report.getEvaluation());
+            stmt.setInt(8, report.getReportId());
             
             stmt.execute();
             conn.close();
             
-            return "success";
+            return "Report successfully updated";
         }
         catch(Exception e)
         {
             return "failed " + e.getMessage();
         }
-    }*/
+    }
     
     
 	public static Employee getUser(String userName, String password) 
@@ -693,7 +742,32 @@ public class DatabaseAccess {
 		}
 
 	}
-	
+	public static Group getGroupById(int id) throws Exception
+	{
+		Group group = new Group();
+		sql = "SELECT * FROM group where groupId = ?;";
+		
+		try
+		{
+			conn = connectDatabase();
+			stmt= conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			
+			while(rs.next())
+			{
+				group.setGroupId(id);
+				group.setGroupName(rs.getString("groupName"));
+				group.setDepartmentId(rs.getInt("departmentId"));
+			}
+			conn.close();
+			return group;
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+	}
 	public static int getGroupIdByGroupName(String groupName)
 	{
 		int groupId = 0;

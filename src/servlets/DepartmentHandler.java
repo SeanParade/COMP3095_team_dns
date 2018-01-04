@@ -76,6 +76,7 @@ public class DepartmentHandler extends HttpServlet {
 				{
 					request.setAttribute("table", "Department");
 					request.setAttribute("name", departmentName);
+					request.setAttribute("action", "added");
 					request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 					return;
 				}
