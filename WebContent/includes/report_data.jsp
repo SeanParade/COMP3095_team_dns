@@ -2,55 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:useBean id="date" class="java.util.Date" />
 
-<fieldset>
-				<legend class="left-label">1. Details: </legend>
-				<label>Report Template: </label> <input type="text"
-					name="templateName" value="${template.templateName}" disabled/>
-					<input type="hidden" name="templateId" value="${template.id}" />
-					<label>Report Title: </label> <input type="text"
-					name="reportTitle"/> 
-					<label>Date: </label> 
-					<!-- if report is not empty, view report page : set values as report values -->
-					<input type="text" name="reportDate" id="datepicker"
-					value=<c:if test="${not empty report}">"<fmt:formatDate value='${report.date}' pattern = 'MM/dd/yyyy'/>" "disabled"
-					</c:if>
-					<c:if test="${empty report}">"<fmt:formatDate value='${date}' pattern='MM/dd/yyyy'/>"
-					</c:if>/>
-					<br/> 
-					<label>Department: </label> 
-					<select	name="departmentId" id="ddlDepartment">
-						<option value="${template.departmentId}">${departmentName}
-						</option>
-				</select>
-				<br/>
-				<label>Report-Type:</label>
-				<fieldset>
-					<input type="radio" name="reportType" id="groupType" value="group" 
-					<c:if test="${report.reportType == 'group'}">"checked"</c:if>
-					onclick="disable(this)"/>
-					<label for="groupType">Group</label>
-					<input type="radio" name="reportType" id="employeeType" value="employee" onclick="disable(this)" checked/>
-					<label for="employeeType">Employee</label>
-				</fieldset>
-				<select
-					name="groupId" id="ddlGroup" disabled>
-					<c:forEach items="${groups}" var="groups">
-						<option value="${groups.groupId}"
-						<c:if test="${groups.groupId == report.groupId}">"selected"</c:if>>
-						<c:out
-								value="${groups.groupName}" />
-						</option>
-					</c:forEach>
-				</select>
-				
-				<select
-					name="employeeId" id="ddlEmployee">
-					<c:forEach items="${employees}" var="employees">
-						<option value="${employees.employeeId}">${employees}
-						</option>
-					</c:forEach>
-			    </select>
-				<hr />
 				
 				<legend class="left-label">
 					2.Section I: <input type="text" name="sec1Title" value="${template.sec1Title}" disabled/>
@@ -65,7 +16,7 @@
 						</select>
 						<br/>
 					</c:forEach>
-					<textarea name="s1comment" id="s1comment" class="comments" cols="30" rows="10" placeholder="Please enter a comment here"></textarea>
+					<textarea name="s1comment" id="s1comment" class="comments" cols="30" rows="10" value="${report.comment1}" disabled></textarea>
 				</fieldset>
 				<hr />
 
@@ -109,6 +60,10 @@
 					value="Cancel" />
 			</fieldset>
 
+<form action="" method="POST">
+<input type="button" value="Edit Report" onclick=""> <!-- onclick hide this div, show edit div -->
+<input type="reset" value="Back">
+</form>
 			
 <script>	    	
        //function for getting sum of evaluations and populating

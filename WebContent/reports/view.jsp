@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/COMP3095_TEAM_DNS/css/main.css" />
 <title>View Reports</title>
 </head>
-<body onload="disableAll()">
+<body>
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
 	<h1>View Report</h1>
@@ -65,7 +65,15 @@
 			<!-- if selectedReport attribute is set: include report jsp -->
 		<c:if test="${not empty selectedReport}">
 			<!-- include report.jsp -->
-			<jsp:include page="../includes/report.jsp" />
+			<div class="report_header" id="reportHeader">
+				<jsp:include page="../includes/report_header.jsp">
+			</div>
+			<div class="report_data" id="reportData">
+				<jsp:include page="../includes/report_data.jsp">
+			</div>
+			<div class="edit_report" id="editData">
+				<jsp:include page="../includes/edit_report.jsp">
+			</div>
 		</c:if>
 		
 	</div>	
