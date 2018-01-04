@@ -3,12 +3,12 @@ package classes;
 import java.sql.Date;
 
 public class Report extends ReportTemplate {
-    private int templateId;
+    private int reportId;
+	private int templateId;
     private int groupId = -1;
     private int employeeId = -1;
     private String reportTitle;
     private String reportType;
-    private int evaluationMax;
     private int evaluation;
     private Date date;
     //Default values to avoid some nulls in the db insert logic
@@ -28,7 +28,14 @@ public class Report extends ReportTemplate {
         this.evaluation = evaluation;
         this.date = date;
     }
-    
+    public int getReportId()
+    {
+    	return reportId;
+    }
+    public void setReportId(int id)
+    {
+    	this.reportId = id;
+    }
     public int getTemplateId() {
         return templateId;
     }
@@ -51,14 +58,6 @@ public class Report extends ReportTemplate {
 
     public void setReportType(String reportType) {
         this.reportType = reportType;
-    }
-
-    public int getEvaluationMax() {
-        return evaluationMax;
-    }
-
-    public void setEvaluationMax(int evaluationMax) {
-        this.evaluationMax = evaluationMax;
     }
 
     public int getEvaluation() {

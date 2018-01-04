@@ -117,6 +117,7 @@ CREATE TABLE REPORT
     comment3 varchar(500),
 	groupId int(11),
 	employeeId int(11),
+	evaluationMax int(2),
 	totalEvaluation int(2),
     
 		UNIQUE(templateId, title),

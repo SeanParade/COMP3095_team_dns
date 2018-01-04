@@ -17,6 +17,9 @@
 		<h3>
 		    <a href="EnterReport">Enter a Report</a>
 		</h3>
+		<h3>
+		    <a href="ViewReport">View a Report</a>
+		</h3>
 	</div>
 </body>
 </html>

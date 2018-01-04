@@ -251,6 +251,42 @@ public class DatabaseAccess {
 	    }
 	    catch(Exception e) { throw e; }	    
 	}
+	public static ArrayList<ReportTemplate> getAllReportTemplates() throws Exception
+	{
+		ArrayList<ReportTemplate> templates = new ArrayList<>();
+		
+		sql = "SELECT * FROM REPORT_TEMPLATE;";
+		
+		try
+        {
+            conn = connectDatabase();
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+            while(rs.next()) 
+            {
+                ReportTemplate template = new ReportTemplate();
+                template.setId(rs.getInt("id"));
+                template.setTemplateName(rs.getString("templateName"));
+                template.setDepartmentId(rs.getInt("departmentId"));
+                template.setSec1Title(rs.getString("sec1_title"));
+                template.setSec2Title(rs.getString("sec2_title"));
+                template.setSec3Title(rs.getString("sec3_title"));
+                template.setSec1Criteria(rs.getString("sec1_criteria"));
+                template.setSec2Criteria(rs.getString("sec2_criteria"));
+                template.setSec3Criteria(rs.getString("sec3_criteria"));
+                templates.add(template);
+            }
+            conn.close();
+            return templates;
+        }
+		catch(Exception e)
+		{
+			throw e;
+		}
+		
+            
+	}
 	
     public static ArrayList<ReportTemplate> getReportTemplatesByDepId(int departmentId) throws Exception
     /**
@@ -287,7 +323,43 @@ public class DatabaseAccess {
         }
         catch(Exception e) { throw e; }     
     }	
-	
+	public static ArrayList<Report> getReportsByTemplateId(int templateId) throws Exception
+	{
+		ArrayList<Report> reports = new ArrayList<Report>();
+		sql = "SELECT * FROM report WHERE templateId = ?;";
+		
+		try{
+			conn = connectDatabase();
+			stmt = conn.prepareStatement(sql);
+	        stmt.setInt(1, templateId);
+	        rs = stmt.executeQuery();
+	        
+	        while(rs.next())
+	        {
+	        	Report report = new Report();
+	        	report.setReportId(rs.getInt("id"));
+	        	report.setTemplateId(rs.getInt("templateId"));
+	        	report.setGroupId(rs.getInt("groupId"));
+	        	report.setEmployeeId(rs.getInt("employeeId"));
+	        	report.setReportTitle(rs.getString("title"));
+	        	report.setReportType(rs.getString("reportType"));
+	        	report.setEvaluation(rs.getInt("totalEvaluation"));
+	        	report.setDate(rs.getDate("date"));
+	        	report.setComment1(rs.getString("comment1"));
+	        	report.setComment2(rs.getString("comment2"));
+	        	report.setComment3(rs.getString("comment3"));
+	        	
+	        	reports.add(report);
+	        	
+	        }
+	        conn.close();
+	        return reports;
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+	}
     public static String insertEmployeeAttendance(int employeeId, Date date)
 	{
 		sql = "INSERT INTO EMPLOYEE_ATTENDANCE(date, present, employeeId) VALUES (?,?,?);";

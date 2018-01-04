@@ -8,45 +8,46 @@
 <link rel="stylesheet" href="/COMP3095_TEAM_DNS/css/main.css" />
 <title>View Reports</title>
 </head>
-<body>
+<body <c:if test="${edit == true}"> "onload='edit()'"</c:if>>
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
 	<h1>View Report</h1>
 	<!-- needs form action to servlet -->
-	<form action="" method="POST">
+	<form action="ViewReport" method="POST">
 	<h2>Filter</h2>
-	<select name="templateId" id="ddlTemplate" onchange="enable(this)">
+	<select name="templateId" id="ddlTemplate" onchange="this.form.submit(); enable(this)">
+		<option value="">Template Name</option>
 		<c:forEach items="${templates}" var="template">
-			<option value="${template.templateName}" 
-				<c:if test="${template.templateName == selectedTemplate}"> "selected" </c:if>>
+			<option value="${template.id}" 
+				<c:if test="${template.id== selectedTemplate}"> "selected" </c:if>>
 					<c:out value="${template.templateName}" />
 					<!-- preserve selected template name -->
 			</option>
 		</c:forEach>
 	</select>
 	
-	<select name="departmentId" id="ddlDepartment" onchange="enable(this)" disabled>
-		<c:forEach items="${departments}" var="department">
+	<select name="departmentId" id="ddlDepartment" onchange="this.form.submit(); enable(this)" disabled>
+		<option value="">Department</option>
 			<option value="${department.departmentId}" 
-				<c:if test="${department.departmentName == selectedDepartment}"> "selected" </c:if>>
+				<c:if test="${department.departmentId == selectedDepartment}"> "selected" </c:if>>
 				<c:out value="${department.departmentName}"  />
 					<!-- preserve selected department name -->
 			</option>
-		</c:forEach>
 	</select>
 	
 	<select name="reportId" id="ddlReport" onchange="enable(this)" disabled>
+	<option value="">Report Title</option>
 		<c:forEach items="${reports}" var="report">
-			<option value="${report.templateId}" 
-				<c:if test="${report.reportTitle == selectedReport}"> "selected" </c:if>>
+			<option value="${report.reportId}" 
+				<c:if test="${report.reportId == selectedReport}"> "selected" </c:if>>
 					<c:out value="${report.reportTitle}" /> 
 				<!-- preserve selected report title -->
 			</option>
 		</c:forEach>
 	</select>
 	<br>
-	<input type="submit" name="RequestType" value="View">
-	<input type="submit" name="RequestType" value="Cancel">
+	<input type="submit" value="View">
+	<input type="reset" value="Cancel">
 	<!-- in servlet: test whether requestType equals cancel or submit; 
 	reset selected values attributes; 
 	reset selected Report attribute-->
@@ -65,15 +66,14 @@
 			<!-- if selectedReport attribute is set: include report jsp -->
 		<c:if test="${not empty selectedReport}">
 			<!-- include report.jsp -->
+		<div id="report">	
 			<div class="report_header" id="reportHeader">
-				<jsp:include page="../includes/report_header.jsp">
+				<jsp:include page="../includes/report_header.jsp"/>
 			</div>
 			<div class="report_data" id="reportData">
-				<jsp:include page="../includes/report_data.jsp">
+				<jsp:include page="../includes/report_data.jsp"/>
 			</div>
-			<div class="edit_report" id="editData">
-				<jsp:include page="../includes/edit_report.jsp">
-			</div>
+		</div>
 		</c:if>
 		
 	</div>	
@@ -97,6 +97,34 @@
 					document.getElementById("ddlReport").disabled = false;
 				}
 		}
+		
+		//function to toggle showing div
+		function toggleDiv()
+		{
+			var div = document.getElementById("report");
+			if(div.style.display == "none")
+				{
+					div.style.display="block";
+				}
+			else
+				{
+					div.style.display="none";
+				}
+			
+		}
+		//function to enable editing
+		function edit()
+		{
+			var comments = document.getElementsByClass("comments");
+			for(var i=0; i<comments.length; i++)
+				{
+					comments[i].removeAttribute("readonly");
+				}
+			var edit = document.getElementById("edit");
+			edit.value = "Update";
+			edit.type="submit";
+		}
+		
 		
 	</script>
 </body>
