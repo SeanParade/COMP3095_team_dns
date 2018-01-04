@@ -87,6 +87,7 @@ public class EmployeeHandler extends HttpServlet {
 						//set attributes with "Employee" and employee name
 						request.setAttribute("error", "");
 						request.setAttribute("table", "Employee");
+						request.setAttribute("action", "added");
 						request.setAttribute("name", firstName + " " + lastName);
 						request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 						return;

@@ -121,6 +121,7 @@ public class GroupHandler extends HttpServlet {
 				{
 					request.setAttribute("table", "Group");
 					request.setAttribute("name", groupName);
+					request.setAttribute("action", "added");
 					
 					// Employee update loop					
 					for (String employeeID : employeeIDs) 
