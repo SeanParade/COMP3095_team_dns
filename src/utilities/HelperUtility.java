@@ -1,13 +1,5 @@
 package utilities;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
 /************************************************************************
  * Project: COMP3095_team_dns
  * Assignment: Assignment #1
@@ -17,6 +9,14 @@ import javax.servlet.http.HttpServletRequest;
  * Description: HelperUtility - Methods to help with miscellaneous things. Checks if a string is empty,
  * checks if a user has a token, etc.
  ***********************************************************************/
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 public class HelperUtility {
 

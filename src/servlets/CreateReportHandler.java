@@ -1,5 +1,15 @@
 package servlets;
 
+/**********************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 03/01/20178
+ * Description: CreateReportHandler - Servlet that handles the processes on the create_template jsp.
+ * Inserts Department information on the get request and creates a report template on the post request
+ ***********************************************************************/
+
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -32,7 +42,7 @@ public class CreateReportHandler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	/**
-	 * Used by select_template jsp to populate available templates based on the users departmentId
+	 * Used by create_report jsp to populate a department dropdown list
 	 */
 	{
 		ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();

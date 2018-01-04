@@ -1,5 +1,14 @@
 package servlets;
 
+/**********************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 03/01/20178
+ * Description: InsertReport - Servlet that handles insertion of a report object into the database
+ ***********************************************************************/
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 

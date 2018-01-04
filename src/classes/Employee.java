@@ -1,9 +1,5 @@
 package classes;
 
-import java.util.Random;
-
-import org.apache.tomcat.util.codec.binary.Base64;
-
 /************************************************************************
  * Project: COMP3095_team_dns
  * Assignment: Assignment #1
@@ -12,6 +8,11 @@ import org.apache.tomcat.util.codec.binary.Base64;
  * Date: 20/11/2017
  * Description: Employee -  Class for the Employee object. Stores Employee information
  ***********************************************************************/
+
+import java.util.Random;
+
+import org.apache.tomcat.util.codec.binary.Base64;
+
 public class Employee {
 	private int employeeId; //primary key
 	private String firstName;

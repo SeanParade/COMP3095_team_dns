@@ -8,6 +8,7 @@ package classes;
  * Date: 20/11/2017
  * Description: Department - Class for the Department object, holds Department ID, Name, and Location.
  ***********************************************************************/
+
 public class Department {
 	private int departmentId; //primary key
 	private String departmentName;
