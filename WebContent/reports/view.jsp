@@ -12,7 +12,7 @@
 <title>View Reports</title>
 
 </head>
-<c:if test="${edit == true}"><body onload="disable('ddlTemplate'); disable('ddlDepartment'); disable('ddlReport'); edit();"></c:if>
+<c:if test="${sessionScope.edit == 'true'}"><body onload="disable('ddlTemplate'); disable('ddlDepartment'); disable('ddlReport'); edit();"></c:if>
  <c:if test="${not empty sessionScope.selectedDepartment}"><body onload=" enable('ddlReport');"></c:if> 
 <c:if test="${not empty sessionScope.selectedTemplate}"> <body onload="enable('ddlDepartment');"></c:if> 
 <c:if test="${empty sessionScope.selectedTemplate}"> <body onload="enable('ddlTemplate');"></c:if>
@@ -20,16 +20,10 @@
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
 	<h1>View Report</h1>
-	<h2> TEST <br>
-	templates: ${templates}
-	selected template = ${sessionScope.selectedTemplate} <br>
-	selected department = ${sessionScope.selectedDepartment }<br>
-	departments: ${sessionScope.department}<br>
-	reports: ${sessionScope.reports}<br>
-	map: ${section1Map}<br>
+	<div class="error">${sessionScope.error}</div>
+	
 	<c:if test="${not empty sessionScope.selectedReport}">selected report: ${sessionScope.selectedReport}</c:if>
 	
-	</h2>
 	<!-- needs form action to servlet -->
 	<form action="ViewReport" id="viewForm" method="POST">
 	<h2>Filter</h2>
@@ -131,6 +125,11 @@
 		//function to enable editing
 		function edit()
 		{
+			var evaluations = document.getElementsByClass("evaluation");
+			for(var i=0; i<evaluations.length; i++)
+				{
+					evaluations[i].disabled = false;
+				}
 			var comments = document.getElementsByClass("comments");
 			for(var i=0; i<comments.length; i++)
 				{
@@ -139,6 +138,10 @@
 			var edit = document.getElementById("edit");
 			edit.value = "Update";
 			edit.type="submit";
+			
+			var cancel = document.getElementById("cancel");
+			cancel.value ="Cancel";
+			
 		}
 		
 		function changeMethod() {

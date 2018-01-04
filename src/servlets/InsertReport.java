@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import classes.Report;
 import classes.ReportTemplate;
@@ -57,6 +58,7 @@ public class InsertReport extends HttpServlet {
 	 * Check whether report is for group or employee and stores the appropriate id. Then inserts Report into the db.
 	 */
 	{
+		HttpSession session = request.getSession();
 	    String errorMsg = "";
 	    String servletDestination = "/reports/index.jsp";
 	    // check fields for empty values
@@ -123,7 +125,7 @@ public class InsertReport extends HttpServlet {
 	        }
 	        }
 	        else {
-	            request.setAttribute("error", errorMsg);
+	            session.setAttribute("error", errorMsg);
 	            servletDestination = "/reports/EnterReport";
 	        }
 	        

@@ -47,6 +47,8 @@ public class ViewReportHandler extends HttpServlet {
 			    request.getSession().removeAttribute("selectedDepartment");
 			if(request.getSession().getAttribute("selectedReport")!=null)
 			    request.getSession().removeAttribute("selectedReport");
+		
+			request.getSession().setAttribute("edit", "false");
 			
 		} catch (Exception e) {
 			
@@ -147,18 +149,18 @@ public class ViewReportHandler extends HttpServlet {
 					
 					
 					 // Map report evaluations as attributes
-		            request.setAttribute("section1Map", report.getS1Map());
-		            request.setAttribute("section2Map", report.getS2Map());
-		            request.setAttribute("section3Map", report.getS3Map());
+		            session.setAttribute("section1Map", report.getS1Map());
+		            session.setAttribute("section2Map", report.getS2Map());
+		            session.setAttribute("section3Map", report.getS3Map());
 		            
 		            
 		            
 		            template = DatabaseAccess.getReportTemplateById(templateId);
 		            
 		            //map template criteria as attributes
-		            request.setAttribute("section1MapT", template.getS1Map());
-		            request.setAttribute("section2MapT", template.getS2Map());
-		            request.setAttribute("section3MapT", template.getS3Map());
+		            session.setAttribute("section1MapT", template.getS1Map());
+		            session.setAttribute("section2MapT", template.getS2Map());
+		            session.setAttribute("section3MapT", template.getS3Map());
 		            
 					int maxEval = template.getEvaluation();
 					session.setAttribute("template", template);

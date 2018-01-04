@@ -491,11 +491,11 @@ public class DatabaseAccess {
 	
 	}
 	
-	   public static String updateReport(Report report)
+	   public static void updateReport(Report report)throws Exception
     {
         
-        sql = "UPDATE report_item SET sec1_evaluation=? sec2_evaluation=? sec3_evaluation=? "
-        		+ "comment1 = ? comment2 = ? comment3 = ? totalEvaluation = ?  WHERE ID= ?;";
+        sql = "UPDATE report SET sec1_evaluation=?, sec2_evaluation=?, sec3_evaluation=?, "
+        		+ "comment1 = ?, comment2 = ?, comment3 = ?, totalEvaluation = ?  WHERE id= ?;";
         
         try
         {
@@ -513,11 +513,10 @@ public class DatabaseAccess {
             stmt.execute();
             conn.close();
             
-            return "Report successfully updated";
         }
         catch(Exception e)
         {
-            return "failed " + e.getMessage();
+           throw e;
         }
     }
     
