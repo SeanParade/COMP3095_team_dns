@@ -30,8 +30,10 @@ public class CreateReportHandler extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-	        throws ServletException, IOException 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	/**
+	 * Used by select_template jsp to populate available templates based on the users departmentId
+	 */
 	{
 		ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
 		
@@ -44,7 +46,9 @@ public class CreateReportHandler extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * Create Report:
-	 * 
+	 * Check the form for empty required values. Takes the form data and uses it to populate a ReportTemplate
+	 * object to be stored in the db. Criteria values are passed to a CSV generator that alternates each sections
+	 * criteria and maximum evaluation so they may be stored in the server.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException 

@@ -81,7 +81,9 @@ public class ReportTemplate {
     public void setSec3Criteria(String sec3Criteria) {
         this.sec3CriteriaCSV = sec3Criteria;
     }
-    public int getMaximumEvaluation() {
+    public int getEvaluation() 
+    // takes all of the criteria csvs and counts the sum of the evaluation maximums
+    {
         int sum = 0;
         try{
             String[][] criteria = { 

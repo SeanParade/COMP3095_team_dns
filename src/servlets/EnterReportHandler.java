@@ -55,9 +55,7 @@ public class EnterReportHandler extends HttpServlet {
             }
 		}
 		
-		request.getRequestDispatcher("/reports/select_template.jsp").forward(request, response);
-		
-		
+		request.getRequestDispatcher("/reports/select_template.jsp").forward(request, response);		
 	}
 
 	/**
@@ -93,7 +91,7 @@ public class EnterReportHandler extends HttpServlet {
 	            ArrayList<Group> depGroups = DatabaseAccess.selectGroupsByDepartment(selectedTemplate.getDepartmentId());
 	            request.setAttribute("groups", depGroups);	            
 	            // maximum evaluation as attribute
-	            request.setAttribute("evaluationMaximum", selectedTemplate.getMaximumEvaluation());
+	            request.setAttribute("evaluationMaximum", selectedTemplate.getEvaluation());
 	                      
 	            request.getRequestDispatcher("/reports/enter_report.jsp").forward(request, response);   
 	        } catch(Exception e) {
