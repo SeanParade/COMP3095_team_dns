@@ -5,9 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="/COMP3095_TEAM_DNS/css/main.css" />
 <title>View Employees</title>
 </head>
 <body>
+<jsp:include page="../includes/navigation.jsp" />
+
+	<div class="container">
 <h2>View Employees</h2>
 <jsp:include page="../includes/dropdown.jsp" />
 
@@ -26,9 +30,6 @@
 </tr>
 </c:forEach>
 </table>
-<p>
-${employeeList}
-${selected }
-</p>
+</div>
 </body>
 </html>

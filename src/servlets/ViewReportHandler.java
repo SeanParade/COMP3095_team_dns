@@ -17,12 +17,12 @@ import classes.Group;
 import classes.ReportTemplate;
 import classes.Report;
 import utilities.DatabaseAccess;
-import utilities.HelperUtility;
+
 
 /************************************************************************
  * Project: COMP3095_team_dns
  * Assignment: Assignment #2
- * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
  * Student Numbers: 100727526, 100695733, 101015020
  * Date: 02/01/2018
  * Description: ViewReportHandler - Queries database for templates,

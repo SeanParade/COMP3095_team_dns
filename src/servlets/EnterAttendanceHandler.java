@@ -76,11 +76,11 @@ public class EnterAttendanceHandler extends HttpServlet {
 			DatabaseAccess.insertEmployeeAttendance(Integer.parseInt(employeeId), sqlDate);
 			request.setAttribute("table", "Employee attendance");
 			request.setAttribute("action", "added");
-			request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 		}
 			}else {
 			request.setAttribute("error", "Please enter a valid date");
-			request.getRequestDispatcher("enter_attendance.jsp").forward(request, response);;
-		}	
+			request.getRequestDispatcher("enter_attendance.jsp").forward(request, response);
+		}
+        request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 		}
 	}

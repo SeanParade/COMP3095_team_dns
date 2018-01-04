@@ -2,10 +2,6 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
@@ -23,7 +19,7 @@ import utilities.DatabaseAccess;
 /************************************************************************
  * Project: COMP3095_team_dns
  * Assignment: Assignment #2
- * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Authors:  Dylan Roberts, Nooran El-Sherif, Sean Price
  * Student Numbers: 100727526, 100695733, 101015020
  * Date: 02/01/2018
  * Description: ViewAttendanceHelper - gets employee attendance from 

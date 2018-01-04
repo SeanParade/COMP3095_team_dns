@@ -99,7 +99,9 @@ public class CreateReportHandler extends HttpServlet {
 	                            sec1Criteria, sec2Criteria, sec3Criteria);
 
 	            DatabaseAccess.insertReportTemplate(template);
-	            request.getRequestDispatcher("/reports/index.jsp").forward(request, response);
+                request.setAttribute("table", "Report Template");
+                request.setAttribute("action", "added");
+	            request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 	            return;
 	        } 
 	        catch (Exception e) 

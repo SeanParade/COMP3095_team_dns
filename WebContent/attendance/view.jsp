@@ -27,7 +27,7 @@
 				</c:forEach>
 			</select> <br> <input type="submit" value="Search">
 
-			//displays selected Department for user clarity
+			<!-- //displays selected Department for user clarity -->
 			<h1>
 				<c:out value="${selectedDep}" />
 			</h1>
