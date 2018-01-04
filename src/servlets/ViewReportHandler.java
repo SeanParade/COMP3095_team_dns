@@ -57,45 +57,61 @@ public class ViewReportHandler extends HttpServlet {
 		//get the selected template from dropdown
 		String selectedTemplate = request.getParameter("templateId");
 		int templateId = 0;
-		if(session.getAttribute("templateId")!=null)
+		if(session.getAttribute("selectedTemplate")!=null)
 		{
-			templateId = (Integer)session.getAttribute("templateId");
+			templateId = (Integer)session.getAttribute("selectedTemplate");
 		}
 		else{
 			
-		try{
-			templateId = Integer.parseInt(selectedTemplate);
-			session.setAttribute("selectedTemplate", templateId);
+			try{
+				templateId = Integer.parseInt(selectedTemplate);
+				session.setAttribute("selectedTemplate", templateId);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		}
+		
 		//check if selected department is populated
 		String selectedDepartment = request.getParameter("departmentId");
-		if(selectedDepartment == null || HelperUtility.isMissing(selectedDepartment)) //if its not populated
+		int departmentId =0;
+		if(session.getAttribute("selectedDepartment")!=null)//if departmentID is saved in session
 		{
+			departmentId = (Integer)session.getAttribute("departmentId");
+		}
+		else if(selectedDepartment!= null)
+		{
+			try{
+			departmentId = Integer.parseInt(selectedDepartment);
+			session.setAttribute("selectedDepartment", departmentId);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else //populate department list for dropdown
+		{
+			
 			Department department = new Department();
 			try {
 				//get the department from the template dept id
 				ReportTemplate choiceTemplate = DatabaseAccess.getReportTemplateById(templateId);
 				department = DatabaseAccess.selectDepartmentById(choiceTemplate.getDepartmentId());
-				//populate the dropdown
+				//add list to session
 				session.setAttribute("department", department);
+				//send back to the view.jsp
+				request.getRequestDispatcher("/reports/view.jsp").forward(request, response);
+				return;
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//send back to the view.jsp
-			request.getRequestDispatcher("/reports/view.jsp").forward(request, response);
-			return; //exit
-			
+		
 		}
-		//if the department is populated, get the selected department
-		int departmentId = Integer.parseInt(selectedDepartment);
-		session.setAttribute("selectedDepartment", departmentId); //save so jsp can correctly choose option from dropdown
-			
-		String selectedReport = request.getParameter("reportId"); //get selected report
+		String selectedReport = request.getParameter("reportId");
+		
 		if(selectedReport == null)//if no report
 		{
 			try
@@ -114,5 +130,5 @@ public class ViewReportHandler extends HttpServlet {
 		
 		
 	}
-
 }
+
