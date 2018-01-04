@@ -16,6 +16,7 @@ import classes.Employee;
 import classes.ReportTemplate;
 import classes.Report;
 import utilities.DatabaseAccess;
+import utilities.HelperUtility;
 
 /**
  * Servlet implementation class ViewReportHandler
@@ -56,6 +57,12 @@ public class ViewReportHandler extends HttpServlet {
 		//get the selected template from dropdown
 		String selectedTemplate = request.getParameter("templateId");
 		int templateId = 0;
+		if(session.getAttribute("templateId")!=null)
+		{
+			templateId = (Integer)session.getAttribute("templateId");
+		}
+		else{
+			
 		try{
 			templateId = Integer.parseInt(selectedTemplate);
 			session.setAttribute("selectedTemplate", templateId);
@@ -64,9 +71,10 @@ public class ViewReportHandler extends HttpServlet {
 		{
 			e.printStackTrace();
 		}
+		}
 		//check if selected department is populated
 		String selectedDepartment = request.getParameter("departmentId");
-		if(selectedDepartment == null) //if its not populated
+		if(selectedDepartment == null || HelperUtility.isMissing(selectedDepartment)) //if its not populated
 		{
 			Department department = new Department();
 			try {
@@ -85,7 +93,7 @@ public class ViewReportHandler extends HttpServlet {
 		}
 		//if the department is populated, get the selected department
 		int departmentId = Integer.parseInt(selectedDepartment);
-		request.setAttribute("selectedDepartment", departmentId); //save so jsp can correctly choose option from dropdown
+		session.setAttribute("selectedDepartment", departmentId); //save so jsp can correctly choose option from dropdown
 			
 		String selectedReport = request.getParameter("reportId"); //get selected report
 		if(selectedReport == null)//if no report

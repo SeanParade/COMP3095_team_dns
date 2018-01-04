@@ -57,7 +57,7 @@ public class EnterReportHandler extends HttpServlet {
 		        Employee user = (Employee) session.getAttribute("user");
                 ArrayList<ReportTemplate> templates = 
                         DatabaseAccess.getReportTemplatesByDepId(user.getDepartmentId());
-                request.setAttribute("reportTemplates", templates);
+                session.setAttribute("reportTemplates", templates);
             } 
 		    catch (Exception e) 
 		    {

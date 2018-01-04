@@ -339,10 +339,16 @@ public class DatabaseAccess {
 	        	Report report = new Report();
 	        	report.setReportId(rs.getInt("id"));
 	        	report.setTemplateId(rs.getInt("templateId"));
-	        	report.setGroupId(rs.getInt("groupId"));
-	        	report.setEmployeeId(rs.getInt("employeeId"));
 	        	report.setReportTitle(rs.getString("title"));
 	        	report.setReportType(rs.getString("reportType"));
+	        		if(report.getReportType().equals("group"))
+	        		{
+	        			report.setGroupId(rs.getInt("groupId"));
+	        		}
+	        		else
+	        		{
+	        			report.setEmployeeId(rs.getInt("employeeId"));
+	        		}
 	        	report.setEvaluation(rs.getInt("totalEvaluation"));
 	        	report.setDate(rs.getDate("date"));
 	        	report.setComment1(rs.getString("comment1"));
@@ -366,7 +372,7 @@ public class DatabaseAccess {
 		try {
 			conn = connectDatabase();
 			stmt = conn.prepareStatement(sql);
-			stmt.setDate(1, date);
+			stmt.setDate(1, (java.sql.Date)date);
 			stmt.setInt(2, 1);
 			stmt.setInt(3, employeeId);
 			stmt.execute();
@@ -396,7 +402,7 @@ public class DatabaseAccess {
 			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, report.getTemplateId());
 			stmt.setString(2,  report.getReportTitle());
-			stmt.setDate(3,  (Date) report.getDate());
+			stmt.setDate(3,  (java.sql.Date)report.getDate());
 			stmt.setInt(4,  report.getDepartmentId());
 			if(report.getGroupId() < 0)
 			{
