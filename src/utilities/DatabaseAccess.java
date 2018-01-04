@@ -487,30 +487,36 @@ public class DatabaseAccess {
 		}
 	
 	}
-	/*
-	   public static String updateReport(Report item)
+	
+	   public static String updateReport(Report report)
     {
         
-        sql = "UPDATE report_item SET evaluation= ?, description=? WHERE ID= ?;";
+        sql = "UPDATE report_item SET sec1_evaluation=? sec2_evaluation=? sec3_evaluation=? "
+        		+ "comment1 = ? comment2 = ? comment3 = ? totalEvaluation = ?  WHERE ID= ?;";
         
         try
         {
             conn = connectDatabase();
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,  item.getEvaluation());
-            stmt.setString(2, item.getDescription());
-            stmt.setInt(3, item.getReportId());
+            stmt.setString(1, report.getSec1Criteria());
+            stmt.setString(2, report.getSec2Criteria());
+            stmt.setString(3, report.getSec3Criteria());
+            stmt.setString(4, report.getComment1());
+            stmt.setString(5, report.getComment2());
+            stmt.setString(6, report.getComment3());
+            stmt.setInt(7, report.getEvaluation());
+            stmt.setInt(8, report.getReportId());
             
             stmt.execute();
             conn.close();
             
-            return "success";
+            return "Report successfully updated";
         }
         catch(Exception e)
         {
             return "failed " + e.getMessage();
         }
-    }*/
+    }
     
     
 	public static Employee getUser(String userName, String password) 
