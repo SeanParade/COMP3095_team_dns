@@ -39,7 +39,12 @@ public class InsertReport extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	/**
+	 * Insert Report:
+	 * Sets the destination of the dispatcher to that of a successful operation. 
+	 */
+	{
 	    String errorMsg = "";
 	    String servletDestination = "/reports/index.jsp";
 	    // check fields for empty values

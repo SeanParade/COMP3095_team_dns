@@ -189,9 +189,10 @@ public class DatabaseAccess {
 	public static String insertReportTemplate(ReportTemplate template) throws Exception
 	/**
 	 * Insert Report Template:
-	 * Takes a Report object and uses it to populate a row in the REPORT table.
+	 * Takes a ReportTemplate object and uses it to populate a row in the REPORT_TEMPLATE table.
 	 * 
-	 * @param
+	 * @param  template   a ReportTemplate object to be stored in the database.
+	 * @return            a "success" flag on successful insertion.
 	 */
 	{
 	    sql = "INSERT INTO REPORT_TEMPLATE(templateName, departmentId, "
@@ -219,7 +220,9 @@ public class DatabaseAccess {
 	
 	public static ReportTemplate getReportTemplateById(int id) throws Exception
 	/**
-	 * 
+	 * Get Report Template by Id:
+	 * Returns a ReportTemplate object if the provided id 
+	 * matches that of one of the templates in the table.
 	 */
 	{
 	    ReportTemplate template = new ReportTemplate();
@@ -251,7 +254,8 @@ public class DatabaseAccess {
 	
     public static ArrayList<ReportTemplate> getReportTemplatesByDepId(int departmentId) throws Exception
     /**
-     * 
+     * Get Report Templates by Department ID:
+     * Returns a list of ReportTemplate objects that contain a given department id. 
      */
     {
         ArrayList<ReportTemplate> templatesList = new ArrayList<>();
@@ -304,7 +308,9 @@ public class DatabaseAccess {
     
 	public static int insertReport(Report report)
 	/**
-	 * 
+	 * Insert Report: 
+	 * Takes a Report object and populates a row in the REPORT table with its attributes.
+	 * Returns the ID generated for the row in the REPORT table.
 	 */
 	{
 		int generatedKey = 0;
@@ -415,13 +421,15 @@ public class DatabaseAccess {
 				String first = rs.getString("firstName");
 				String last = rs.getString("lastName");
 				String email = rs.getString("email");
-
+				int departmentId = rs.getInt("departmentId");
+				
 				user.setEmployeeId(userId);
 				user.setFirstName(first);
 				user.setLastName(last);
 				user.setEmail(email);
 				user.setUsername(userName);
 				user.setPassword(password);
+				user.setDepartmentId(departmentId);
 			}
 			conn.close();
 			return user;
@@ -877,7 +885,7 @@ public class DatabaseAccess {
 				String role = rs.getString("role");
 				String username = rs.getString("username");
 				String password = rs.getString("password");
-				employee.setEmployeeId(id);
+				employee.setEmployeeId(employeeId);
 				employee.setFirstName(fName);
 				employee.setLastName(lName);
 				employee.setEmail(email);
