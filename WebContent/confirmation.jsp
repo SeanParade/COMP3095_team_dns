@@ -14,7 +14,7 @@
 <jsp:include page="includes/navigation.jsp" />
 	<div class="container">
 		<h1>${table} successfully added!</h1>
-		<p>${table} ${name} has been added to the system</p>
+		<p style="text-align: center;">${table} ${name} has been added to the system</p>
 	</div>
 
 </body>

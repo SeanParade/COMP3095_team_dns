@@ -45,8 +45,8 @@
 			</table>
 			<input type="submit" value="Enter">
 		</form>
+		<p><c:out value="${error}"/></p>
 		
 	</div>
-	
 </body>
 </html>

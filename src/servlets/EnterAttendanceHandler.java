@@ -42,6 +42,7 @@ public class EnterAttendanceHandler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Date date = null;
+		request.removeAttribute("error");
 		String[] selectedEmployeeIds = request.getParameterValues("selected");
 		String dateStr = request.getParameter("date");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -51,8 +52,20 @@ public class EnterAttendanceHandler extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		if (selectedEmployeeIds == null || selectedEmployeeIds.length == 0) {
+			request.setAttribute("error", "Please choose an employee");
+			request.getRequestDispatcher("enter_attendance.jsp").forward(request, response);
+		}
+		
+		
+		
+		
+		if (date != null) {
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-		System.out.println(Arrays.toString(selectedEmployeeIds));
+		
+	
+
 		
 		for(String employeeId:selectedEmployeeIds)
 		{
@@ -60,6 +73,9 @@ public class EnterAttendanceHandler extends HttpServlet {
 			request.setAttribute("table", "Employee attendance");
 			request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
 		}
+			}else {
+			request.setAttribute("error", "Please enter a valid date");
+			request.getRequestDispatcher("enter_attendance.jsp").forward(request, response);;
+		}	
+		}
 	}
-
-}
