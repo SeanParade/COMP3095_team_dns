@@ -21,8 +21,7 @@
 	<div class="container">
 	<h1>View Report</h1>
 	<div class="error">${sessionScope.error}</div>
-	
-	<c:if test="${not empty sessionScope.selectedReport}">selected report: ${sessionScope.selectedReport}</c:if>
+
 	
 	<!-- needs form action to servlet -->
 	<form action="ViewReport" id="viewForm" method="POST">
@@ -83,10 +82,10 @@
 			<!-- include report.jsp -->
 		<div id="report">	
 			<div class="report_header" id="reportHeader">
-				<jsp:include page="../includes/report_header.jsp"/>
+				<%@include file="../includes/report_header.jsp"%>
 			</div>
 			<div class="report_data" id="reportData">
-				<jsp:include page="../includes/report_data.jsp"/>
+				<%@include file="../includes/report_data.jsp"%>
 			</div>
 		</div>
 		</c:if>
