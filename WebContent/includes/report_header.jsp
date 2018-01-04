@@ -3,7 +3,7 @@
 <h4>Details</h4>
 <table>
 <tr><th>Report</th><td>${sessionScope.template.templateName}</td></tr>
-<tr><th>Report Title</th><td>${sessionScope.report.title}</td></tr>
+<tr><th>Report Title</th><td>${sessionScope.report.reportTitle}</td></tr>
 <tr><th>Date Created</th><td>${sessionScope.report.date}</td></tr>
 <tr><th>${sessionScope.report.reportType}</th><td> 
 <!-- test report type to display either employee name or group name -->

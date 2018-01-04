@@ -113,14 +113,19 @@ public class ViewReportHandler extends HttpServlet {
 		}
 		String selectedReport = request.getParameter("reportId");
 		int reportId = 0;
-		if(session.getAttribute("selectedReport")!=null)
+		
+		 if (selectedReport!= null)
 		{
-			reportId = (Integer)session.getAttribute("selectedReport");
-			Report report;
-			ReportTemplate template;
-			Employee employee;
-			Group group;
-			try {
+			try{
+				reportId = Integer.parseInt(selectedReport);
+				session.setAttribute("selectedReport", reportId);
+				
+				reportId = (Integer)session.getAttribute("selectedReport");
+				Report report;
+				ReportTemplate template;
+				Employee employee;
+				Group group;
+				
 				report = DatabaseAccess.getReportById(reportId);
 				if(report.getReportType().equals("employee"))
 				{
@@ -132,31 +137,21 @@ public class ViewReportHandler extends HttpServlet {
 					group = DatabaseAccess.getGroupById(report.getGroupId());
 					session.setAttribute("group", group);
 				}
-				session.setAttribute("report", report);
-			} catch (Exception e) {
-				e.printStackTrace();
+					session.setAttribute("report", report);
+					 // Map criteria and evaluations as attributes
+		            request.setAttribute("section1Map", report.getS1Map());
+		            request.setAttribute("section2Map", report.getS2Map());
+		            request.setAttribute("section3Map", report.getS3Map());
+		            
+		            template = DatabaseAccess.getReportTemplateById(templateId);
+					int maxEval = template.getEvaluation();
+					session.setAttribute("template", template);
+					session.setAttribute("maxEvaluation", maxEval);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
-			try
-			{
-				template = DatabaseAccess.getReportTemplateById(templateId);
-				session.setAttribute("template", template);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-		else if (selectedReport!= null)
-		{
-			try{
-				reportId = Integer.parseInt(selectedReport);
-				session.setAttribute("selectedReport", reportId);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
 		else{
 			try
 			{

@@ -22,7 +22,8 @@
 	selected template = ${sessionScope.selectedTemplate} <br>
 	selected department = ${sessionScope.selectedDepartment }<br>
 	departments: ${sessionScope.department}<br>
-	reports: ${sessionScope.reports}
+	reports: ${sessionScope.reports}<br>
+	<c:if test="${not empty sessionScope.selectedReport}">selected report: ${sessionScope.selectedReport}</c:if>
 	
 	</h2>
 	<!-- needs form action to servlet -->

@@ -114,6 +114,9 @@ public class InsertReport extends HttpServlet {
                 }
                 
                 DatabaseAccess.insertReport(rep);
+                request.setAttribute("table", "Report");
+                request.setAttribute("action", "inserted");
+                servletDestination = "/confirmation.jsp";
                 
 	        }catch(Exception e) {
 	            e.printStackTrace();
