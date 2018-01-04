@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import classes.Department;
 import classes.Employee;
+import classes.Group;
 import classes.ReportTemplate;
 import classes.Report;
 import utilities.DatabaseAccess;
@@ -115,6 +116,35 @@ public class ViewReportHandler extends HttpServlet {
 		if(session.getAttribute("selectedReport")!=null)
 		{
 			reportId = (Integer)session.getAttribute("selectedReport");
+			Report report;
+			ReportTemplate template;
+			Employee employee;
+			Group group;
+			try {
+				report = DatabaseAccess.getReportById(reportId);
+				if(report.getReportType().equals("employee"))
+				{
+					employee = DatabaseAccess.selectEmployeeById(report.getEmployeeId());
+					session.setAttribute("employee", employee);
+				}
+				else
+				{
+					group = DatabaseAccess.getGroupById(report.getGroupId());
+					session.setAttribute("group", group);
+				}
+				session.setAttribute("report", report);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try
+			{
+				template = DatabaseAccess.getReportTemplateById(templateId);
+				session.setAttribute("template", template);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 		else if (selectedReport!= null)
 		{

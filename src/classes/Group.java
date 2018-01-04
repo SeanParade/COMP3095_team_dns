@@ -12,6 +12,7 @@ public class Group {
 	private String groupName;
 	private int departmentId;
 	
+	public Group(){}
 	
 	public Group(int groupId, String groupName, int departmentId)
 	{
