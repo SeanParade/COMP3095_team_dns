@@ -78,7 +78,7 @@ public class ViewReportHandler extends HttpServlet {
 		int departmentId =0;
 		if(session.getAttribute("selectedDepartment")!=null)//if departmentID is saved in session
 		{
-			departmentId = (Integer)session.getAttribute("departmentId");
+			departmentId = (Integer)session.getAttribute("selectedDepartment");
 		}
 		else if(selectedDepartment!= null)
 		{
@@ -111,9 +111,23 @@ public class ViewReportHandler extends HttpServlet {
 		
 		}
 		String selectedReport = request.getParameter("reportId");
-		
-		if(selectedReport == null)//if no report
+		int reportId = 0;
+		if(session.getAttribute("selectedReport")!=null)
 		{
+			reportId = (Integer)session.getAttribute("selectedReport");
+		}
+		else if (selectedReport!= null)
+		{
+			try{
+				reportId = Integer.parseInt(selectedReport);
+				session.setAttribute("selectedReport", reportId);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else{
 			try
 			{
 				//populate dropdown of reports
