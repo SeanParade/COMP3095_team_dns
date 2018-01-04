@@ -13,9 +13,9 @@
 
 </head>
 <c:if test="${edit == true}"><body onload="disable('ddlTemplate'); disable('ddlDepartment'); disable('ddlReport'); edit();"></c:if>
-<c:if test="${not empty sessionScope.selectedDepartment}"><body onload=" enable('ddlReport');"></c:if> 
+ <c:if test="${not empty sessionScope.selectedDepartment}"><body onload=" enable('ddlReport');"></c:if> 
 <c:if test="${not empty sessionScope.selectedTemplate}"> <body onload="enable('ddlDepartment');"></c:if> 
-<c:if test="${empty sessionScope.selectedTemplate}"> <body onload="enable('ddlTemplate');"></c:if> 
+<c:if test="${empty sessionScope.selectedTemplate}"> <body onload="enable('ddlTemplate');"></c:if>
 
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
@@ -63,6 +63,7 @@
 		</c:forEach>
 	</select>
 	<br>
+	
 	<input type="submit" value="View">
 	<button onclick="changeMethod();this.form.submit();">Cancel</button>
 	<!-- in servlet: test whether requestType equals cancel or submit; 
