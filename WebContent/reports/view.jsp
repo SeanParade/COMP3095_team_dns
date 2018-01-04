@@ -8,11 +8,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 <link rel="stylesheet" href="/COMP3095_TEAM_DNS/css/main.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <title>View Reports</title>
+
 </head>
 <c:if test="${edit == true}"><body onload="disable('ddlTemplate'); disable('ddlDepartment'); disable('ddlReport'); edit();"></c:if>
-<c:if test="${not empty sessionScope.selectedDepartment}"><body onload="enable('ddlDepartment'); enable('ddlReport');"></c:if> 
+ <c:if test="${not empty sessionScope.selectedDepartment}"><body onload=" enable('ddlReport');"></c:if> 
 <c:if test="${not empty sessionScope.selectedTemplate}"> <body onload="enable('ddlDepartment');"></c:if> 
+<c:if test="${empty sessionScope.selectedTemplate}"> <body onload="enable('ddlTemplate');"></c:if>
 
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
@@ -27,13 +30,13 @@
 	
 	</h2>
 	<!-- needs form action to servlet -->
-	<form action="ViewReport" method="POST">
+	<form action="ViewReport" id="viewForm" method="POST">
 	<h2>Filter</h2>
-	<select name="templateId" id="ddlTemplate" onchange="this.form.submit()">
+	<select name="templateId" id="ddlTemplate" onchange="this.form.submit()" disabled>
 		<option value="">Template Name</option>
 		<c:forEach items="${sessionScope.templates}" var="template">
 			<option value="${template.id}" 
-				<c:if test="${template.id == sessionScope.selectedTemplate}"> "selected" </c:if>>
+				<c:if test="${template.id == sessionScope.selectedTemplate}"> selected </c:if>>
 					<c:out value="${template.templateName}" />
 					<!-- preserve selected template name -->
 			</option>
@@ -44,7 +47,7 @@
 	<select name="departmentId" id="ddlDepartment" onchange="this.form.submit()" disabled>
 		<option value="">Department</option>
 			<option value="${sessionScope.department.departmentId}" 
-				<c:if test="${sessionScope.department.departmentId == sessionScope.selectedDepartment}"> "selected" </c:if>>
+				<c:if test="${sessionScope.department.departmentId == sessionScope.selectedDepartment}"> selected </c:if>>
 				<c:out value="${sessionScope.department.departmentName}"  />
 					<!-- preserve selected department name -->
 			</option>
@@ -54,19 +57,21 @@
 	<option value="">Report Title</option>
 		<c:forEach items="${sessionScope.reports}" var="report">
 			<option value="${report.reportId}" 
-				<c:if test="${report.reportId == sessionScope.selectedReport}"> "selected" </c:if>>
+				<c:if test="${report.reportId == sessionScope.selectedReport}"> selected </c:if>>
 					<c:out value="${report.reportTitle}" /> 
 				<!-- preserve selected report title -->
 			</option>
 		</c:forEach>
 	</select>
 	<br>
+	
 	<input type="submit" value="View">
-	<input type="reset" value="Cancel">
+	<button onclick="changeMethod();this.form.submit();">Cancel</button>
 	<!-- in servlet: test whether requestType equals cancel or submit; 
 	reset selected values attributes; 
 	reset selected Report attribute-->
 	</form>
+	
 	
 	<hr>
 	
@@ -133,6 +138,10 @@
 			var edit = document.getElementById("edit");
 			edit.value = "Update";
 			edit.type="submit";
+		}
+		
+		function changeMethod() {
+		    $("#viewForm").attr("method", "get");
 		}
 		
 		
