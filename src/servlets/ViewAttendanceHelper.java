@@ -39,7 +39,7 @@ public class ViewAttendanceHelper extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		//displays departments in a drop down list
 		HttpSession session = request.getSession();
 		ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
 		session.setAttribute("departments", departmentList);
@@ -51,7 +51,10 @@ public class ViewAttendanceHelper extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		//Grabs all employees from the selected department in the dropdown. Grabs all unique dates in the attendance table
+		//Grabs all the employee and date information in the attendance table. For each Attendance object the employee's information
+		//(like first name and last name) is pulled. The attendance objects create Keys for a TreeMap and the Values are the Employees
+		//personal information
 		TreeMap<Attendance, Employee> attendanceMap = new TreeMap<>();
 		HttpSession session = request.getSession();
 		ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();

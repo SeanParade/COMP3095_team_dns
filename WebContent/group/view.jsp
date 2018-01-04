@@ -13,13 +13,17 @@
 	<jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
 		<h1>View Groups</h1>
+		
 		<form action="/COMP3095_TEAM_DNS/ViewGroup" method="post">
+		<!-- department dropdown list -->
 			Department: <select name="department" id="ddDepartment"
 				onchange="self.location = '//' + location.host + location.pathname + '?dep=' + this.selectedIndex">
 				<c:forEach items="${departments}" var="department">
 					<option value="${department.departmentId}"><c:out
 							value="${department.departmentName}" />
 				</c:forEach>
+			
+			<!-- finds all group for the selected department -->
 			</select> <br> Group: <select name="group">
 				<c:forEach items="${groups}" var="group">
 					<option value="${group.groupName}"><c:out
@@ -39,6 +43,8 @@
 				<th>Email</th>
 				<th>Job Position</th>
 			</tr>
+			
+			<!-- loops through list of employees and displays their group name and their personal information -->
 			<c:forEach var="employee" items="${employeesList}">
 				<tr>
 					<td><c:out value="${depName}"/></td>
@@ -53,6 +59,8 @@
 			</c:forEach>
 		</table>
 	</div>
+	
+	<!-- keeps correct placeholder for department dropdown list -->
 	<script type="text/javascript">
 var ddlDepartment = document.getElementById('ddDepartment');
 
