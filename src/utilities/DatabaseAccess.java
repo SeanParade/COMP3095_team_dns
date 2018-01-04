@@ -187,6 +187,13 @@ public class DatabaseAccess {
 	}
 	
 	public static String insertReportTemplate(ReportTemplate template) throws Exception
+	/**
+	 * Insert Report Template:
+	 * Takes a ReportTemplate object and uses it to populate a row in the REPORT_TEMPLATE table.
+	 * 
+	 * @param  template   a ReportTemplate object to be stored in the database.
+	 * @return            a "success" flag on successful insertion.
+	 */
 	{
 	    sql = "INSERT INTO REPORT_TEMPLATE(templateName, departmentId, "
 	            + "sec1_title, sec2_title, sec3_title, sec1_criteria, "
@@ -211,8 +218,12 @@ public class DatabaseAccess {
 	    }
 	}
 	
-	public static ReportTemplate getReportTemplateById(int id)
-	throws Exception
+	public static ReportTemplate getReportTemplateById(int id) throws Exception
+	/**
+	 * Get Report Template by Id:
+	 * Returns a ReportTemplate object if the provided id 
+	 * matches that of one of the templates in the table.
+	 */
 	{
 	    ReportTemplate template = new ReportTemplate();
 	    sql = "SELECT * FROM REPORT_TEMPLATE WHERE id = ?;";
@@ -241,8 +252,11 @@ public class DatabaseAccess {
 	    catch(Exception e) { throw e; }	    
 	}
 	
-    public static ArrayList<ReportTemplate> getReportTemplatesByDepId(int departmentId)
-    throws Exception
+    public static ArrayList<ReportTemplate> getReportTemplatesByDepId(int departmentId) throws Exception
+    /**
+     * Get Report Templates by Department ID:
+     * Returns a list of ReportTemplate objects that contain a given department id. 
+     */
     {
         ArrayList<ReportTemplate> templatesList = new ArrayList<>();
         sql = "SELECT * FROM REPORT_TEMPLATE WHERE departmentId = ?;";
@@ -293,9 +307,15 @@ public class DatabaseAccess {
 	}
     
 	public static int insertReport(Report report)
+	/**
+	 * Insert Report: 
+	 * Takes a Report object and populates a row in the REPORT table with its attributes.
+	 * Returns the ID generated for the row in the REPORT table.
+	 */
 	{
 		int generatedKey = 0;
-		sql = "INSERT INTO REPORT(templateId, title, date, departmentId, groupId, employeeId, totalEvaluation, comment1, comment2, comment3, reportType,"
+		sql = "INSERT INTO REPORT(templateId, title, date, departmentId, groupId, employeeId,"
+		        + " totalEvaluation, comment1, comment2, comment3, reportType,"
 		        + "sec1_evaluation, sec2_evaluation, sec3_evaluation)" +
 	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		
@@ -401,13 +421,15 @@ public class DatabaseAccess {
 				String first = rs.getString("firstName");
 				String last = rs.getString("lastName");
 				String email = rs.getString("email");
-
+				int departmentId = rs.getInt("departmentId");
+				
 				user.setEmployeeId(userId);
 				user.setFirstName(first);
 				user.setLastName(last);
 				user.setEmail(email);
 				user.setUsername(userName);
 				user.setPassword(password);
+				user.setDepartmentId(departmentId);
 			}
 			conn.close();
 			return user;
@@ -557,17 +579,17 @@ public class DatabaseAccess {
 
 		
 	}
-	/**
-	 * Fetches all the groups in a given department and returns an array of 
-	 * employee objects instantiated from group rows in the database that
-	 * have a matching department id
-	 * 
-	 * @param  departmentId  Unique department identification number
-	 * @return               Collection of group objects that belong to a 
-	 *                       given department.
-	 */
-	
-	public static ArrayList<Group> selectGroupsByDepartment(int departmentId) 
+
+	public static ArrayList<Group> selectGroupsByDepartment(int departmentId)
+	 /**
+     * Fetches all the groups in a given department and returns an array of 
+     * employee objects instantiated from group rows in the database that
+     * have a matching department id
+     * 
+     * @param  departmentId  Unique department identification number
+     * @return               Collection of group objects that belong to a 
+     *                       given department.
+     */
 	{
 		ArrayList<Group> groups = new ArrayList<Group>();
 		sql = "SELECT * FROM EGROUP WHERE departmentId = ?;";
@@ -863,7 +885,7 @@ public class DatabaseAccess {
 				String role = rs.getString("role");
 				String username = rs.getString("username");
 				String password = rs.getString("password");
-				employee.setEmployeeId(id);
+				employee.setEmployeeId(employeeId);
 				employee.setFirstName(fName);
 				employee.setLastName(lName);
 				employee.setEmail(email);

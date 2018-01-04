@@ -13,11 +13,12 @@
 <jsp:include page="../includes/navigation.jsp" />
 	<div class="container">
 		<h4>Please select a report template from your department</h4>
-		<br /><br />
+		<br />
 		<form action="EnterReport" method="POST">
+		
+		<!-- Populates a ddl with report templates that match a users departmentId -->
 		<label>Templates: </label>
-			<select
-					name="template" id="ddlTemplate">
+			<select	name="template" id="ddlTemplate">
 					<c:forEach items="${reportTemplates}" var="reportTemplates">
 						<option value="${reportTemplates.id}">
 							<c:out value="${reportTemplates.templateName}" />
