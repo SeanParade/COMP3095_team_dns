@@ -348,6 +348,9 @@ public class DatabaseAccess {
         		{
         			report.setEmployeeId(rs.getInt("employeeId"));
         		}
+        		report.setSec1Criteria(rs.getString("sec1Criteria"));
+        		report.setSec2Criteria(rs.getString("sec2Criteria"));
+        		report.setSec3Criteria(rs.getString("sec3Criteria"));
         		report.setEvaluation(rs.getInt("totalEvaluation"));
         		report.setDate(rs.getDate("date"));
         		report.setComment1(rs.getString("comment1"));
