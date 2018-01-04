@@ -13,16 +13,20 @@ import javax.servlet.http.HttpSession;
 import classes.Department;
 import utilities.DatabaseAccess;
 
-/**
- * Servlet implementation class ViewDepartmentsHandler
- */
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #1
+ * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 30/12/2017
+ * Description: ViewDepartmentsHandler - Handles requests from 
+ * departments/view.jsp
+ ***********************************************************************/
 @WebServlet("/ViewDepartmentsHandler")
 public class ViewDepartmentsHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public ViewDepartmentsHandler() {
         super();
        
@@ -30,9 +34,14 @@ public class ViewDepartmentsHandler extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//get list of departments from database
 		ArrayList<Department> departments = DatabaseAccess.selectDepartments();
+		
+		//store list in session
 		HttpSession session = request.getSession();
 		session.setAttribute("departmentList", departments);
+		
+		//forward request back to jsp
 		request.getRequestDispatcher("/department/view.jsp").forward(request, response);
 	}
 

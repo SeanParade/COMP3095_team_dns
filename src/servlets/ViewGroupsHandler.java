@@ -15,9 +15,14 @@ import classes.Employee;
 import classes.Group;
 import utilities.DatabaseAccess;
 
-/**
- * Servlet implementation class ViewGroupsHandler
- */
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 30/12/2017
+ * Description: ViewGroupsHandler- handles requests for groups/view.jsp
+ ***********************************************************************/
 @WebServlet(name = "ViewGroup", urlPatterns = { "/ViewGroup" })
 public class ViewGroupsHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;

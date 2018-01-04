@@ -20,25 +20,26 @@ import classes.Department;
 import classes.Employee;
 import utilities.DatabaseAccess;
 
-/**
- * Servlet implementation class ViewAttendanceHelper
- */
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 02/01/2018
+ * Description: ViewAttendanceHelper - gets employee attendance from 
+ * database and forwards to jsp for viewing
+ ***********************************************************************/
 @WebServlet("/attendance/ViewAttendance")
 public class ViewAttendanceHelper extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public ViewAttendanceHelper() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//displays departments in a drop down list
 		HttpSession session = request.getSession();
 		ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
@@ -46,9 +47,7 @@ public class ViewAttendanceHelper extends HttpServlet {
 		request.getRequestDispatcher("/attendance/view.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//Grabs all employees from the selected department in the dropdown. Grabs all unique dates in the attendance table

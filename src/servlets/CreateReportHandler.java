@@ -5,7 +5,7 @@ package servlets;
  * Assignment: Assignment #2
  * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
  * Student Numbers: 100727526, 100695733, 101015020
- * Date: 03/01/20178
+ * Date: 03/01/2018
  * Description: CreateReportHandler - Servlet that handles the processes on the create_template jsp.
  * Inserts Department information on the get request and creates a report template on the post request
  ***********************************************************************/
@@ -23,23 +23,16 @@ import classes.ReportTemplate;
 import utilities.DatabaseAccess;
 import utilities.HelperUtility;
 
-/**
- * Servlet implementation class CreateReportHandler
- */
+
 @WebServlet("/reports/CreateReport")
 public class CreateReportHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public CreateReportHandler() {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	/**
 	 * Used by create_report jsp to populate a department dropdown list
@@ -54,7 +47,6 @@ public class CreateReportHandler extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * Create Report:
 	 * Check the form for empty required values. Takes the form data and uses it to populate a ReportTemplate
 	 * object to be stored in the db. Criteria values are passed to a CSV generator that alternates each sections

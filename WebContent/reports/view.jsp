@@ -12,7 +12,8 @@
 <title>View Reports</title>
 
 </head>
-<c:if test="${sessionScope.edit == 'true'}"><body onload="disable('ddlTemplate'); disable('ddlDepartment'); disable('ddlReport'); edit();"></c:if>
+<!--  onload functions: disable and enable dropdown boxes -->
+<c:if test="${sessionScope.edit == 'true'}"><body onload="disable('ddlTemplate'); disable('ddlDepartment'); disable('ddlReport');"></c:if>
  <c:if test="${not empty sessionScope.selectedDepartment}"><body onload=" enable('ddlReport');"></c:if> 
 <c:if test="${not empty sessionScope.selectedTemplate}"> <body onload="enable('ddlDepartment');"></c:if> 
 <c:if test="${empty sessionScope.selectedTemplate}"> <body onload="enable('ddlTemplate');"></c:if>
@@ -23,7 +24,7 @@
 	<div class="error">${sessionScope.error}</div>
 
 	
-	<!-- needs form action to servlet -->
+	<!-- search templates -->
 	<form action="ViewReport" id="viewForm" method="POST">
 	<h2>Filter</h2>
 	<select name="templateId" id="ddlTemplate" onchange="this.form.submit()" disabled>
@@ -37,7 +38,7 @@
 		</c:forEach>
 	</select>
 
-	
+	<!-- search departments -->
 	<select name="departmentId" id="ddlDepartment" onchange="this.form.submit()" disabled>
 		<option value="">Department</option>
 			<option value="${sessionScope.department.departmentId}" 
@@ -47,6 +48,7 @@
 			</option>
 	</select>
 	
+	<!-- search reports -->
 	<select name="reportId" id="ddlReport" disabled>
 	<option value="">Report Title</option>
 		<c:forEach items="${sessionScope.reports}" var="report">
@@ -59,18 +61,16 @@
 	</select>
 	<br>
 	
+	<!-- submit -->
 	<input type="submit" value="View">
+	<!-- submit GET(), reset session attributes -->
 	<button onclick="changeMethod();this.form.submit();">Cancel</button>
-	<!-- in servlet: test whether requestType equals cancel or submit; 
-	reset selected values attributes; 
-	reset selected Report attribute-->
 	</form>
 	
 	
 	<hr>
 	
 	<!-- report here -->
-	<!-- need to set selected template id when servlet redirects to page -->
 	<div class="container report_container" id="report_div">
 		
 			<!-- if selectedReport attribute is not set: display placeholder text -->
@@ -82,10 +82,10 @@
 			<!-- include report.jsp -->
 		<div id="report">	
 			<div class="report_header" id="reportHeader">
-				<%@include file="../includes/report_header.jsp"%>
+				<%@include file="../includes/report_header.jsp"%> <!-- report header jsp -->
 			</div>
 			<div class="report_data" id="reportData">
-				<%@include file="../includes/report_data.jsp"%>
+				<%@include file="../includes/report_data.jsp"%> <!--  report data jsp -->
 			</div>
 		</div>
 		</c:if>
@@ -119,27 +119,6 @@
 				{
 					div.style.display="none";
 				}
-			
-		}
-		//function to enable editing
-		function edit()
-		{
-			var evaluations = document.getElementsByClass("evaluation");
-			for(var i=0; i<evaluations.length; i++)
-				{
-					evaluations[i].disabled = false;
-				}
-			var comments = document.getElementsByClass("comments");
-			for(var i=0; i<comments.length; i++)
-				{
-					comments[i].removeAttribute("readonly");
-				}
-			var edit = document.getElementById("edit");
-			edit.value = "Update";
-			edit.type="submit";
-			
-			var cancel = document.getElementById("cancel");
-			cancel.value ="Cancel";
 			
 		}
 		

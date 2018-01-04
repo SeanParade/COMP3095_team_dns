@@ -19,9 +19,16 @@ import classes.Report;
 import utilities.DatabaseAccess;
 import utilities.HelperUtility;
 
-/**
- * Servlet implementation class ViewReportHandler
- */
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 02/01/2018
+ * Description: ViewReportHandler - Queries database for templates,
+ * department, report, sends info to reports/view.jsp
+ ***********************************************************************/
+
 @WebServlet("/reports/ViewReport")
 public class ViewReportHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,6 +48,7 @@ public class ViewReportHandler extends HttpServlet {
 						DatabaseAccess.getAllReportTemplates();
 			request.getSession().setAttribute("templates", templates);
 
+			//remove previous session attributes for this page
 			if(request.getSession().getAttribute("selectedTemplate")!=null)
 			    request.getSession().removeAttribute("selectedTemplate");
 			if(request.getSession().getAttribute("selectedDepartment")!=null)
@@ -48,13 +56,14 @@ public class ViewReportHandler extends HttpServlet {
 			if(request.getSession().getAttribute("selectedReport")!=null)
 			    request.getSession().removeAttribute("selectedReport");
 		
+			//reset edit attribute to false
 			request.getSession().setAttribute("edit", "false");
 			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}
-		//dispatch to view.jsp
+		//forward to view
 		request.getRequestDispatcher("/reports/view.jsp").forward(request,response);
 		
 
@@ -66,15 +75,15 @@ public class ViewReportHandler extends HttpServlet {
         //get the selected template from dropdown
         String selectedTemplate = request.getParameter("templateId");
         int templateId = 0;
-        if(session.getAttribute("selectedTemplate")!=null)
+        if(session.getAttribute("selectedTemplate")!=null) //selected template id has been saved in session
         {
-            templateId = (Integer)session.getAttribute("selectedTemplate");
+            templateId = (Integer)session.getAttribute("selectedTemplate"); //set session attribute
         }
-        else{
+        else{ //template has been selected, not saved in session
             
             try{
-                templateId = Integer.parseInt(selectedTemplate);
-                session.setAttribute("selectedTemplate", templateId);
+                templateId = Integer.parseInt(selectedTemplate); //get template id
+                session.setAttribute("selectedTemplate", templateId); //set session attribute
             }
             catch(Exception e)
             {
@@ -87,13 +96,13 @@ public class ViewReportHandler extends HttpServlet {
         int departmentId =0;
         if(session.getAttribute("selectedDepartment")!=null)//if departmentID is saved in session
         {
-            departmentId = (Integer)session.getAttribute("selectedDepartment");
+            departmentId = (Integer)session.getAttribute("selectedDepartment"); //get departmentId from session
         }
-        else if(selectedDepartment!= null)
+        else if(selectedDepartment!= null) //departmentId not saved in session
         {
             try{
-            departmentId = Integer.parseInt(selectedDepartment);
-            session.setAttribute("selectedDepartment", departmentId);
+            departmentId = Integer.parseInt(selectedDepartment); //get department id from dropdown
+            session.setAttribute("selectedDepartment", departmentId); //set session attribute
             }
             catch(Exception e)
             {
@@ -108,27 +117,32 @@ public class ViewReportHandler extends HttpServlet {
                 //get the department from the template dept id
                 ReportTemplate choiceTemplate = DatabaseAccess.getReportTemplateById(templateId);
                 department = DatabaseAccess.selectDepartmentById(choiceTemplate.getDepartmentId());
+                
                 //add list to session
                 session.setAttribute("department", department);
+                
                 //send back to the view.jsp
                 request.getRequestDispatcher("/reports/view.jsp").forward(request, response);
-                return;
+                return; //don't go through anymore code below
                 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         
         }
-        String selectedReport = request.getParameter("reportId");
+        //if it gets to here: template and department have been selected previously
+        String selectedReport = request.getParameter("reportId"); //get selected report
 		int reportId = 0;
 		
-		 if (selectedReport!= null)
+		 if (selectedReport!= null) //if report is selected
 		{
 			try{
-				reportId = Integer.parseInt(selectedReport);
-				session.setAttribute("selectedReport", reportId);
+				reportId = Integer.parseInt(selectedReport);       //get reportId
+				session.setAttribute("selectedReport", reportId); //save to session
 				
-				reportId = (Integer)session.getAttribute("selectedReport");
+				reportId = (Integer)session.getAttribute("selectedReport"); //get reportId
+				
+				//declare objects needed
 				Report report;
 				ReportTemplate template;
 				Employee employee;
@@ -170,7 +184,8 @@ public class ViewReportHandler extends HttpServlet {
 				}
 				
 			}
-		else{
+		else //reports have not been populated
+		{
 			try
 			{
 				//populate dropdown of reports

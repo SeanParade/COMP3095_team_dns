@@ -14,9 +14,15 @@ import classes.Department;
 import classes.Employee;
 import utilities.DatabaseAccess;
 
-/**
- * Servlet implementation class ViewEmployeesHandler
- */
+/************************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 03/01/2017
+ * Description: ViewEmployeesHandler - Handles requests from 
+ * employees/view.jsp
+ ***********************************************************************/
 @WebServlet("/ViewEmployeesHandler")
 public class ViewEmployeesHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;

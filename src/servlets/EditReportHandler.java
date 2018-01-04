@@ -14,10 +14,10 @@ import utilities.DatabaseAccess;
 import utilities.HelperUtility;
 /************************************************************************
  * Project: COMP3095_team_dns
- * Assignment: Assignment #1
+ * Assignment: Assignment #2
  * Authors: Sergio Santilli, Dylan Roberts, Nooran El-Sherif, Sean Price
  * Student Numbers: 100727526, 100695733, 101015020
- * Date: 20/11/2017
+ * Date: 03/01/2018
  * Description: EditReportHandler - Handles report update in database
  ***********************************************************************/
 
@@ -89,7 +89,6 @@ public class EditReportHandler extends HttpServlet {
 					//redirect to success page
 					request.setAttribute("table", "Report");
 					request.setAttribute("action", "updated");
-					request.setAttribute("name", comment1);
 					servletDestination = "/confirmation.jsp";
 				}
 				
@@ -100,12 +99,13 @@ public class EditReportHandler extends HttpServlet {
 					
 				}
 			}
-		else
+		else //nothing has been edited yet, set edit to true
 		{
 			session.setAttribute("edit", "true");
 		
 			}
 		}
+		//forward to either view.jsp or confirmation.jsp
 		request.getRequestDispatcher(servletDestination).forward(request,response);
 		
 

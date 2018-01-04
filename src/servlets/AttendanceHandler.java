@@ -1,5 +1,14 @@
 package servlets;
 
+/**********************************************************************
+ * Project: COMP3095_team_dns
+ * Assignment: Assignment #2
+ * Authors: Dylan Roberts, Nooran El-Sherif, Sean Price
+ * Student Numbers: 100727526, 100695733, 101015020
+ * Date: 01/01/2018
+ * Description: AttendanceHandler - handles requests to view attendance
+ ***********************************************************************/
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,25 +23,18 @@ import classes.Department;
 import classes.Employee;
 import utilities.DatabaseAccess;
 
-/**
- * Servlet implementation class AttendanceHandler
- */
+
 @WebServlet(name = "Attendance", urlPatterns = { "/attendance/Attendance" })
 public class AttendanceHandler extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public AttendanceHandler() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
@@ -41,9 +43,6 @@ public class AttendanceHandler extends HttpServlet {
 		request.getRequestDispatcher("/attendance/enter_attendance.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int depId = Integer.parseInt(request.getParameter("department"));

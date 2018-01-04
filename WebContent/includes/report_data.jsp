@@ -2,10 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:useBean id="date" class="java.util.Date" />
 
+<!--  form to view and edit selected report data -->
 <form action="EditReport" method="POST">
-	<input type="hidden" name="reportId" value="${sessionScope.report.id}">
+	<input type="hidden" name="reportId" value="${sessionScope.selectedReport}">
 	
-
+<!-- criteria and evaluations -->
 			<fieldset>
 				<legend class="left-label">
 					2.Section I: <input type="text" name="sec1Title" value="${sessionScope.template.sec1Title}" readonly/>
@@ -22,6 +23,7 @@
 						</select>
 						<br/>
 				   </c:forEach>
+				  <!-- comment --> 
 					<textarea name="s1comment" id="s1comment" class="comments" cols="30" rows="10" <c:if test="${sessionScope.edit == 'false'}">readonly</c:if>>${sessionScope.report.comment1}</textarea>
 				</fieldset>
 				<hr />
@@ -41,6 +43,7 @@
 						</select>
 						<br/>
 					</c:forEach>
+					<!-- comment -->
 					<textarea name="s2comment" id="s2comment" class="comments" cols="30" rows="10" <c:if test="${sessionScope.edit == 'false'}">readonly</c:if>>${sessionScope.report.comment2}</textarea>
 				</fieldset>
 				<hr />
@@ -60,17 +63,20 @@
 						</select>
 						<br/>
 					</c:forEach>
+					<!-- comment -->
 					<textarea name="s3comment" id="s3comment" class="comments" cols="30" rows="10" 
 								<c:if test="${sessionScope.edit == 'false'}">readonly</c:if>>${sessionScope.report.comment3}</textarea>
 								
 				</fieldset>
 			</fieldset>
+			<!-- evaluation summed up -->
 				<input type="text" id="sumBox" value="${sessionScope.report.evaluation}" readonly></input><p> / ${sessionScope.maxEvaluation}</p>
 			<input type="hidden" id="sumBoxHidden" value="${sessionScope.report.evaluation}" name="evaluationTotal"></input>
 				<hr />
 			
 
 
+<!-- change input values if in edit mode or view mode -->
 <input type="submit" value=<c:if test="${sessionScope.edit == 'false'}">"Edit Report"</c:if>
 						<c:if test="${sessionScope.edit== 'true' }">"Update Report"</c:if> id="edit"> <!-- submit send to servlet, servlet redirects back to here with 
 														parameter that servlet tests for to enable-->
