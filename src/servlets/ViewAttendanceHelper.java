@@ -51,8 +51,10 @@ public class ViewAttendanceHelper extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		TreeMap<Attendance, Employee> attendanceMap = new TreeMap<>();
 		HttpSession session = request.getSession();
+		ArrayList<Department> departmentList = DatabaseAccess.selectDepartments();
 		int depId = Integer.parseInt(request.getParameter("department"));
 		
 		ArrayList<java.sql.Date> dateList = DatabaseAccess.selectUniqueDates();
@@ -66,6 +68,8 @@ public class ViewAttendanceHelper extends HttpServlet {
 			attendanceMap.put(attendance, employee );
 		
 		}
+		
+		session.setAttribute("selectedDep", departmentList.get(depId-1));
 		session.setAttribute("dates", dateList);
 		session.setAttribute("map", attendanceMap);
 		session.setAttribute("employees", employeesList);
