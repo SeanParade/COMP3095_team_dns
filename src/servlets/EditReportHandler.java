@@ -66,7 +66,7 @@ public class EditReportHandler extends HttpServlet {
 		         String sec3Criteria = HelperUtility.parseTemplateCriteria(
 		                 request.getParameterValues("s3criteria"), request.getParameterValues("s3eval"));
 		         
-		         String comment1 = request.getParameter("s1comment");
+		         String comment1 = request.getParameter("s1comment"); //why is this empty?
 		         String comment2 = request.getParameter("s2comment");
 		         String comment3 = request.getParameter("s3comment");
 		         
@@ -89,6 +89,7 @@ public class EditReportHandler extends HttpServlet {
 					//redirect to success page
 					request.setAttribute("table", "Report");
 					request.setAttribute("action", "updated");
+					request.setAttribute("name", comment1);
 					servletDestination = "/confirmation.jsp";
 				}
 				

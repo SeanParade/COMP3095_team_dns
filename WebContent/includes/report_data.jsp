@@ -3,19 +3,9 @@
 <jsp:useBean id="date" class="java.util.Date" />
 
 <form action="EditReport" method="POST">
-	<input type="hidden" name="reportTitle" value="${sessionScope.report.reportTitle}">
 	<input type="hidden" name="reportId" value="${sessionScope.report.id}">
-	<input type="hidden" name="templateId" value="${sessionScope.report.templateId}">
-	<input type="hidden" name="date" value ="${sessionScope.report.date}">
-	<c:forEach var="s1m" items="${sessionScope.section1Map}" >
-			<input type="hidden" name="s1criteria" value="${s1m.key}" />
-		</c:forEach>
-		<c:forEach var="s2m" items="${sessionScope.section2Map}" >
-			<input type="hidden" name="s2criteria" value="${s2m.key}" />
-		</c:forEach>
-		<c:forEach var="s3m" items="${sessionScope.section3Map}" >
-			<input type="hidden" name="s3criteria" value="${s3m.key}" />
-		</c:forEach>	
+	
+
 			<fieldset>
 				<legend class="left-label">
 					2.Section I: <input type="text" name="sec1Title" value="${sessionScope.template.sec1Title}" readonly/>
